@@ -8,3 +8,14 @@
 ### Fixed
 
 ### Updated
+
+## [8.0.0] - 2024-10-03
+
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Updated
