@@ -24,3 +24,4 @@ TestResults.xml
 
 node_modules/
 **/package-lock.json
+*/lib/vendor/ankitpokhrel/tus-php/.cache/tus_php.client.cache
