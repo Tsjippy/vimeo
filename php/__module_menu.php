@@ -11,26 +11,6 @@ DEFINE(__NAMESPACE__.'\MODULE_PATH', plugin_dir_path(__DIR__));
 
 $vimeoVideos	= get_option('sim-vimeo-videos');
 
-add_filter('sim_submenu_description', function($description, $moduleSlug){
-	//module slug should be the same as the constant
-	if($moduleSlug != MODULE_SLUG)	{
-		return $description;
-	}
-
-	ob_start();
-	?>
-	<p>
-		This module will upload all video's to Vimeo. It support resumable uploads, meaning that if the page gets reloaded or internet connection is lost the video upload can be restarted and will continue where it was left.<br>
-		A video title or description  update is also synced to Vimeo.<br>
-		You can enable the option to sync your media library with Vimeo, so that enay videos added to Vimeo will also be added to your websites library<br>
-		You can enable the option to delete a video from Vimeo if you delete the video from your media library.<br>
-	</p>
-	<?php
-
-	return ob_get_clean();
-
-}, 10, 2);
-
 add_filter('sim_submenu_options', function($optionsHtml, $moduleSlug, $settings){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG){
