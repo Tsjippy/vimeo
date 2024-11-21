@@ -4,25 +4,28 @@ use SIM;
 
 // Delete video from vimeo when attachemnt is deleted, if that option is enabled
 if(SIM\getModuleOption(MODULE_SLUG, 'remove')){
-	add_action( 'delete_attachment', function($postId, $post ){
+	add_action( 'delete_attachment', __NAMESPACE__.'\attachmentDeleted', 10, 2);
+}
+function attachmentDeleted($postId, $post ){
 
-		if(explode('/', $post->post_mime_type)[0] == 'video'){
-			$vimeoApi = new VimeoApi();
-			$vimeoApi->deleteVimeoVideo($postId);
-		}
-	}, 10, 2);
+	if(explode('/', $post->post_mime_type)[0] == 'video'){
+		$vimeoApi = new VimeoApi();
+		$vimeoApi->deleteVimeoVideo($postId);
+	}
 }
 
-add_action('sim_before_visibility_change', function($attachmentId, $visibility){
+add_action('sim_before_visibility_change', __NAMESPACE__.'\visibility', 10, 2);
+function visibility($attachmentId, $visibility){
 
 	if($visibility == 'private'){
 		$vimeoApi	= new VimeoApi();
 		$vimeoApi->hideVimeoVideo($attachmentId);
 	}
-}, 10, 2);
+}
 
 //change the url of vimeo videos so it points to vimeo.com
-add_filter( 'wp_get_attachment_url', function( $url, $attId ) {
+add_filter( 'wp_get_attachment_url', __NAMESPACE__.'\attachmentUrl', 999, 2 );
+function attachmentUrl( $url, $attId ) {
 	$vimeoId   = get_post_meta($attId, 'vimeo_id', true);
 
     if(is_numeric($vimeoId)){
@@ -36,7 +39,7 @@ add_filter( 'wp_get_attachment_url', function( $url, $attId ) {
     }
 	
     return $url;
-}, 999, 2 );
+}
 
 
 if(SIM\getModuleOption(MODULE_SLUG, 'upload')){
@@ -66,7 +69,8 @@ if(SIM\getModuleOption(MODULE_SLUG, 'upload')){
 }
 
 // Uploads a video to vimeo, runs after file has been uploaded to the tmp folder but before adding it to the library
-add_filter( 'wp_handle_upload', function($file){
+add_filter( 'wp_handle_upload', __NAMESPACE__.'\handleUpload' );
+function handleUpload($file){
 
 	if(explode('/', $file['type'])[0] == 'video' && is_numeric($_REQUEST['post'])){
 		$vimeoApi	= new VimeoApi();
@@ -116,10 +120,11 @@ add_filter( 'wp_handle_upload', function($file){
 	}
 
 	return $file;
-} );
+}
 
 //change vimeo thumbnails
-add_filter( 'wp_mime_type_icon', function ($icon, $mime, $postId) {
+add_filter( 'wp_mime_type_icon', __NAMESPACE__.'\mimeTypeIcon', 10, 9 );
+function mimeTypeIcon($icon, $mime, $postId) {
 
 	if(str_contains($icon, 'video.png') && is_numeric(get_post_meta($postId, 'vimeo_id', true))){
 		$startTime = microtime(true);
@@ -152,7 +157,7 @@ add_filter( 'wp_mime_type_icon', function ($icon, $mime, $postId) {
 	}
 	
 	return $icon;
-}, 10, 9 );
+}
 
 
 

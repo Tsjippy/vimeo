@@ -11,7 +11,8 @@ DEFINE(__NAMESPACE__.'\MODULE_PATH', plugin_dir_path(__DIR__));
 
 $vimeoVideos	= get_option('sim-vimeo-videos');
 
-add_filter('sim_submenu_options', function($optionsHtml, $moduleSlug, $settings){
+add_filter('sim_submenu_options', __NAMESPACE__.'\moduleOptions', 10, 3);
+function moduleOptions($optionsHtml, $moduleSlug, $settings){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG){
 		return $optionsHtml;
@@ -142,9 +143,10 @@ add_filter('sim_submenu_options', function($optionsHtml, $moduleSlug, $settings)
 	<?php
 
 	return ob_get_clean();
-}, 10, 3);
+}
 
-add_filter('sim_module_functions', function($functionHtml, $moduleSlug){
+add_filter('sim_module_functions', __NAMESPACE__.'\moduleFunctions', 10, 2);
+function moduleFunctions($functionHtml, $moduleSlug){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG){
 		return $functionHtml;
@@ -214,9 +216,10 @@ add_filter('sim_module_functions', function($functionHtml, $moduleSlug){
 	
 	
 	return ob_get_clean();
-}, 10, 2);
+}
 
-add_filter('sim_module_updated', function($options, $moduleSlug){
+add_filter('sim_module_updated', __NAMESPACE__.'\moduleUpdated', 10, 2);
+function moduleUpdated($options, $moduleSlug){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG){
 		return $options;
@@ -225,4 +228,4 @@ add_filter('sim_module_updated', function($options, $moduleSlug){
 	scheduleTasks();
 
 	return $options;
-}, 10, 2);
+}

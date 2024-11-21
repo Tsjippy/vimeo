@@ -2,7 +2,8 @@
 namespace SIM\VIMEO;
 use SIM;
 
-add_filter('sim_media_gallery_item_html', function($mediaHtml, $type, $postId){
+add_filter('sim_media_gallery_item_html', __NAMESPACE__.'\mediaItem', 10, 3);
+function mediaItem($mediaHtml, $type, $postId){
     if($type != 'video'){
         return $mediaHtml;
     }
@@ -17,9 +18,10 @@ add_filter('sim_media_gallery_item_html', function($mediaHtml, $type, $postId){
     }
 
     return $mediaHtml;
-}, 10, 3);
+}
 
-add_filter('sim_media_gallery_download_url', function($url, $postId){
+add_filter('sim_media_gallery_download_url', __NAMESPACE__.'\downloadUrl', 10, 2);
+function downloadUrl($url, $postId){
     $vimeoApi   = new VimeoApi();
     $path       = $vimeoApi->getVideoPath($postId);
 
@@ -28,9 +30,10 @@ add_filter('sim_media_gallery_download_url', function($url, $postId){
     }
 
     return $url;
-}, 10, 2);
+}
 
-add_filter('sim_media_gallery_download_filename', function($fileName, $type, $postId){
+add_filter('sim_media_gallery_download_filename', __NAMESPACE__.'\downloadFileName', 10, 3);
+function downloadFileName($fileName, $type, $postId){
     if($type != 'video'){
         return $fileName;
     }
@@ -48,4 +51,4 @@ add_filter('sim_media_gallery_download_filename', function($fileName, $type, $po
     }
 
     return $fileName;
-}, 10, 3);
+}

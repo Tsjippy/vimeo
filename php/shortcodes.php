@@ -27,7 +27,8 @@ function showVimeoVideo($vimeoId){
 	return ob_get_clean();
 }
 
-add_filter( 'wp_video_shortcode', function($output, $atts, $video, $postId){
+add_filter( 'wp_video_shortcode', __NAMESPACE__.'\videoShortcode', 10, 4 );
+function videoShortcode($output, $atts, $video, $postId){
 	$vimeoId	= get_post_meta($postId, 'vimeo_id', true);
 
 	if(!is_numeric($vimeoId)){
@@ -35,4 +36,4 @@ add_filter( 'wp_video_shortcode', function($output, $atts, $video, $postId){
 	}
 
 	return showVimeoVideo($vimeoId);
-}, 10, 4 );
+}

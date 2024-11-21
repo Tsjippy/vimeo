@@ -3,7 +3,8 @@ namespace SIM\VIMEO;
 use SIM;
 
 // upload, download or edit a vimeo video
-add_action( 'edit_attachment', function($attachmentId){
+add_action( 'edit_attachment', __NAMESPACE__.'\editAttachment' );
+function editAttachment($attachmentId){
 	if(empty($_REQUEST['changes'])){
 		return;
 	}
@@ -34,10 +35,11 @@ add_action( 'edit_attachment', function($attachmentId){
 	if(!empty($data)){
 		$vimeoApi->updateMeta($attachmentId, $data);
 	}
-} );
+}
 
 // Add upload to vimeo button to attachment page if auto upload is not on
-add_filter( 'attachment_fields_to_edit', function($formFields, $post ){
+add_filter( 'attachment_fields_to_edit', __NAMESPACE__.'\attachmentFieldsToEdit', 10, 2);
+function attachmentFieldsToEdit($formFields, $post ){
 	//only work on video's
 	if(explode('/',$post->post_mime_type)[0] != 'video'){
 		return $formFields;
@@ -79,4 +81,4 @@ add_filter( 'attachment_fields_to_edit', function($formFields, $post ){
 	}
 
 	return $formFields;
-}, 10, 2);
+}

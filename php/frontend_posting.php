@@ -3,7 +3,8 @@ namespace SIM\VIMEO;
 use SIM;
 
 // Update vimeo when attachment has changed
-add_action('sim_after_post_save', function($post){
+add_action('sim_after_post_save',__NAMESPACE__.'\afterPostSave' );
+function afterPostSave($post){
     if($post->post_type == 'attachment' && is_numeric($post->ID)){
 
         $vimeoApi		= new VimeoApi();
@@ -29,9 +30,10 @@ add_action('sim_after_post_save', function($post){
             $vimeoApi->updateMeta($post->ID, $data);
         }
     }
-});
+}
 
-add_filter('sim_attachment_preview', function($image, $postId){
+add_filter('sim_attachment_preview', __NAMESPACE__.'\attachmentPreview', 10, 2);
+function attachmentPreview($image, $postId){
 
     $vimeoApi   = new VimeoApi();
     $vimeoId    = $vimeoApi->getVimeoId($postId);
@@ -41,4 +43,4 @@ add_filter('sim_attachment_preview', function($image, $postId){
     }
 
     return  $image;
-}, 10, 2);
+}

@@ -2,11 +2,12 @@
 namespace SIM\VIMEO;
 use SIM;
 
-add_action('init', function(){
+add_action('init', __NAMESPACE__.'\initTasks');
+function initTasks(){
 	//add action for use in scheduled task
 	add_action( 'sync_vimeo_action', __NAMESPACE__.'\vimeoSync');
     add_action( 'createVimeoThumbnails', __NAMESPACE__.'\createVimeoThumbnails');
-});
+}
 
 function scheduleTasks(){
     SIM\scheduleTask('createVimeoThumbnails', 'daily');
@@ -118,10 +119,11 @@ function vimeoSync(){
 }
 
 // Remove scheduled tasks upon module deactivatio
-add_action('sim_module_deactivated', function($moduleSlug){
+add_action('sim_module_deactivated', __NAMESPACE__.'\moduleDeActivated');
+function moduleDeActivated($moduleSlug){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG)	{return;}
 
 	wp_clear_scheduled_hook( 'createVimeoThumbnails' );
 	wp_clear_scheduled_hook( 'sync_vimeo_action' );
-});
+}
