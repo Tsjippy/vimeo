@@ -44,14 +44,10 @@ function attachmentUrl( $url, $attId ) {
 
 if(SIM\getModuleOption(MODULE_SLUG, 'upload')){
 	//add filter
-	add_action('post-html-upload-ui', function(){
-		add_filter('gettext', __NAMESPACE__.'\changeUploadSizeMessage', 10, 2);
-	});
+	add_action('post-html-upload-ui', __NAMESPACE__.'\uploadUi');
 
 	//add filter
-	add_action('post-plupload-upload-ui', function(){
-		add_filter('gettext', __NAMESPACE__.'\changeUploadSizeMessage', 10, 2);
-	});
+	add_action('post-plupload-upload-ui', __NAMESPACE__.'\postPluploadUi');
 
 	//do the filter: change upload size message
 	function changeUploadSizeMessage($translation, $text){
@@ -63,9 +59,19 @@ if(SIM\getModuleOption(MODULE_SLUG, 'upload')){
 	}
 
 	//remove filter
-	add_action('post-upload-ui', function(){
-		remove_filter( 'gettext', 'SIM\VIMEO\change_upload_size_message', 10 );
-	});
+	add_action('post-upload-ui', __NAMESPACE__.'\postUploadUi');
+}
+
+function uploadUi(){
+	add_filter('gettext', __NAMESPACE__.'\changeUploadSizeMessage', 10, 2);
+}
+
+function postPluploadUi(){
+	add_filter('gettext', __NAMESPACE__.'\changeUploadSizeMessage', 10, 2);
+}
+
+function postUploadUi(){
+	remove_filter( 'gettext', 'SIM\VIMEO\change_upload_size_message', 10 );
 }
 
 // Uploads a video to vimeo, runs after file has been uploaded to the tmp folder but before adding it to the library

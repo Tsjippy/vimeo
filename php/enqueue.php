@@ -43,7 +43,9 @@ function enqueueVimeoScripts(){
 //auto upload via js if enabled
 if(SIM\getModuleOption(MODULE_SLUG, 'upload')){
 	//load js script to change media screen
-	add_action( 'wp_enqueue_media', function(){
-		wp_enqueue_script('sim_vimeo_script');
-	});
+	add_action( 'wp_enqueue_media', __NAMESPACE__.'\loadMediaAssets');
+}
+
+function loadMediaAssets(){
+	wp_enqueue_script('sim_vimeo_script');
 }
