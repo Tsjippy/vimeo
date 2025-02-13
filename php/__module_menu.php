@@ -11,13 +11,8 @@ DEFINE(__NAMESPACE__.'\MODULE_PATH', plugin_dir_path(__DIR__));
 
 $vimeoVideos	= get_option('sim-vimeo-videos');
 
-add_filter('sim_submenu_options', __NAMESPACE__.'\moduleOptions', 10, 3);
-function moduleOptions($optionsHtml, $moduleSlug, $settings){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $optionsHtml;
-	}
-
+add_filter('sim_submenu_vimeo_options', __NAMESPACE__.'\moduleOptions', 10, 2);
+function moduleOptions($optionsHtml, $settings){
 	ob_start();
 
 	$clientId		= $settings['client_id'];
@@ -142,16 +137,11 @@ function moduleOptions($optionsHtml, $moduleSlug, $settings){
 	<br>
 	<?php
 
-	return ob_get_clean();
+	return $optionsHtml.ob_get_clean();
 }
 
-add_filter('sim_module_functions', __NAMESPACE__.'\moduleFunctions', 10, 2);
-function moduleFunctions($functionHtml, $moduleSlug){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $functionHtml;
-	}
-	
+add_filter('sim_module_vimeo_functions', __NAMESPACE__.'\moduleFunctions');
+function moduleFunctions($html){
 	wp_enqueue_script('sim_vimeo_admin_script');
 	ob_start();
 	//display url form
@@ -215,16 +205,11 @@ function moduleFunctions($functionHtml, $moduleSlug){
 	}
 	
 	
-	return ob_get_clean();
+	return $html.ob_get_clean();
 }
 
-add_filter('sim_module_updated', __NAMESPACE__.'\moduleUpdated', 10, 2);
-function moduleUpdated($options, $moduleSlug){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $options;
-	}
-
+add_filter('sim_module_vimeo_after_save', __NAMESPACE__.'\moduleUpdated');
+function moduleUpdated($options){
 	scheduleTasks();
 
 	return $options;
