@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- module menu hooks
 
 ### Fixed
 
 ### Updated
+
+## [8.0.5] - 2025-02-13
+
+
+### Changed
+- module menu hooks
 
 ## [8.0.4] - 2024-11-22
 
