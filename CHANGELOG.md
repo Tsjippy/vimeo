@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- module menu hooks
 
 ### Fixed
 
