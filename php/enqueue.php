@@ -11,7 +11,8 @@ function loadAssets(){
 		array(
 			'loadingGif' 	=> SIM\LOADERIMAGEURL,
 			'baseUrl' 		=> get_home_url(),
-			'restNonce'		=> wp_create_nonce('wp_rest')
+			'restNonce'		=> wp_create_nonce('wp_rest'),
+			'restApiPrefix'	=> '/'.RESTAPIPREFIX
 		)
 	);
 }

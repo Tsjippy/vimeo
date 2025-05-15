@@ -14,7 +14,7 @@ function showVimeoVideo($vimeoId){
 	wp_enqueue_style( 'vimeo_style');
 
 	$vimeoApi	= new VimeoApi();
-	$html	= $vimeoApi->getEmbedHtml($vimeoId);
+	$html		= $vimeoApi->getEmbedHtml($vimeoId);
 
 	ob_start();
 	?>
@@ -24,6 +24,7 @@ function showVimeoVideo($vimeoId){
 		</div>
 	</div>
 	<?php
+	
 	return ob_get_clean();
 }
 

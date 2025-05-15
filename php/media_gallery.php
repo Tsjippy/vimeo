@@ -25,7 +25,7 @@ function downloadUrl($url, $postId){
     $vimeoApi   = new VimeoApi();
     $path       = $vimeoApi->getVideoPath($postId);
 
-    if($path){
+    if(file_exists($path)){
         return SIM\pathToUrl($path);
     }
 
@@ -41,7 +41,7 @@ function downloadFileName($fileName, $type, $postId){
     $vimeoApi   = new VimeoApi();
     $path       = $vimeoApi->getVideoPath($postId);
 
-    if($path){
+    if(file_exists($path)){
         $fileName   = basename($path);
         $vimeoId    = $vimeoApi->getVimeoId($postId);
 
