@@ -684,9 +684,13 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                     $filename   .= "-{$width}x{$height}";
                 }
             }else{
-                $path       = $this->backupDir;
+                $path           = $this->backupDir;
 
-                $filename   = $this->getVimeoId($postId)."_".get_the_title($postId);
+                $vimeoId        = $this->getVimeoId($postId);
+
+                $vimeoDetails   = $this->getVideo($vimeoId);
+
+                $filename   = $vimeoId."_".$vimeoDetails['name'];
 
                 if(empty($extension )){
                     $extension = 'mp4';
