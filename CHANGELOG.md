@@ -7,6 +7,7 @@
 ### Changed
 
 ### Fixed
+- filenames of downloaded videos
 
 ### Updated
 
