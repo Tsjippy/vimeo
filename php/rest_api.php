@@ -282,7 +282,7 @@ function downloadToServer(){
 /**
  * Checks and returns the current filesize of a vimeo file backup
  *
- * @return	array with succes and the attachment data
+ * @return	int|false		The filesize or error 
  */
 function getDownloadProgress(){
 	$vimeoApi	= new VimeoApi();
@@ -292,7 +292,7 @@ function getDownloadProgress(){
 	$path		= $vimeoApi->getVideoPath($post->ID);
 
 	if(!$path){
-		return 0;
+		return new WP_Error('Vimeo', "Vimeo post not found!");
 	}else{
 		return filesize($path);
 	}

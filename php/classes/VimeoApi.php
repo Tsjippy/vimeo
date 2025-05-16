@@ -481,8 +481,6 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                 return false;
             }
 
-            $externalUrl    = 
-
             $filePath   = get_post_meta($postId, 'video_path', true);
 
             if(empty($filePath)){
