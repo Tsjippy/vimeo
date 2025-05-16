@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- better error handling
 
 ### Updated
 
