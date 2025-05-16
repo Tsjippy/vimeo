@@ -2,13 +2,21 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- respapi prefix for downloading videos
 
 ### Changed
 
 ### Fixed
 
 ### Updated
+
+## [8.0.6] - 2025-05-15
+
+
+### Added
+- respapi prefix for downloading videos
+
+### Fixed
+- filenames of downloaded videos
 
 ## [8.0.5] - 2025-02-13
 
