@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- better error handling
 
 ### Updated
+
+## [8.0.7] - 2025-07-25
+
+
+### Fixed
+- better error handling
 
 ## [8.0.6] - 2025-05-15
 
