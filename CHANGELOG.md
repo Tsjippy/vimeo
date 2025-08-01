@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- imports
 
 ### Updated
+
+## [8.0.8] - 2025-08-01
+
+
+### Fixed
+- imports
 
 ## [8.0.7] - 2025-07-25
 
