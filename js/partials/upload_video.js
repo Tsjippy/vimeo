@@ -1,5 +1,5 @@
 import {VimeoUpload} from './../vimeo_upload.js';
-import { showLoader } from './../../../../js/imports.js';
+import { showLoader } from './../../../../plugins/sim-plugin/includes/js/imports.js';
 
 window.wp.Uploader.prototype.init = function() { // plupload 'PostInit'
 	this.uploader.bind('FileFiltered', function(_up, _files) {
