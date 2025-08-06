@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- less niceselect code
 
 ### Fixed
 
 ### Updated
+
+## [8.0.9] - 2025-08-06
+
+
+### Changed
+- less niceselect code
 
 ## [8.0.8] - 2025-08-01
 
