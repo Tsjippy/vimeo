@@ -9,7 +9,7 @@ function loadAssets(){
 	wp_localize_script( 'sim_vimeo_admin_script',
 		'sim',
 		array(
-			'loadingGif' 	=> SIM\LOADERIMAGEURL,
+			'loadingGif' 	=> SIM\LOADERIMAGE,
 			'baseUrl' 		=> get_home_url(),
 			'restNonce'		=> wp_create_nonce('wp_rest'),
 			'restApiPrefix'	=> '/'.RESTAPIPREFIX
@@ -30,7 +30,7 @@ function enqueueVimeoScripts(){
 	wp_localize_script('sim_vimeo_script',
 		'media_vars',
 		array(
-			'loadingGif' 	=> SIM\LOADERIMAGEURL
+			'loadingGif' 	=> SIM\LOADERIMAGE
 		)
 	);
 

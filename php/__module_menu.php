@@ -148,7 +148,7 @@ function moduleFunctions($html){
 	if(is_numeric($_GET['vimeoid'])){
 		?>
 		<style>
-			.loadergif{
+			.loader_wrapper{
 				width: 30px;
 			}
 
@@ -172,7 +172,7 @@ function moduleFunctions($html){
 	if(is_numeric($_GET['vimeopostid'])){
 		?>
 		<style>
-			.loadergif{
+			.loader_wrapper{
 				width: 30px;
 			}
 
@@ -193,7 +193,7 @@ function moduleFunctions($html){
 
 	?>
 	<style>
-		.loadergif{
+		.loader_wrapper{
 			width: 30px;
 		}
 	</style>
