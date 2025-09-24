@@ -4,13 +4,11 @@
 ### Added
 
 ### Changed
+- loader images
 
 ### Fixed
 
 ### Updated
-
-## [8.1.0] - 2025-09-24
-
 
 ## [8.0.9] - 2025-08-06
 
