@@ -3,7 +3,7 @@ namespace SIM\VIMEO;
 use SIM;
 use Vimeo\Vimeo;
 
-const MODULE_VERSION		= '8.0.9';
+const MODULE_VERSION		= '8.1.0';
 //module slug is the same as grandparent folder name
 DEFINE(__NAMESPACE__.'\MODULE_SLUG', strtolower(basename(dirname(__DIR__))));
 
@@ -148,7 +148,7 @@ function moduleFunctions($html){
 	if(is_numeric($_GET['vimeoid'])){
 		?>
 		<style>
-			.loader_wrapper{
+			.loadergif{
 				width: 30px;
 			}
 
@@ -172,7 +172,7 @@ function moduleFunctions($html){
 	if(is_numeric($_GET['vimeopostid'])){
 		?>
 		<style>
-			.loader_wrapper{
+			.loadergif{
 				width: 30px;
 			}
 
@@ -193,7 +193,7 @@ function moduleFunctions($html){
 
 	?>
 	<style>
-		.loader_wrapper{
+		.loadergif{
 			width: 30px;
 		}
 	</style>
