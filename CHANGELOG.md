@@ -4,12 +4,17 @@
 ### Added
 
 ### Changed
-- loader images
-- js generated loader
 
 ### Fixed
 
 ### Updated
+
+## [8.1.1] - 2025-09-25
+
+
+### Changed
+- loader images
+- js generated loader
 
 ## [8.0.9] - 2025-08-06
 
