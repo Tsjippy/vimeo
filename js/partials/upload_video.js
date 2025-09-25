@@ -6,7 +6,8 @@ window.wp.Uploader.prototype.init = function() { // plupload 'PostInit'
 		if(_files.type.split("/")[0] == 'video'){
 			//show vimeo loader
 			try{
-				showLoader(document.querySelector('.upload-inline-status'), false, '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>');
+				let loader = showLoader(document.querySelector('.upload-inline-status'));
+				loader.querySelector('loader_text').innerHTML	= '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>';
 			}catch(error){
 				console.error(error);
 			}
