@@ -5,6 +5,7 @@
 
 ### Changed
 - loader images
+- js generated loader
 
 ### Fixed
 
