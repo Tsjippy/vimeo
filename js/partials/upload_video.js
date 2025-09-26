@@ -7,7 +7,7 @@ window.wp.Uploader.prototype.init = function() { // plupload 'PostInit'
 			//show vimeo loader
 			try{
 				let loader = showLoader(document.querySelector('.upload-inline-status'));
-				loader.querySelector('loader_text').innerHTML	= '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>';
+				loader.querySelector('loader-text').innerHTML	= '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>';
 			}catch(error){
 				console.error(error);
 			}
@@ -46,8 +46,8 @@ async function wpMediaUpload (plupload_file, wp_uploader) {
 
     upload.options.onProgress   = function(bytesUploaded, bytesTotal) {
 		// Show loader
-		if(document.querySelector('.loaderwrapper .media-progress-bar') == null && document.querySelector('.loaderwrapper') != null){
-			document.querySelector('.loaderwrapper').innerHTML	= `
+		if(document.querySelector('.loader-wrapper .media-progress-bar') == null && document.querySelector('.loader-wrapper') != null){
+			document.querySelector('.loader-wrapper').innerHTML	= `
 			<div class="media-progress-bar" style='display:block;height: 20px;'>
 				<div style="width: 0%;height: 20px;">
 					<span style="width:100%;text-align:center;color:white;display:block;font-size:smaller;">0.00%</span>
@@ -59,7 +59,7 @@ async function wpMediaUpload (plupload_file, wp_uploader) {
         let percentage = (bytesUploaded / bytesTotal * 100).toFixed(1)
     
         //show percentage in progressbar
-        document.querySelectorAll('.loaderwrapper .media-progress-bar > div, .media-progress-bar > div, .selection-view .uploading:first-child .media-progress-bar > div, .media-uploader-status.uploading .media-progress-bar > div').forEach(div=>{
+        document.querySelectorAll('.loader-wrapper .media-progress-bar > div, .media-progress-bar > div, .selection-view .uploading:first-child .media-progress-bar > div, .media-uploader-status.uploading .media-progress-bar > div').forEach(div=>{
             div.style.width	= percentage+'%';
             div.innerHTML	= '<span style="width:100%;text-align:center;color:white;display:block;font-size:smaller;">'+percentage+'%</span>';
         });
@@ -80,7 +80,7 @@ async function wpMediaUpload (plupload_file, wp_uploader) {
 	    wp_uploader.dispatchEvent('fileUploaded', plupload_file, request);
 	    document.querySelector(`[data-id="${uploader.storedEntry.postId}"] .filename > div`).textContent = 'Uploaded to Vimeo';    
 
-		document.querySelectorAll('.loaderwrapper').forEach(el=>el.remove());
+		document.querySelectorAll('.loader-wrapper').forEach(el=>el.remove());
     }
 
     upload.options.onError      = function(error) {

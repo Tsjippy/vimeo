@@ -6,7 +6,8 @@
   "scripts": {
     "vimeo": "webpack --watch --entry ./vimeo.js --output-path . --output-filename vimeo.min.js --progress --mode=production --devtool source-map",
     "upload": "webpack --watch --config vimeo.config.js",
-    "admin": "webpack --watch --entry ./admin.js --output-path . --output-filename admin.min.js --progress --mode=production --devtool source-map"
+    "admin": "webpack --watch --entry ./admin.js --output-path . --output-filename admin.min.js --progress --mode=production --devtool source-map",
+    "all": "run-p vimeo upload admin"
   },
   "author": "Ewald Harmsen",
   "license": "ISC",

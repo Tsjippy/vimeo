@@ -36,7 +36,7 @@ async function updateProgress(){
         Main.displayMessage('Download finished ', 'info', true);
 
         //hide loader
-        document.querySelectorAll('.submit_wrapper .loader_wrapper:not(.hidden)').classList.add('hidden');
+        document.querySelectorAll('.submit-wrapper .loader-wrapper:not(.hidden)').classList.add('hidden');
     }
 }
 
@@ -67,7 +67,7 @@ async function downloadVimeoVideo(ev){
     }
 
     //show loader
-    ev.target.closest('.submit_wrapper').querySelector('.loader_wrapper').classList.remove('hidden');
+    ev.target.closest('.submit-wrapper').querySelector('.loader-wrapper').classList.remove('hidden');
 
     // initiate the download
     let params = new Proxy(new URLSearchParams(window.location.search), {
@@ -86,7 +86,7 @@ async function downloadVimeoVideo(ev){
         Main.displayMessage(response, 'info');
 
         //hide loader and progressbar
-        document.querySelectorAll('.submit_wrapper .loader_wrapper:not(.hidden), #progressbar, #information').forEach(el=>el.classList.add('hidden'));
+        document.querySelectorAll('.submit-wrapper .loader-wrapper:not(.hidden), #progressbar, #information').forEach(el=>el.classList.add('hidden'));
 
         document.querySelectorAll(`[name='download_url']`).forEach(el=>el.value='');
     });
@@ -118,7 +118,7 @@ async function storeVimeoUrlLocation(ev){
     }
 
     //show loader
-    ev.target.closest('.submit_wrapper').querySelector('.loader_wrapper').classList.remove('hidden');
+    ev.target.closest('.submit-wrapper').querySelector('.loader-wrapper').classList.remove('hidden');
 
     // initiate the download
     let params = new Proxy(new URLSearchParams(window.location.search), {
@@ -135,7 +135,7 @@ async function storeVimeoUrlLocation(ev){
         Main.displayMessage(response, 'info', true);
 
         //hide loader and progressbar
-        document.querySelectorAll('.submit_wrapper .loader_wrapper:not(.hidden)').forEach(el=>el.classList.add('hidden'));
+        document.querySelectorAll('.submit-wrapper .loader-wrapper:not(.hidden)').forEach(el=>el.classList.add('hidden'));
 
         ev.target.closest('form').querySelector('[name="external_url"]').value  = '';
     });
@@ -147,7 +147,7 @@ async function cleanUpBackup(ev){
     let response    = await FormSubmit.fetchRestApi('vimeo/cleanup_backup');
 
     //hide loader
-    document.querySelectorAll('.loader_wrapper:not(.hidden)').forEach(el=>el.classList.add('hidden'));
+    document.querySelectorAll('.loader-wrapper:not(.hidden)').forEach(el=>el.classList.add('hidden'));
 
     if(response){
         Main.displayMessage(response, 'success');
