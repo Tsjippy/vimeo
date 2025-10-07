@@ -15,9 +15,9 @@ add_filter('sim_submenu_vimeo_options', __NAMESPACE__.'\moduleOptions', 10, 2);
 function moduleOptions($optionsHtml, $settings){
 	ob_start();
 
-	$clientId		= $settings['client_id'];
-	$clientSecret	= $settings['client_secret'];
-	$accessToken	= $settings['access_token'];
+	$clientId		= $settings['client-id'];
+	$clientSecret	= $settings['client-secret'];
+	$accessToken	= $settings['access-token'];
 
 	if(empty($clientId) || empty($clientSecret)){
 		?>
@@ -97,19 +97,19 @@ function moduleOptions($optionsHtml, $settings){
 		<h2>API Settings</h2>
 		<label>
 			Client ID<br>
-			<input type="text" name="client_id" value="<?php echo $clientId;?>">
+			<input type="text" name="client-id" value="<?php echo $clientId;?>">
 		</label>
 		<br>
 
 		<label>
 			Client Secret<br>
-			<input type="text" name="client_secret" value="<?php echo $clientSecret;?>">
+			<input type="text" name="client-secret" value="<?php echo $clientSecret;?>">
 		</label>
 		<br>
 
 		<label <?php if(empty($clientSecret)){echo 'style="display:none;"';}?>>
 			Access Token<br>
-			<input type="text" name="access_token" value="<?php echo $accessToken;?>">
+			<input type="text" name="access-token" value="<?php echo $accessToken;?>">
 		</label>
 		
 	</div>
@@ -158,10 +158,10 @@ function moduleFunctions($html){
 		</style>
 		<form>
 			<label>Enter download url (get it from <a href='https://vimeo.com/manage/<?php echo $_GET['vimeoid'];?>/advanced' target="_blank">this page</a>)
-				<input type="url" name="download_url" style='width:100%;'><br><br>
+				<input type="url" name="download-url" style='width:100%;'><br><br>
 			</label>
 			<?php
-			echo SIM\addSaveButton('download_video', 'Submit download url');
+			echo SIM\addSaveButton('download-video', 'Submit download url');
 			?>
 			<div id="progressbar" style='height: 30px; margin-top: -30px;margin-left: 200px;border-radius: 50px; overflow: hidden;'></div>
 			<div id="information" ></div>
@@ -182,10 +182,10 @@ function moduleFunctions($html){
 		</style>
 		<form>
 			<label>Enter the external url for this video
-				<input type="url" name="external_url" style='width:100%;'><br><br>
+				<input type="url" name="external-url" style='width:100%;'><br><br>
 			</label>
 			<?php
-			echo SIM\addSaveButton('save_vimeo_url', 'Save download url');
+			echo SIM\addSaveButton('save-vimeo-url', 'Save download url');
 			?>
 		</form>
 		<?php

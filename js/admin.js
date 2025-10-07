@@ -59,7 +59,7 @@ Number.prototype.formatBytes = function() {
  * @returns 
  */
 async function downloadVimeoVideo(ev){
-    const vimeoUrl   = ev.target.closest('form').querySelector('[name="download_url"]').value;
+    const vimeoUrl   = ev.target.closest('form').querySelector('[name="download-url"]').value;
 
     if(vimeoUrl == ''){
         Main.displayMessage('Please give an url to download from', 'error');
@@ -77,7 +77,7 @@ async function downloadVimeoVideo(ev){
 
     let formData    = new FormData();
     formData.append('vimeoid', vidmeoId);
-    formData.append('download_url', vimeoUrl);
+    formData.append('download-url', vimeoUrl);
 
     // when download is done
     FormSubmit.fetchRestApi('vimeo/download_to_server', formData).then(response=>{
@@ -88,7 +88,7 @@ async function downloadVimeoVideo(ev){
         //hide loader and progressbar
         document.querySelectorAll('.submit-wrapper .loader-wrapper:not(.hidden), #progressbar, #information').forEach(el=>el.classList.add('hidden'));
 
-        document.querySelectorAll(`[name='download_url']`).forEach(el=>el.value='');
+        document.querySelectorAll(`[name='download-url']`).forEach(el=>el.value='');
     });
 
     // display the progress
@@ -110,7 +110,7 @@ async function downloadVimeoVideo(ev){
  * @param {*} ev 
  */
 async function storeVimeoUrlLocation(ev){
-    const vimeoUrl   = ev.target.closest('form').querySelector('[name="external_url"]').value;
+    const vimeoUrl   = ev.target.closest('form').querySelector('[name="external-url"]').value;
 
     if(vimeoUrl == ''){
         Main.displayMessage('Please provide an external url', 'error');
@@ -127,8 +127,8 @@ async function storeVimeoUrlLocation(ev){
     let vidmeoPostId    = params.vimeopostid
 
     let formData    = new FormData();
-    formData.append('post_id', vidmeoPostId);
-    formData.append('external_url', vimeoUrl);
+    formData.append('post-id', vidmeoPostId);
+    formData.append('external-url', vimeoUrl);
 
     // when download is done
     FormSubmit.fetchRestApi('vimeo/store_external_url', formData).then(response=>{
@@ -137,7 +137,7 @@ async function storeVimeoUrlLocation(ev){
         //hide loader and progressbar
         document.querySelectorAll('.submit-wrapper .loader-wrapper:not(.hidden)').forEach(el=>el.classList.add('hidden'));
 
-        ev.target.closest('form').querySelector('[name="external_url"]').value  = '';
+        ev.target.closest('form').querySelector('[name="external-url"]').value  = '';
     });
 }
 
@@ -155,9 +155,9 @@ async function cleanUpBackup(ev){
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('[name="download_video"]').forEach(el=>el.addEventListener('click', downloadVimeoVideo));
+    document.querySelectorAll('[name="download-video"]').forEach(el=>el.addEventListener('click', downloadVimeoVideo));
 
-    document.querySelectorAll('[name="save_vimeo_url"]').forEach(el=>el.addEventListener('click', storeVimeoUrlLocation));
+    document.querySelectorAll('[name="save-vimeo-url"]').forEach(el=>el.addEventListener('click', storeVimeoUrlLocation));
 
     document.getElementById('cleanup-archive').addEventListener('click', cleanUpBackup);
 });

@@ -29,10 +29,10 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
 
             $settings               = $Modules[MODULE_SLUG];
 
-            if(!empty($settings['client_id']) && !empty($settings['client_secret']) && !empty($settings['access_token'])){
-                $this->clientId		    = $settings['client_id'];
-                $this->clientSecret	    = $settings['client_secret'];
-                $this->accessToken      = $settings['access_token'];
+            if(!empty($settings['client-id']) && !empty($settings['client-secret']) && !empty($settings['access-token'])){
+                $this->clientId		    = $settings['client-id'];
+                $this->clientSecret	    = $settings['client-secret'];
+                $this->accessToken      = $settings['access-token'];
                 $this->filesDir         = WP_CONTENT_DIR.'/vimeo_files';
                 $this->picturesDir      = $this->filesDir."/thumbnails/";
                 $this->backupDir        = $this->filesDir."/backup/";
@@ -123,9 +123,9 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
         public function storeAccessToken($clientId, $clientSecret, $code, $redirectUri){
             $api    = new \Vimeo\Vimeo($clientId, $clientSecret);
             $token  = $api->accessToken($code, $redirectUri);
-            $api->setToken($token['body']['access_token']);
+            $api->setToken($token['body']['access-token']);
 
-            return $token['body']['access_token'];
+            return $token['body']['access-token'];
         }
 
         /**
@@ -382,7 +382,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
 
             return [
                 'upload_link'	=> $uploadLink,
-                'post_id'		=> $attachmentId,
+                'post-id'		=> $attachmentId,
                 'vimeo_id'      => $vimeoId
             ];
         }

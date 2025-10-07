@@ -27,10 +27,10 @@ function restApiInit() {
 			'callback' 				=> 	__NAMESPACE__.'\storeExternalUrl',
 			'permission_callback' 	=> '__return_true',
 			'args'					=> array(
-				'external_url'		=> array(
+				'external-url'		=> array(
 					'required'	=> true
                 ),
-				'post_id'		=> array(
+				'post-id'		=> array(
 					'required'	=> true,
 					'validate_callback' => function($postId){
 						return is_numeric($postId);
@@ -68,7 +68,7 @@ function restApiInit() {
 			'callback' 				=> 	__NAMESPACE__.'\addUploadedVimeo',
 			'permission_callback' 	=> '__return_true',
 			'args'					=> array(
-				'post_id'		=> array(
+				'post-id'		=> array(
 					'required'	=> true,
 					'validate_callback' => function($postId){
 						return is_numeric($postId);
@@ -92,7 +92,7 @@ function restApiInit() {
 				if(is_wp_error($post)){
 					return $post;
 				}else{
-					$result		= $vimeoApi->downloadFromVimeo($_POST['download_url'], $post->ID);
+					$result		= $vimeoApi->downloadFromVimeo($_POST['download-url'], $post->ID);
 					if(is_wp_error($result)){
 						return $result;
 					}
@@ -168,7 +168,7 @@ function prepareVimeoUpload(){
 	}else{
 		$result = [
 			'upload_link'	=> $url,
-			'post_id'		=> $postId,
+			'post-id'		=> $postId,
 			'vimeo_id'      => $vimeoId
 		];
 	}
@@ -183,7 +183,7 @@ function prepareVimeoUpload(){
  */
 function addUploadedVimeo(){
 
-	$postId		= $_POST['post_id'];
+	$postId		= $_POST['post-id'];
 
     // Get the attachement data
 	$attachment = wp_prepare_attachment_for_js( $postId );
@@ -253,7 +253,7 @@ function cleanupBackupFolder(){
 function storeExternalUrl(){
 	$vimeoApi	= new VimeoApi();
 
-	$result		= $vimeoApi->setDownloadUrl($_POST['post_id'], $_POST['external_url']);
+	$result		= $vimeoApi->setDownloadUrl($_POST['post-id'], $_POST['external-url']);
 
 	if($result){
 		return "Succesfully stored the url";
