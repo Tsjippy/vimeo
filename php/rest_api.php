@@ -49,10 +49,10 @@ function restApiInit() {
 			'callback' 				=> 	__NAMESPACE__.'\prepareVimeoUpload',
 			'permission_callback' 	=> '__return_true',
 			'args'					=> array(
-				'file_name'		=> array(
+				'file-name'		=> array(
 					'required'	=> true
                 ),
-                'file_type'		=> array(
+                'file-type'		=> array(
 					'required'	=> true
 				)
 			)
@@ -143,8 +143,8 @@ function restApiInit() {
 function prepareVimeoUpload(){
 	global $wpdb;
 
-	$fileName	= $_POST['file_name'];
-	$mime		= $_POST['file_type'];
+	$fileName	= $_POST['file-name'];
+	$mime		= $_POST['file-type'];
 
 	$url		= '';
 	$postId		= 0;

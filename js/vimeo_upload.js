@@ -30,9 +30,9 @@ export class VimeoUpload{
 
     async getVimeoUploadUrl(){
         var formData = new FormData();
-        formData.append('file_size', this.file.size);
-        formData.append('file_name', this.file.name);
-        formData.append('file_type', this.file.type);
+        formData.append('file-size', this.file.size);
+        formData.append('file-name', this.file.name);
+        formData.append('file-type', this.file.type);
 
         var response    = await fetchRestApi('vimeo/prepare_vimeo_upload', formData);
 

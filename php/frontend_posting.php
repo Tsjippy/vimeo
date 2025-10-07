@@ -15,15 +15,15 @@ function afterPostSave($post){
 
         $data			= [];
 
-        $newTitle       = sanitize_text_field($_POST['post_title']);
+        $newTitle       = sanitize_text_field($_POST['post-title']);
 
         // Only update when needed
         if(!empty($newTitle) && $newTitle != $post->post_title){
             $data['name']	= $newTitle;
         }
         
-        if(!empty($_POST['post_content']) && $_POST['post_content'] != $post->post_content){
-            $data['description']	= $_POST['post_content'];
+        if(!empty($_POST['post-content']) && $_POST['post-content'] != $post->post_content){
+            $data['description']	= $_POST['post-content'];
         }
 
         if(!empty($data)){

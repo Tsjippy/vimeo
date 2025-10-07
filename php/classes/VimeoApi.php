@@ -338,7 +338,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
             //remove extension
             $title		    = pathinfo($path, PATHINFO_FILENAME);
             $uploadLink     = '';
-            $size		    = $_POST['file_size'];
+            $size		    = $_POST['file-size'];
             if(!is_numeric($size)){
                 return new WP_Error('vimeo','No filesize given');
             }
