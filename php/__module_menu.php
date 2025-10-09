@@ -21,7 +21,7 @@ function moduleOptions($optionsHtml, $settings){
 
 	if(empty($clientId) || empty($clientSecret)){
 		?>
-		<div id='set_vimeo_id'>
+		<div id='set-vimeo-id'>
 			<h2>Connect to vimeo</h2>
 			<p>
 				It seems you are not connected to vimeo.<br>
@@ -57,7 +57,7 @@ function moduleOptions($optionsHtml, $settings){
 			}else{
 				$accessToken = $vimeoApi->storeAccessToken($clientId, $clientSecret, $_GET['code'], admin_url( "admin.php?page=".$_GET["page"] ));
 				?>
-				<div id='set_vimeo_token'>
+				<div id='set-vimeo-token'>
 					<h2>Succesfully connect to vimeo</h2>
 					<p>
 						We are all done<br>
@@ -70,7 +70,7 @@ function moduleOptions($optionsHtml, $settings){
 			$vimeoApi		= new VimeoApi();
 			$link	= $vimeoApi->getAuthorizeUrl($clientId, $clientSecret);
 			?>
-			<div id='set_vimeo_token'>
+			<div id='set-vimeo-token'>
 				<h2>Connect to vimeo</h2>
 				<p>
 					We are almost done.<br>
