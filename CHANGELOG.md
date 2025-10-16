@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- bug in receiving rest api response
 
 ### Updated
+
+## [8.1.4] - 2025-10-16
+
+
+### Fixed
+- bug in receiving rest api response
 
 ## [8.1.3] - 2025-10-13
 
