@@ -39,7 +39,7 @@ export class VimeoUpload{
         //Failed
         if(response){
             var uploadUrl		= response.upload_link;
-            var postId		    = response.post-id;
+            var postId		    = response['post-id'];
             var vimeoId		    = response.vimeo_id;
 
             this.storedEntry = {
