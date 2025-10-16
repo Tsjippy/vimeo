@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- bug in receiving rest api response
 
 ### Updated
 
