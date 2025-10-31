@@ -19,7 +19,8 @@ function showVimeoVideo($vimeoId){
 	ob_start();
 	?>
 	<div class="vimeo-wrapper">
-		<div class='vimeo-embed-container' style='background:url(<?php echo SIM\LOADERIMAGEURL;?>) center center no-repeat;'>
+		<div class="loader-image-trigger" data-size="100" data-text="Loading video..."></div>
+		<div class='vimeo-embed-container'>
 			<?php echo $html;?>
 		</div>
 	</div>

@@ -20,7 +20,7 @@ wp.media.view.Attachment.Details.prototype.render = function() {
 } 
 
 //replace preview with vimeo iframe
-function loadVimeoVideo(el) {
+export function loadVimeoVideo(el) {
 	var vimeoLink	= el.src;
 
 	if(el.querySelector('source') != null){
@@ -32,11 +32,14 @@ function loadVimeoVideo(el) {
 		setTimeout(loadVimeoVideo, 20, el);
 	//if this is a vimeo item
 	}else if(vimeoLink.includes('vimeo.com/')){
-		let element	= document.querySelector('.wp-media-wrapper.wp-video');
+		let element			= document.querySelector('.wp-media-wrapper.wp-video');
+
+		let loaderHtml		= Main.showLoader('', true, 100, 'Loading video...', true);
 
 		element.innerHTML	= `
 		<div class="vimeo-wrapper">
-			<div class='vimeo-embed-container' style='background:url(${sim.loadingGif}) center center no-repeat;'>
+			${loaderHtml}
+			<div class='vimeo-embed-container'>
 				<iframe src="${vimeoLink}" style="width: 100%; height: 100%;" onload='console.log("loaded")'></iframe>
 			</div>
 		</div>

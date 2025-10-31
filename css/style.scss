@@ -1,15 +1,37 @@
-.vimeo-embed-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    max-width: 100%;
-}
+.vimeo-wrapper{
+    position:           relative; 
+    min-width:          600px;
+    min-height:         300px;
 
-.vimeo-embed-container iframe{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    .vimeo-embed-container {
+        position:       relative;
+        padding-bottom: 56.25%;
+        height:         0;
+        overflow:       hidden;
+        max-width:      100%;
+        z-index:        2; /* Higher z-index, appears on top */
+        
+        iframe{
+            position:       absolute;
+            top:            0;
+            left:           0;
+            width:          100%;
+            height:         100%;
+        }
+    }
+
+    .loader-wrapper, .vimeo-embed-container{
+        position:           absolute; /* Removes from normal flow, allows precise positioning */
+        top:                0;
+        left:               0;
+        width:              100%;
+        height:             100%;
+        padding:            10px;
+        box-sizing:         border-box;
+    }
+
+    .loader-wrapper{
+        z-index:            1;
+        margin-top:         100px;
+    }
 }

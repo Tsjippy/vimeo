@@ -9,7 +9,6 @@ function loadAssets(){
 	wp_localize_script( 'sim_vimeo_admin_script',
 		'sim',
 		array(
-			'loadingGif' 	=> SIM\LOADERIMAGE,
 			'baseUrl' 		=> get_home_url(),
 			'restNonce'		=> wp_create_nonce('wp_rest'),
 			'restApiPrefix'	=> '/'.RESTAPIPREFIX
@@ -22,22 +21,16 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__.'\enqueueVimeoScripts');
 add_action( 'admin_enqueue_scripts', __NAMESPACE__.'\enqueueVimeoScripts');
 function enqueueVimeoScripts(){
     // Load css
-    wp_register_style( 'vimeo_style', SIM\pathToUrl(MODULE_PATH.'css/style.css'), array(), MODULE_VERSION);
+    wp_register_style( 'vimeo_style', SIM\pathToUrl(MODULE_PATH.'css/style.min.css'), array(), MODULE_VERSION);
 
 	wp_register_script('sim_vimeo_player', 'https://player.vimeo.com/api/player.js', [], false, true);
 
-	wp_register_script('sim_vimeo_script', SIM\pathToUrl(MODULE_PATH.'js/vimeo.min.js'), ['sim_vimeo_player','media-audiovideo', 'sweetalert', 'sim_script'], MODULE_VERSION, true);
-	wp_localize_script('sim_vimeo_script',
-		'media_vars',
-		array(
-			'loadingGif' 	=> SIM\LOADERIMAGE
-		)
-	);
+	wp_register_script('sim_vimeo_library_script', SIM\pathToUrl(MODULE_PATH.'js/vimeo_library.min.js'), ['sim_vimeo_player','media-audiovideo', 'sweetalert', 'sim_script'], MODULE_VERSION, true);
 
 	wp_register_script('sim_vimeo_uploader_script', SIM\pathToUrl(MODULE_PATH.'js/vimeo_upload.min.js'), ['sim_script', 'sim_formsubmit_script'], MODULE_VERSION, true);
 
 	if($_SERVER['PHP_SELF'] == "/simnigeria/wp-admin/upload.php"){
-		wp_enqueue_script('sim_vimeo_script');
+		wp_enqueue_script('sim_vimeo_library_script');
 	}
 }
 
@@ -48,5 +41,5 @@ if(SIM\getModuleOption(MODULE_SLUG, 'upload')){
 }
 
 function loadMediaAssets(){
-	wp_enqueue_script('sim_vimeo_script');
+	wp_enqueue_script('sim_vimeo_library_script');
 }

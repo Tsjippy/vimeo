@@ -210,13 +210,13 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
             }
 
             $oembedEndpoint = 'http://vimeo.com/api/oembed';
-            $url = $oembedEndpoint . '.json?url=' . rawurlencode("http://vimeo.com/$vimeoId") . '&width=640';
+            $url            = $oembedEndpoint . '.json?url=' . rawurlencode("http://vimeo.com/$vimeoId") . '&width=640';
             
-            $curl = curl_init($url);
+            $curl           = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_TIMEOUT, 30);
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-            $response = curl_exec($curl);
+            $response       = curl_exec($curl);
 
             if(!$response){
                 return "<div class='error'>No valid result found<br>Check this url manually: <a href='http://vimeo.com/$vimeoId'>http://vimeo.com/$vimeoId</a> </div>";
