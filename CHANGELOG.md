@@ -5,6 +5,7 @@
 
 ### Changed
 - render loader image using js
+- clearer data attributes
 
 ### Fixed
 
