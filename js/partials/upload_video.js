@@ -78,7 +78,7 @@ async function wpMediaUpload (plupload_file, wp_uploader) {
     
         //mark as uploaded
 	    wp_uploader.dispatchEvent('fileUploaded', plupload_file, request);
-	    document.querySelector(`[data-id="${uploader.storedEntry.postId}"] .filename > div`).textContent = 'Uploaded to Vimeo';    
+	    document.querySelector(`[data-post-id="${uploader.storedEntry.postId}"] .filename > div`).textContent = 'Uploaded to Vimeo';    
 
 		document.querySelectorAll('.loader-wrapper').forEach(el=>el.remove());
     }
