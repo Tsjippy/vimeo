@@ -4,12 +4,17 @@
 ### Added
 
 ### Changed
-- render loader image using js
-- clearer data attributes
 
 ### Fixed
 
 ### Updated
+
+## [8.1.6] - 2025-11-04
+
+
+### Changed
+- render loader image using js
+- clearer data attributes
 
 ## [8.1.4] - 2025-10-16
 
