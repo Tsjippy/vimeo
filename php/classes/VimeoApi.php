@@ -303,7 +303,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                 }
 
                 //Deleting video on vimeo
-                if($_SERVER['HTTP_HOST'] != 'localhost'){
+                if($_SERVER['HTTP_HOST'] != 'localhost' || str_contains($_SERVER['HTTP_HOST'], '.local')){
                     wp_mail('enharmsen@gmail.com' , 'Video deleted', 'Hi Ewald<br><br>'.wp_get_current_user()->display_name.' just deleted the video with id '.$vimeoId);
                     /* $response = $this->api->request( "/videos/$vimeo_id", [], 'DELETE' );
 
