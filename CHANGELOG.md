@@ -2,13 +2,18 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- support for Local
 
 ### Changed
 
 ### Fixed
 
 ### Updated
+
+## [8.1.7] - 2025-11-21
+
+
+### Added
+- support for Local
 
 ## [8.1.6] - 2025-11-04
 
