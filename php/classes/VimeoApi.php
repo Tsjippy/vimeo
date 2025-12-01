@@ -698,7 +698,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
             // Create folder if it does not exist
             if (!file_exists($path)) {
                 SIM\printArray("Creating folder at $path");
-                if(!mkdir($path, 0755, true)){
+                if(!wp_mkdir_p($path)){
                     SIM\printArray("Creating folder in $path failed!");
                     return false;
                 }
