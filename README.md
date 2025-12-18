@@ -1,4 +1,4 @@
-A module for the sim-plugin to add the upload, backup and embedding of vimeo videos
+A module for the sim-base to add the upload, backup and embedding of vimeo videos
 
 ## Characteristics:
 - This module will upload all video's to Vimeo. It supports resumable uploads, meaning that if the page gets reloaded or internet connection is lost the video upload can be restarted and will continue where it was left.

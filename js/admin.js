@@ -1,4 +1,4 @@
-import {showLoader} from './../../../plugins/sim-plugin/includes/js/partials/show_loader.js';
+import {showLoader} from './../../../plugins/sim-basencludes/js/partials/show_loader.js';
 
 console.log('Vimeo admin js loaded');
 
