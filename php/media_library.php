@@ -1,6 +1,6 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 
 // upload, download or edit a vimeo video
 add_action( 'edit_attachment', __NAMESPACE__.'\editAttachment' );
@@ -61,7 +61,7 @@ function attachmentFieldsToEdit($formFields, $post ){
 				'helps' => "Enter the url to download a backup to your server (get it from <a href='https://vimeo.com/manage/$vimeoId/advanced' target='_blank'>this page</a>)"
 			);
 		}
-	}elseif( !SIM\getModuleOption(MODULE_SLUG, 'upload') ){
+	}elseif( !SETTINGS['upload'] ?? false ){
 		//Check if already uploaded
 		$html    = "<div>";
 			$html   .= "<input style='width: initial' type='checkbox' name='attachments[{$post->ID}][vimeo]' value='upload'>";
@@ -77,7 +77,7 @@ function attachmentFieldsToEdit($formFields, $post ){
 
     $executionTime = (microtime(true) - $startTime);
 	if($executionTime > 0.01){
-		SIM\printArray(" Execution time of script = $executionTime sec");
+		TSJIPPY\printArray(" Execution time of script = $executionTime sec");
 	}
 
 	return $formFields;

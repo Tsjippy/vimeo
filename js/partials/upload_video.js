@@ -73,7 +73,7 @@ async function wpMediaUpload (plupload_file, wp_uploader) {
         formData.append('post-id', uploader.storedEntry.postId);
     
         let request = new XMLHttpRequest();
-        request.open('POST', `${sim.baseUrl}/wp-json${sim.restApiPrefix}/vimeo/add_uploaded_vimeo`, false);
+        request.open('POST', `${baseUrl}/wp-json${restApiPrefix}/vimeo/add_uploaded_vimeo`, false);
         request.send(formData);
     
         //mark as uploaded

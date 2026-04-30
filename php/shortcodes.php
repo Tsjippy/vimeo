@@ -1,6 +1,6 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 use Vimeo\Vimeo;
 
 //shortcode to display vimeo video's

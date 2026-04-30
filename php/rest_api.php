@@ -1,6 +1,6 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 use WP_Error;
 use WP_User;
 

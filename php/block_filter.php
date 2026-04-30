@@ -1,6 +1,6 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 
 add_filter('render_block', __NAMESPACE__.'\vimeoBlock', 999999999, 2);
 function vimeoBlock($blockContent, $block){

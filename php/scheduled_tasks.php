@@ -1,6 +1,6 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 
 add_action('init', __NAMESPACE__.'\initTasks');
 function initTasks(){
@@ -10,9 +10,9 @@ function initTasks(){
 }
 
 function scheduleTasks(){
-    SIM\scheduleTask('createVimeoThumbnails', 'daily');
-    if(SIM\getModuleOption(MODULE_SLUG, 'sync')){
-        SIM\scheduleTask('sync_vimeo_action', 'daily');
+    TSJIPPY\scheduleTask('createVimeoThumbnails', 'daily');
+    if(SETTINGS['sync'] ?? false){
+        TSJIPPY\scheduleTask('sync_vimeo_action', 'daily');
     }
 }
 
@@ -63,7 +63,7 @@ function vimeoSync(){
         }
 
         // update the cache
-        update_option('sim-vimeo-videos', $indexedVideos);
+        update_option('tsjippy-vimeo-videos', $indexedVideos);
 
         $args = array(
             'post_type'  	=> 'attachment',
@@ -96,7 +96,7 @@ function vimeoSync(){
         //remove any local video which does not exist on vimeo
         foreach(array_diff_key($localVideos, $onlineVideos) as $vimeoId=>$postId){
             $vimeoId		= get_post_meta($postId, 'vimeo_id', true);
-            SIM\printArray("Deleting video with vimeo id $vimeoId");
+            TSJIPPY\printArray("Deleting video with vimeo id $vimeoId");
             wp_delete_post($postId);
         }
 
@@ -107,7 +107,7 @@ function vimeoSync(){
 
         // Backup any video who is not yet backed up
         $files      = glob($vimeoApi->backupDir.'*.mp4');
-        $files      = apply_filters('sim-local-vimeo-files', $files);
+        $files      = apply_filters('tsjippy-local-vimeo-files', $files);
         foreach(array_keys($onlineVideos) as $vimeoId){
             // If the video does not exist locally
             if(empty(preg_grep("~$vimeoId~", $files))){
@@ -119,7 +119,7 @@ function vimeoSync(){
 }
 
 // Remove scheduled tasks upon module deactivatio
-add_action('sim_module_vimeo_deactivated', __NAMESPACE__.'\moduleDeActivated');
+add_action('tsjippy_module_vimeo_deactivated', __NAMESPACE__.'\moduleDeActivated');
 function moduleDeActivated(){
 	wp_clear_scheduled_hook( 'createVimeoThumbnails' );
 	wp_clear_scheduled_hook( 'sync_vimeo_action' );

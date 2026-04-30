@@ -1,9 +1,9 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 
 // Delete video from vimeo when attachemnt is deleted, if that option is enabled
-if(SIM\getModuleOption(MODULE_SLUG, 'remove')){
+if(SETTINGS['remove'] ?? false){
 	add_action( 'delete_attachment', __NAMESPACE__.'\attachmentDeleted', 10, 2);
 }
 function attachmentDeleted($postId, $post ){
@@ -14,7 +14,7 @@ function attachmentDeleted($postId, $post ){
 	}
 }
 
-add_action('sim_before_visibility_change', __NAMESPACE__.'\visibility', 10, 2);
+add_action('tsjippy_before_visibility_change', __NAMESPACE__.'\visibility', 10, 2);
 function visibility($attachmentId, $visibility){
 
 	if($visibility == 'private'){
@@ -42,7 +42,7 @@ function attachmentUrl( $url, $attId ) {
 }
 
 
-if(SIM\getModuleOption(MODULE_SLUG, 'upload')){
+if(SETTINGS['upload'] ?? false){
 	//add filter
 	add_action('post-html-upload-ui', __NAMESPACE__.'\uploadUi');
 
@@ -71,7 +71,7 @@ function postPluploadUi(){
 }
 
 function postUploadUi(){
-	remove_filter( 'gettext', 'SIM\VIMEO\change_upload_size_message', 10 );
+	remove_filter( 'gettext', 'TSJIPPY\VIMEO\change_upload_size_message', 10 );
 }
 
 // Uploads a video to vimeo, runs after file has been uploaded to the tmp folder but before adding it to the library
@@ -121,7 +121,7 @@ function handleUpload($file){
 			update_post_meta($post->ID, 'vimeo_id', $vimeoId);
 
 		}catch(\Exception $e) {
-			SIM\printArray('Unable to upload: '.$e->getMessage());
+			TSJIPPY\printArray('Unable to upload: '.$e->getMessage());
 		}
 	}
 
@@ -145,7 +145,7 @@ function mimeTypeIcon($icon, $mime, $postId) {
 				}
             }
 			
-			$newIcon		= SIM\pathToUrl($path);
+			$newIcon		= TSJIPPY\pathToUrl($path);
 
 			if(!$newIcon){
 				return $icon;
@@ -153,12 +153,12 @@ function mimeTypeIcon($icon, $mime, $postId) {
 
 			$executionTime = (microtime(true) - $startTime);
 			if($executionTime > 0.01){
-				SIM\printArray(" Execution time of script = $executionTime sec");
+				TSJIPPY\printArray(" Execution time of script = $executionTime sec");
 			}
 
 			return $newIcon;
 		}catch(\Exception $e){
-			SIM\printArray($e);
+			TSJIPPY\printArray($e);
 		}
 	}
 	

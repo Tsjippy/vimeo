@@ -1,11 +1,11 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 use GuzzleHttp;
 use WP;
 use WP_Error;
 
-require_once( MODULE_PATH  . 'lib/vendor/autoload.php');
+require_once( PLUGINPATH  . 'lib/vendor/autoload.php');
 
 if(!class_exists(__NAMESPACE__.'\VimeoApi')){
     class VimeoApi{
@@ -23,11 +23,11 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
             global $Modules;
 
             if ( ! class_exists( '\Vimeo\Vimeo' ) ) {
-                SIM\printArray(__( 'Vimeo not loaded', 'sim' ));
+                TSJIPPY\printArray(__( 'Vimeo not loaded', 'sim' ));
                 return false;
             }
 
-            $settings               = $Modules[MODULE_SLUG];
+            $settings               = $Modules[PLUGINSLUG];
 
             if(!empty($settings['client-id']) && !empty($settings['client-secret']) && !empty($settings['access-token'])){
                 $this->clientId		    = $settings['client-id'];
@@ -185,7 +185,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                     }
 
                     // update the cache
-                    update_option('sim-vimeo-videos', $indexedVideos);
+                    update_option('tsjippy-vimeo-videos', $indexedVideos);
                 }
             }
             
@@ -312,7 +312,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                     } */
                 }
 
-                SIM\printArray("Succesfully deleted video with id $vimeoId from Vimeo");
+                TSJIPPY\printArray("Succesfully deleted video with id $vimeoId from Vimeo");
 
                 //delete thumbnail
                 $path   = get_post_meta($postId, 'thumbnail', true);
@@ -444,7 +444,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                     'description'   => $post->post_content
                 ]);
             }catch(\Exception $e) {
-                SIM\printArray('Unable to upload: '.$e->getMessage());
+                TSJIPPY\printArray('Unable to upload: '.$e->getMessage());
             }
 
             update_post_meta($postId, 'vimeo_id', str_replace('/videos/', '', $response['body']['uri']));
@@ -546,7 +546,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                     )
                 ), 'PATCH' );
             } catch ( \Exception $e ) {
-                SIM\printArray( 'Hide Vimeo video: ' . $e->getMessage() );
+                TSJIPPY\printArray( 'Hide Vimeo video: ' . $e->getMessage() );
             }
         }
 
@@ -649,14 +649,14 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                 $url = $response['download']['link'];
             }else{
                 $name       = get_post_meta($postId, '_wp_attached_file', true);
-                $adminUrl   = admin_url("admin.php?page=sim_vimeo&tab=functions&vimeoid=$vimeoId");
+                $adminUrl   = admin_url("admin.php?page=tsjippy_vimeo&tab=functions&vimeoid=$vimeoId");
 
                 $message    = "Hi admin,<br><br>";
                 $message    .= "Please provide me with a link to download the Vimeo video '$name' with id $vimeoId to a local backup folder on your website.<br>";
                 $message    .= "Use <a href='$adminUrl'>this page</a> to provide me the download link.<br>";
                 $message    .= "Get the download link from Vimeo on <a href='https://vimeo.com/manage/$vimeoId/advanced'>this page</a>.<br><br>";
 
-                $adminUrl   = admin_url("admin.php?page=sim_vimeo&tab=functions&vimeopostid=$postId");
+                $adminUrl   = admin_url("admin.php?page=tsjippy_vimeo&tab=functions&vimeopostid=$postId");
                 $message    .= "Alternatively you can host the video somewhere else. You can provide me the external link <a href='$adminUrl'>here</a> in that case.<br><br>";
 
                 wp_mail(get_option('admin_email'), 'Please backup this Vimeo Video', $message);
@@ -697,9 +697,9 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
 
             // Create folder if it does not exist
             if (!file_exists($path)) {
-                SIM\printArray("Creating folder at $path");
+                TSJIPPY\printArray("Creating folder at $path");
                 if(!wp_mkdir_p($path)){
-                    SIM\printArray("Creating folder in $path failed!");
+                    TSJIPPY\printArray("Creating folder in $path failed!");
                     return false;
                 }
             }
@@ -719,7 +719,7 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
 	            $remoteSize = isset($data['Content-Length'])?(int) $data['Content-Length']:0;  
 
                 if($localSize != $remoteSize){
-                    SIM\printArray('Resuming download');
+                    TSJIPPY\printArray('Resuming download');
                 }else{
                     return new WP_Error('vimeo', "The video is already downloaded", ['path' => $filePath]);
                 }

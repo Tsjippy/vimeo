@@ -13,7 +13,7 @@ export class VimeoUpload{
     }
 
     async findInStorage(){
-        this.fingerprint    = await this.getFingerprint(this.file, { endpoint: sim.baseUrl });
+        this.fingerprint    = await this.getFingerprint(this.file, { endpoint: baseUrl });
         let storedEntries   = await this.urlStorage.findUploadsByFingerprint(this.fingerprint);
 
         if (storedEntries.length) {

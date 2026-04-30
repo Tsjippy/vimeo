@@ -1,8 +1,8 @@
 <?php
-namespace SIM\VIMEO;
-use SIM;
+namespace TSJIPPY\VIMEO;
+use TSJIPPY;
 
-add_filter('sim_media_gallery_item_html', __NAMESPACE__.'\mediaItem', 10, 3);
+add_filter('tsjippy_media_gallery_item_html', __NAMESPACE__.'\mediaItem', 10, 3);
 function mediaItem($mediaHtml, $type, $postId){
     if($type != 'video'){
         return $mediaHtml;
@@ -20,19 +20,19 @@ function mediaItem($mediaHtml, $type, $postId){
     return $mediaHtml;
 }
 
-add_filter('sim_media_gallery_download_url', __NAMESPACE__.'\downloadUrl', 10, 2);
+add_filter('tsjippy_media_gallery_download_url', __NAMESPACE__.'\downloadUrl', 10, 2);
 function downloadUrl($url, $postId){
     $vimeoApi   = new VimeoApi();
     $path       = $vimeoApi->getVideoPath($postId);
 
     if(file_exists($path)){
-        return SIM\pathToUrl($path);
+        return TSJIPPY\pathToUrl($path);
     }
 
     return $url;
 }
 
-add_filter('sim_media_gallery_download_filename', __NAMESPACE__.'\downloadFileName', 10, 3);
+add_filter('tsjippy_media_gallery_download_filename', __NAMESPACE__.'\downloadFileName', 10, 3);
 function downloadFileName($fileName, $type, $postId){
     if($type != 'video'){
         return $fileName;
