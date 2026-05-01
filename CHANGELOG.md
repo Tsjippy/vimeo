@@ -4,14 +4,19 @@
 ### Added
 
 ### Changed
-- main plugin name from sim-base to tsjippy-shared-functionality
-- module to plugin  Co-authored-by: Copilot <copilot@github.com>
-- exclude .vscode from releases
-- updated github workflow versions
 
 ### Fixed
 
 ### Updated
+
+## [10.0.0] - 2026-05-01
+
+
+### Changed
+- main plugin name from sim-base to tsjippy-shared-functionality
+- module to plugin  Co-authored-by: Copilot <copilot@github.com>
+- exclude .vscode from releases
+- updated github workflow versions
 
 ## [8.1.9] - 2025-12-01
 
