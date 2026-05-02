@@ -62,12 +62,12 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                     if($response['status'] != 200){
                         $this->status   = 'offline';
                         $error          = $response['body']['error'];
-                        error_log($error);
+                        TSJIPPY\printArray($error);
                     }
                 }catch ( \Exception $e ) {
                     $this->status   = 'offline';
                     $error          = $e;
-                    error_log($error);
+                    TSJIPPY\printArray($error);
                 }
 
                 set_transient( 'vimeo_connected', $this->status, 120 );
