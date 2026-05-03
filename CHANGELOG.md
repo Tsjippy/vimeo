@@ -6,6 +6,7 @@
 ### Changed
 - removed the redirection at activation as it is done by the share plugin
 - print array vs error_log
+- use shared github workflows
 
 ### Fixed
 
