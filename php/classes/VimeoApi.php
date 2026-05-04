@@ -20,19 +20,15 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
         public $license;
 
         public function __construct(){
-            global $Modules;
-
             if ( ! class_exists( '\Vimeo\Vimeo' ) ) {
                 TSJIPPY\printArray(__( 'Vimeo not loaded', 'sim' ));
                 return false;
-            }
+            };
 
-            $settings               = $Modules[PLUGINSLUG];
-
-            if(!empty($settings['client-id']) && !empty($settings['client-secret']) && !empty($settings['access-token'])){
-                $this->clientId		    = $settings['client-id'];
-                $this->clientSecret	    = $settings['client-secret'];
-                $this->accessToken      = $settings['access-token'];
+            if(!empty(SETTINGS['client-id']) && !empty(SETTINGS['client-secret']) && !empty(SETTINGS['access-token'])){
+                $this->clientId		    = SETTINGS['client-id'];
+                $this->clientSecret	    = SETTINGS['client-secret'];
+                $this->accessToken      = SETTINGS['access-token'];
                 $this->filesDir         = WP_CONTENT_DIR.'/vimeo_files';
                 $this->picturesDir      = $this->filesDir."/thumbnails/";
                 $this->backupDir        = $this->filesDir."/backup/";
