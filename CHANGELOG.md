@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- vimeo api client id
 
 ### Updated
 
