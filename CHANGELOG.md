@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- vimeo api client id
 
 ### Updated
+
+## [10.0.2] - 2026-05-05
+
+
+### Fixed
+- vimeo api client id
 
 ## [10.0.1] - 2026-05-03
 
