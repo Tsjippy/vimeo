@@ -29,7 +29,7 @@ function enqueueVimeoScripts(){
 
 	wp_register_script('tsjippy_vimeo_uploader_script', TSJIPPY\pathToUrl(PLUGINPATH.'js/vimeo_upload.min.js'), ['tsjippy_script', 'tsjippy_formsubmit_script'], PLUGINVERSION, true);
 
-	if($_SERVER['PHP_SELF'] == "/simnigeria/wp-admin/upload.php"){
+	if(str_contains($_SERVER['PHP_SELF'],  "wp-admin/upload.php")){
 		wp_enqueue_script('tsjippy_vimeo_library_script');
 	}
 }
