@@ -6,7 +6,6 @@
 ### Changed
 
 ### Fixed
-- url check without domain name
 
 ### Updated
 
