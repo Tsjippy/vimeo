@@ -1,5 +1,5 @@
 import {VimeoUpload} from './../vimeo_upload.js';
-import { showLoader } from './../../../../plugins/tsjippy-shared-functionality/includes/js/partials/show_loader.js';
+import { showLoader } from './../../../tsjippy-shared-functionality/includes/js/partials/show_loader.js';
 
 window.wp.Uploader.prototype.init = function() { // plupload 'PostInit'
 	this.uploader.bind('FileFiltered', function(_up, _files) {
@@ -73,7 +73,7 @@ async function wpMediaUpload (plupload_file, wp_uploader) {
         formData.append('post-id', uploader.storedEntry.postId);
     
         let request = new XMLHttpRequest();
-        request.open('POST', `${baseUrl}/wp-json${restApiPrefix}/vimeo/add_uploaded_vimeo`, false);
+        request.open('POST', `${tsjippy.baseUrl}/wp-json${tsjippy.restApiPrefix}/vimeo/add_uploaded_vimeo`, false);
         request.send(formData);
     
         //mark as uploaded

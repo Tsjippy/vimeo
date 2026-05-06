@@ -1,5 +1,5 @@
 import * as tus from 'tus-js-client';
-import { fetchRestApi } from './../../../plugins/tsjippy-shared-functionality/includes/js/partials/form_submit_functions.js';
+import { fetchRestApi } from './../../tsjippy-shared-functionality/includes/js/partials/form_submit_functions.js';
 
 
 console.log('vimeo upload loaded');
@@ -13,7 +13,7 @@ export class VimeoUpload{
     }
 
     async findInStorage(){
-        this.fingerprint    = await this.getFingerprint(this.file, { endpoint: baseUrl });
+        this.fingerprint    = await this.getFingerprint(this.file, { endpoint: tsjippy.baseUrl });
         let storedEntries   = await this.urlStorage.findUploadsByFingerprint(this.fingerprint);
 
         if (storedEntries.length) {
