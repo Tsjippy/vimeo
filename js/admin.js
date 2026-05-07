@@ -33,7 +33,7 @@ async function updateProgress(){
         timerId = setTimeout(updateProgress, 5000);
     }else{
         clearTimeout(timerId);
-        Main.displayMessage('Download finished ', 'info', true);
+        Main.displayMessage('Download finished ', 'info', 1500);
 
         //hide loader
         document.querySelectorAll('.submit-wrapper .loader-wrapper:not(.hidden)').classList.add('hidden');
@@ -100,7 +100,7 @@ async function downloadVimeoVideo(ev){
 
     document.getElementById('information').innerHTML = `<div style="margin-top: -28px;text-align:center; color: white;font-weight:bold;text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;">0% downloaded</div>`;
 
-    Main.displayMessage('Download started, '+parseInt(downloadSize).formatBytes()+' to go', 'info', true);
+    Main.displayMessage('Download started, '+parseInt(downloadSize).formatBytes()+' to go', 'info', 1500);
 
     updateProgress();
 }
@@ -132,7 +132,7 @@ async function storeVimeoUrlLocation(ev){
 
     // when download is done
     FormSubmit.fetchRestApi('vimeo/store_external_url', formData).then(response=>{
-        Main.displayMessage(response, 'info', true);
+        Main.displayMessage(response, 'info', 1500);
 
         //hide loader and progressbar
         document.querySelectorAll('.submit-wrapper .loader-wrapper:not(.hidden)').forEach(el=>el.classList.add('hidden'));
@@ -150,7 +150,7 @@ async function cleanUpBackup(ev){
     document.querySelectorAll('.loader-wrapper:not(.hidden)').forEach(el=>el.classList.add('hidden'));
 
     if(response){
-        Main.displayMessage(response, 'success');
+        Main.displayMessage(response);
     }
 }
 

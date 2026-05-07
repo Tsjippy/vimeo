@@ -25,7 +25,7 @@ function enqueueVimeoScripts(){
 
 	wp_register_script('tsjippy_vimeo_player', 'https://player.vimeo.com/api/player.js', [], false, true);
 
-	wp_register_script('tsjippy_vimeo_library_script', TSJIPPY\pathToUrl(PLUGINPATH.'js/vimeo_library.min.js'), ['tsjippy_vimeo_player','media-audiovideo', 'sweetalert', 'tsjippy_script'], PLUGINVERSION, true);
+	wp_register_script('tsjippy_vimeo_library_script', TSJIPPY\pathToUrl(PLUGINPATH.'js/vimeo_library.min.js'), ['tsjippy_vimeo_player','media-audiovideo', 'tsjippy_script'], PLUGINVERSION, true);
 
 	wp_register_script('tsjippy_vimeo_uploader_script', TSJIPPY\pathToUrl(PLUGINPATH.'js/vimeo_upload.min.js'), ['tsjippy_script', 'tsjippy_formsubmit_script'], PLUGINVERSION, true);
 
