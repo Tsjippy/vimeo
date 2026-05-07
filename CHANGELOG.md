@@ -4,12 +4,17 @@
 ### Added
 
 ### Changed
-- replaced sweetalert
-- js update
 
 ### Fixed
 
 ### Updated
+
+## [10.0.6] - 2026-05-07
+
+
+### Changed
+- replaced sweetalert
+- js update
 
 ## [10.0.5] - 2026-05-06
 
