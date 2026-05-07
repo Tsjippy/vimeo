@@ -5,6 +5,7 @@
 
 ### Changed
 - replaced sweetalert
+- js update
 
 ### Fixed
 
