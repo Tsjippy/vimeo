@@ -6,8 +6,7 @@ window.wp.Uploader.prototype.init = function() { // plupload 'PostInit'
 		if(_files.type.split("/")[0] == 'video'){
 			//show vimeo loader
 			try{
-				let loader = showLoader(document.querySelector('.upload-inline-status'));
-				loader.querySelector('loader-text').innerHTML	= '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>';
+				let loader = showLoader(document.querySelector('.upload-inline-status'), true, 100, '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>');
 			}catch(error){
 				console.error(error);
 			}
@@ -43,6 +42,9 @@ async function wpMediaUpload (plupload_file, wp_uploader) {
 
 	var uploader	= new VimeoUpload(file);
 	var upload		= await uploader.tusUploader();
+	if(!upload){
+		return;
+	}
 
     upload.options.onProgress   = function(bytesUploaded, bytesTotal) {
 		// Show loader
