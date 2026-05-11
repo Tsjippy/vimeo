@@ -204,8 +204,8 @@ async function uploadVideo(file){
 	upload.start();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    FileUpload.fileTypeFilter['video'] = function(){
+document.addEventListener("DOMContentLoaded", async () => {
+    FileUpload.fileTypeFilter['video'] = async function(){
         createProgressBar(target);
 
         //update post id on a postform
