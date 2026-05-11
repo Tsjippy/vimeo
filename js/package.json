@@ -4,9 +4,9 @@
   "description": "Vimeo",
   "main": "./vimeo.js",
   "scripts": {
-    "library": "webpack --watch --entry ./vimeo_library.js --output-path . --output-filename vimeo_library.min.js --progress --mode=production --devtool source-map",
-    "upload": "webpack --watch --config vimeo_library.config.js",
-    "admin": "webpack --watch --entry ./admin.js --output-path . --output-filename admin.min.js --progress --mode=production --devtool source-map",
+    "library": "webpack --entry ./vimeo_library.js --output-path . --output-filename vimeo_library.min.js --progress --mode=production --devtool source-map",
+    "upload": "webpack --config vimeo_library.config.js",
+    "admin": "webpack --entry ./admin.js --output-path . --output-filename admin.min.js --progress --mode=production --devtool source-map",
     "all": "run-p upload admin library"
   },
   "author": "Ewald Harmsen",
