@@ -4,9 +4,16 @@
 ### Added
 
 ### Changed
-- js update
 
 ### Fixed
+
+### Updated
+
+## [10.0.7] - 2026-05-11
+
+
+### Changed
+- js update
 
 ### Updated
 - readme
