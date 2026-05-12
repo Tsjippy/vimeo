@@ -25,7 +25,9 @@ function restApiInit() {
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	__NAMESPACE__.'\storeExternalUrl',
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> function(){
+				return current_user_can('read');
+			},
 			'args'					=> array(
 				'external-url'		=> array(
 					'required'	=> true
@@ -47,7 +49,7 @@ function restApiInit() {
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	__NAMESPACE__.'\prepareVimeoUpload',
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> '__return_true',		// This is called before the actual upload to vimeo, so we cannot check for permissions here
 			'args'					=> array(
 				'file-name'		=> array(
 					'required'	=> true
@@ -66,7 +68,7 @@ function restApiInit() {
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	__NAMESPACE__.'\addUploadedVimeo',
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> '__return_true',		// This is called after the actual upload to vimeo, so we cannot check for permissions here
 			'args'					=> array(
 				'post-id'		=> array(
 					'required'	=> true,
@@ -99,7 +101,9 @@ function restApiInit() {
 					return "Video downloaded to server succesfully";
 				}
 			},
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> function(){
+				return current_user_can('edit_posts');
+			},
 			'args'					=> array(
 				'vimeoid'		=> array(
 					'required'	=> true,
@@ -121,7 +125,9 @@ function restApiInit() {
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	__NAMESPACE__.'\getDownloadProgress',
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> function(){
+				return current_user_can('edit_posts');
+			},
 			'args'					=> array(
 				'vimeoid'		=> array(
 					'required'	=> true,
@@ -224,6 +230,8 @@ function cleanupBackupFolder(){
 	if(!$vimeoVideos){
 		return;
 	}
+
+	$onlineVideos	= [];
 
 	//Build online video's array
 	foreach($vimeoVideos as $vimeoVideo){
