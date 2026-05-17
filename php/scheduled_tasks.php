@@ -117,10 +117,3 @@ function vimeoSync(){
         }
     }
 }
-
-// Remove scheduled tasks upon module deactivatio
-add_action('tsjippy_module_vimeo_deactivated', __NAMESPACE__.'\moduleDeActivated');
-function moduleDeActivated(){
-	wp_clear_scheduled_hook( 'createVimeoThumbnails' );
-	wp_clear_scheduled_hook( 'sync_vimeo_action' );
-}
