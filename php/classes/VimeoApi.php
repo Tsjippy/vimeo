@@ -645,14 +645,14 @@ if(!class_exists(__NAMESPACE__.'\VimeoApi')){
                 $url = $response['download']['link'];
             }else{
                 $name       = get_post_meta($postId, '_wp_attached_file', true);
-                $adminUrl   = admin_url("admin.php?page=tsjippy_vimeo&tab=functions&vimeoid=$vimeoId");
+                $adminUrl   = admin_url("admin.php?page=tsjippy_vimeo&main-tab=functions&vimeoid=$vimeoId");
 
                 $message    = "Hi admin,<br><br>";
                 $message    .= "Please provide me with a link to download the Vimeo video '$name' with id $vimeoId to a local backup folder on your website.<br>";
                 $message    .= "Use <a href='$adminUrl'>this page</a> to provide me the download link.<br>";
                 $message    .= "Get the download link from Vimeo on <a href='https://vimeo.com/manage/$vimeoId/advanced'>this page</a>.<br><br>";
 
-                $adminUrl   = admin_url("admin.php?page=tsjippy_vimeo&tab=functions&vimeopostid=$postId");
+                $adminUrl   = admin_url("admin.php?page=tsjippy_vimeo&main-tab=functions&vimeopostid=$postId");
                 $message    .= "Alternatively you can host the video somewhere else. You can provide me the external link <a href='$adminUrl'>here</a> in that case.<br><br>";
 
                 wp_mail(get_option('admin_email'), 'Please backup this Vimeo Video', $message);
