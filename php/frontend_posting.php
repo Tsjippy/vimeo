@@ -15,7 +15,7 @@ function afterPostSave($post){
 
         $data			= [];
 
-        $newTitle       = sanitize_text_field($_POST['post-title']);
+        $newTitle       = sanitize_text_field( wp_unslash( $_POST['post-title']));
 
         // Only update when needed
         if(!empty($newTitle) && $newTitle != $post->post_title){
