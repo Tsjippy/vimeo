@@ -5,8 +5,6 @@ use GuzzleHttp;
 use WP;
 use WP_Error;
 
-require_once( PLUGINPATH  . 'lib/vendor/autoload.php');
-
 if(!class_exists(__NAMESPACE__.'\VimeoApi')){
     class VimeoApi{
         public $clientId;
