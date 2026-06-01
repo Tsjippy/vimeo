@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- loading libraries is now done in shared-functionality plugin
 
 ### Fixed
 
 ### Updated
+
+## [10.1.2] - 2026-06-01
+
+
+### Changed
+- loading libraries is now done in shared-functionality plugin
 
 ## [10.1.1] - 2026-05-30
 
