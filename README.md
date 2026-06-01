@@ -11,3 +11,7 @@ A module for the tsjippy-shared-functionality to add the upload, backup and embe
 This plugin connects to the Vimeo API to obtain your vimeo profile data and videos
 
 This service is provided by "PRT Weather INC": terms of use, privacy policy.
+
+== Hooks ==
+# FILTERS
+- apply_filters('sim-local-vimeo-files', $files);
