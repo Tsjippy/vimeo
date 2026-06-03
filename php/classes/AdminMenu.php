@@ -84,9 +84,9 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu{
                         We are almost done.<br>
                         Go back to the vimeo page and click on "OAuth Redirect Authentication"<br>
                         Click on the "Add URL +" button.<br>
-                        Insert his url: <code><?php echo admin_url( "admin.php?page=".$_GET["page"] );?></code><br>
+                        Insert his url: <code><?php echo esc_url(admin_url("admin.php?page=".$_GET["page"]));?></code><br>
                         <br>
-                        Once you have added the url you can click this <a href='<?php echo $link;?>'>link</a> to authorize the app.<br>
+                        Once you have added the url you can click this <a href='<?php echo esc_url($link);?>'>link</a> to authorize the app.<br>
                         <br>
                         You can also create an access token yourself at the "Generate an access token" section.<br>
                         Click the "Authenticated (you)" radio, select all scopes and click the "Generate" button.<br>
@@ -105,19 +105,19 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu{
             <h2>API Settings</h2>
             <label>
                 Client ID<br>
-                <input type="text" name="client-id" value="<?php echo $clientId;?>">
+                <input type="text" name="client-id" value="<?php echo esc_attr($clientId);?>">
             </label>
             <br>
 
             <label>
                 Client Secret<br>
-                <input type="text" name="client-secret" value="<?php echo $clientSecret;?>">
+                <input type="text" name="client-secret" value="<?php echo esc_attr($clientSecret);?>">
             </label>
             <br>
 
             <label <?php if(empty($clientSecret)){echo 'style="display:none;"';}?>>
                 Access Token<br>
-                <input type="text" name="access-token" value="<?php echo $accessToken;?>">
+                <input type="text" name="access-token" value="<?php echo esc_attr($accessToken);?>">
             </label>
             
         </div>
