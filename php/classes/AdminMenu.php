@@ -173,7 +173,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu{
                     <input type="url" name="download-url" style='width:100%;'><br><br>
                 </label>
                 <?php
-                echo TSJIPPY\addSaveButton('download-video', 'Submit download url');
+                TSJIPPY\addSaveButton('download-video', 'Submit download url');
                 ?>
                 <div id="progressbar" style='height: 30px; margin-top: -30px;margin-left: 200px;border-radius: 50px; overflow: hidden;'></div>
                 <div id="information" ></div>
@@ -188,7 +188,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu{
                     <input type="url" name="external-url" style='width:100%;'><br><br>
                 </label>
                 <?php
-                echo TSJIPPY\addSaveButton('save-vimeo-url', 'Save download url');
+                TSJIPPY\addSaveButton('save-vimeo-url', 'Save download url');
                 ?>
             </form>
             <?php
