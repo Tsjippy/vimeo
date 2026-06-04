@@ -1,15 +1,19 @@
 <?php
+
 namespace TSJIPPY\VIMEO;
+
 use TSJIPPY;
 
 add_action('init', __NAMESPACE__ . '\initTasks');
-function initTasks() {
+function initTasks()
+{
     //add action for use in scheduled task
     add_action('sync_vimeo_action', __NAMESPACE__ . '\vimeoSync');
     add_action('createVimeoThumbnails', __NAMESPACE__ . '\createVimeoThumbnails');
 }
 
-function scheduleTasks() {
+function scheduleTasks()
+{
     TSJIPPY\scheduleTask('createVimeoThumbnails', 'daily');
     if (SETTINGS['sync'] ?? false) {
         TSJIPPY\scheduleTask('sync_vimeo_action', 'daily');
@@ -17,7 +21,8 @@ function scheduleTasks() {
 }
 
 //create local thumbnails
-function createVimeoThumbnails() {
+function createVimeoThumbnails()
+{
 
     $args = array(
         'post_type'      => 'attachment',
@@ -25,13 +30,13 @@ function createVimeoThumbnails() {
         'meta_query'    => array(
             array(
                 'key'   => 'vimeo_id'
-           ),
+            ),
             array(
                 'key' => 'thumbnail',
                 'compare' => 'NOT EXISTS'
-           )
-       )
-   );
+            )
+        )
+    );
     $posts = get_posts($args);
 
     if (!empty($posts)) {
@@ -43,11 +48,12 @@ function createVimeoThumbnails() {
 }
 
 //sync local db with vimeo.com
-function vimeoSync() {
+function vimeoSync()
+{
 
     $vimeoApi    = new VimeoApi();
 
-    if ( $vimeoApi->isConnected()) {
+    if ($vimeoApi->isConnected()) {
         $vimeoVideos    = $vimeoApi->getUploadedVideos();
         if (!$vimeoVideos) {
             return;
@@ -71,9 +77,9 @@ function vimeoSync() {
             'meta_query'    => array(
                 array(
                     'key'   => 'vimeo_id'
-               )
-           )
-       );
+                )
+            )
+        );
         $posts = get_posts($args);
 
         $localVideos    = [];
@@ -94,7 +100,7 @@ function vimeoSync() {
         }
 
         //remove any local video which does not exist on vimeo
-        foreach (array_diff_key($localVideos, $onlineVideos) as $vimeoId=>$postId) {
+        foreach (array_diff_key($localVideos, $onlineVideos) as $vimeoId => $postId) {
             $vimeoId        = get_post_meta($postId, 'vimeo_id', true);
             TSJIPPY\printArray("Deleting video with vimeo id $vimeoId");
             wp_delete_post($postId);
@@ -106,7 +112,7 @@ function vimeoSync() {
         }
 
         // Backup any video who is not yet backed up
-        $files      = glob($vimeoApi->backupDir. '*.mp4');
+        $files      = glob($vimeoApi->backupDir . '*.mp4');
         $files      = apply_filters('tsjippy-local-vimeo-files', $files);
         foreach (array_keys($onlineVideos) as $vimeoId) {
             // If the video does not exist locally

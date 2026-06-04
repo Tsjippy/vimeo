@@ -1,9 +1,12 @@
 <?php
+
 namespace TSJIPPY\VIMEO;
+
 use TSJIPPY;
 
 add_filter('render_block', __NAMESPACE__ . '\vimeoBlock', 999999999, 2);
-function vimeoBlock($blockContent, $block) {
+function vimeoBlock($blockContent, $block)
+{
     global $post;
 
     // Video block with a vimeo url

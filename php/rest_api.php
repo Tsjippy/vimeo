@@ -1,26 +1,29 @@
 <?php
+
 namespace TSJIPPY\VIMEO;
+
 use TSJIPPY;
 use WP_Error;
 use WP_User;
 
 add_action('rest_api_init', __NAMESPACE__ . '\restApiInit');
-function restApiInit() {
+function restApiInit()
+{
 
     // Clean backup dir
     register_rest_route(
-        RESTAPIPREFIX. '/vimeo',
+        RESTAPIPREFIX . '/vimeo',
         '/cleanup_backup',
         array(
             'methods'                 => 'POST',
             'callback'                 =>     __NAMESPACE__ . '\cleanupBackupFolder',
             'permission_callback'     => '__return_true'
-       )
-   );
+        )
+    );
 
     // Store external url
     register_rest_route(
-        RESTAPIPREFIX. '/vimeo',
+        RESTAPIPREFIX . '/vimeo',
         '/store_external_url',
         array(
             'methods'                 => 'POST',
@@ -31,20 +34,20 @@ function restApiInit() {
             'args'                    => array(
                 'external-url'        => array(
                     'required'    => true
-               ),
+                ),
                 'post-id'        => array(
                     'required'    => true,
                     'validate_callback' => function ($postId) {
                         return is_numeric($postId);
                     }
-               )
-           )
-       )
-   );
+                )
+            )
+        )
+    );
 
     // prepare video upload
     register_rest_route(
-        RESTAPIPREFIX. '/vimeo',
+        RESTAPIPREFIX . '/vimeo',
         '/prepare_vimeo_upload',
         array(
             'methods'                 => 'POST',
@@ -53,17 +56,17 @@ function restApiInit() {
             'args'                    => array(
                 'file-name'        => array(
                     'required'    => true
-               ),
+                ),
                 'file-type'        => array(
                     'required'    => true
-               )
-           )
-       )
-   );
+                )
+            )
+        )
+    );
 
     // Save uploaded video details
     register_rest_route(
-        RESTAPIPREFIX. '/vimeo',
+        RESTAPIPREFIX . '/vimeo',
         '/add_uploaded_vimeo',
         array(
             'methods'                 => 'POST',
@@ -75,14 +78,14 @@ function restApiInit() {
                     'validate_callback' => function ($postId) {
                         return is_numeric($postId);
                     }
-               )
-           )
-       )
-   );
+                )
+            )
+        )
+    );
 
     // Save uploaded video details
     register_rest_route(
-        RESTAPIPREFIX. '/vimeo',
+        RESTAPIPREFIX . '/vimeo',
         '/download_to_server',
         array(
             'methods'                 => 'POST,GET',
@@ -93,7 +96,7 @@ function restApiInit() {
                 $post    = $vimeoApi->getPost($vimeoId);
                 if (is_wp_error($post)) {
                     return $post;
-                }else{
+                } else {
                     $result        = $vimeoApi->downloadFromVimeo($_POST['download-url'], $post->ID);
                     if (is_wp_error($result)) {
                         return $result;
@@ -110,17 +113,17 @@ function restApiInit() {
                     'validate_callback' => function ($vimeoId) {
                         return is_numeric($vimeoId);
                     }
-               ),
+                ),
                 'download_url'        => array(
                     'required'    => true
-               )
-           )
-       )
-   );
+                )
+            )
+        )
+    );
 
     // Save uploaded video details
     register_rest_route(
-        RESTAPIPREFIX. '/vimeo',
+        RESTAPIPREFIX . '/vimeo',
         '/get_download_progress',
         array(
             'methods'                 => 'POST',
@@ -134,10 +137,10 @@ function restApiInit() {
                     'validate_callback' => function ($vimeoId) {
                         return is_numeric($vimeoId);
                     }
-               )
-           )
-       )
-   );
+                )
+            )
+        )
+    );
 }
 
 /**
@@ -146,7 +149,8 @@ function restApiInit() {
  * @return    array        arra containing the upload link, post id and vimeo id
  *
  */
-function prepareVimeoUpload() {
+function prepareVimeoUpload()
+{
     global $wpdb;
 
     $fileName    = $_POST['file-name'];
@@ -160,8 +164,8 @@ function prepareVimeoUpload() {
         $wpdb->prepare(
             "SELECT * FROM %i WHERE meta_key = 'vimeo_upload_data'",
             $wpdb->postmeta
-       )
-   );
+        )
+    );
 
     foreach ($results as $result) {
         $data    = unserialize($result->meta_value);
@@ -176,8 +180,8 @@ function prepareVimeoUpload() {
     if (empty($url)) {
         $vimeoApi    = new VimeoApi();
         $result        = $vimeoApi->createVimeoVideo($fileName, $mime);
-    // Return a previous created vimeo video link and post id
-    }else{
+        // Return a previous created vimeo video link and post id
+    } else {
         $result = [
             'upload_link'    => $url,
             'post-id'        => $postId,
@@ -193,13 +197,14 @@ function prepareVimeoUpload() {
  *
  * @return    array with succes and the attachment data
  */
-function addUploadedVimeo() {
+function addUploadedVimeo()
+{
 
     $postId        = $_POST['post-id'];
 
     // Get the attachement data
     $attachment = wp_prepare_attachment_for_js($postId);
-    if ( ! $attachment) {
+    if (! $attachment) {
         return new WP_Error('attachemnt', 'Something went wrong');
     }
 
@@ -228,7 +233,8 @@ function addUploadedVimeo() {
     ];
 }
 
-function cleanupBackupFolder() {
+function cleanupBackupFolder()
+{
 
     $vimeoApi    = new VimeoApi();
 
@@ -246,7 +252,7 @@ function cleanupBackupFolder() {
     }
 
     // Remove any backup
-    $files      = glob($vimeoApi->backupDir. '*.mp4');
+    $files      = glob($vimeoApi->backupDir . '*.mp4');
     $count        = 0;
     foreach ($files as $file) {
         $vimeoId    = explode('_', basename($file))[0];
@@ -264,26 +270,28 @@ function cleanupBackupFolder() {
     return "Succesfully cleaned up the backup folder, removed $count files";
 }
 
-function storeExternalUrl() {
+function storeExternalUrl()
+{
     $vimeoApi    = new VimeoApi();
 
     $result        = $vimeoApi->setDownloadUrl($_POST['post-id'], $_POST['external-url']);
 
     if ($result) {
         return "Succesfully stored the url";
-    }else{
+    } else {
         return new WP_Error('Vimeo', 'Something went wrong');
     }
 }
 
-function downloadToServer() {
+function downloadToServer()
+{
     $vimeoApi    = new VimeoApi();
     $vimeoId    = $_REQUEST['vimeoid'];
 
     $post    = $vimeoApi->getPost($vimeoId);
     if (is_wp_error($post)) {
         return $post;
-    }else{
+    } else {
         $result        = $vimeoApi->downloadFromVimeo(base64_decode($_REQUEST['download_url']), $post->ID);
         if (is_wp_error($result)) {
             return $result;
@@ -298,7 +306,8 @@ function downloadToServer() {
  *
  * @return    int|false        The filesize or error
  */
-function getDownloadProgress() {
+function getDownloadProgress()
+{
     $vimeoApi    = new VimeoApi();
     $vimeoId    = $_REQUEST['vimeoid'];
     $post        = $vimeoApi->getPost($vimeoId);
@@ -307,7 +316,7 @@ function getDownloadProgress() {
 
     if (!$path) {
         return new WP_Error('Vimeo', "Vimeo post not found!");
-    }else{
+    } else {
         return filesize($path);
     }
 }

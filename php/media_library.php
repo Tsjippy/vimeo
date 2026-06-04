@@ -1,10 +1,13 @@
 <?php
+
 namespace TSJIPPY\VIMEO;
+
 use TSJIPPY;
 
 // upload, download or edit a vimeo video
 add_action('edit_attachment', __NAMESPACE__ . '\editAttachment');
-function editAttachment($attachmentId) {
+function editAttachment($attachmentId)
+{
     if (empty($_REQUEST['changes'])) {
         return;
     }
@@ -12,12 +15,12 @@ function editAttachment($attachmentId) {
     $vimeoApi    = new VimeoApi();
 
     // Upload local video to vimeo
-    if ( isset($_REQUEST['attachments'][$attachmentId]['vimeo'])) {
+    if (isset($_REQUEST['attachments'][$attachmentId]['vimeo'])) {
         $vimeoApi->upload($attachmentId);
     }
 
     // download vimeo video to server
-    if ( !empty($_REQUEST['attachments'][$attachmentId]['vimeo_url'])) {
+    if (!empty($_REQUEST['attachments'][$attachmentId]['vimeo_url'])) {
         $vimeoApi->downloadFromVimeo($_REQUEST['attachments'][$attachmentId]['vimeo_url'], $attachmentId);
     }
 
@@ -39,9 +42,10 @@ function editAttachment($attachmentId) {
 
 // Add upload to vimeo button to attachment page if auto upload is not on
 add_filter('attachment_fields_to_edit', __NAMESPACE__ . '\attachmentFieldsToEdit', 10, 2);
-function attachmentFieldsToEdit($formFields, $post) {
+function attachmentFieldsToEdit($formFields, $post)
+{
     //only work on video's
-    if (explode('/',$post->post_mime_type)[0] != 'video') {
+    if (explode('/', $post->post_mime_type)[0] != 'video') {
         return $formFields;
     }
 
@@ -59,20 +63,20 @@ function attachmentFieldsToEdit($formFields, $post) {
                 'input' => 'text',
                 'value' => '',
                 'helps' => "Enter the url to download a backup to your server (get it from <a href='https://vimeo.com/manage/$vimeoId/advanced' target='_blank'>this page</a>)"
-           );
+            );
         }
-    }elseif ( !SETTINGS['upload'] ?? false) {
+    } elseif (!SETTINGS['upload'] ?? false) {
         //Check if already uploaded
         $html    = "<div>";
-            $html   .= "<input style='width: initial' type='checkbox' name='attachments[{$post->ID}][vimeo]' value='upload'>";
+        $html   .= "<input style='width: initial' type='checkbox' name='attachments[{$post->ID}][vimeo]' value='upload'>";
         $html   .= "</div>";
 
         $formFields['visibility'] = array(
             'value' => 'upload',
-            'label' => __( 'Upload this video to vimeo' , 'tsjippy'),
+            'label' => __('Upload this video to vimeo', 'tsjippy'),
             'input' => 'html',
             'html'  =>  $html
-       );
+        );
     }
 
     $executionTime = (microtime(true) - $startTime);

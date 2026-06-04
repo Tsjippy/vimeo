@@ -1,9 +1,12 @@
 <?php
+
 namespace TSJIPPY\VIMEO;
+
 use TSJIPPY;
 
 add_filter('tsjippy_media_gallery_item_html', __NAMESPACE__ . '\mediaItem', 10, 3);
-function mediaItem($mediaHtml, $type, $postId) {
+function mediaItem($mediaHtml, $type, $postId)
+{
     if ($type != 'video') {
         return $mediaHtml;
     }
@@ -21,7 +24,8 @@ function mediaItem($mediaHtml, $type, $postId) {
 }
 
 add_filter('tsjippy_media_gallery_download_url', __NAMESPACE__ . '\downloadUrl', 10, 2);
-function downloadUrl($url, $postId) {
+function downloadUrl($url, $postId)
+{
     $vimeoApi   = new VimeoApi();
     $path       = $vimeoApi->getVideoPath($postId);
 
@@ -33,7 +37,8 @@ function downloadUrl($url, $postId) {
 }
 
 add_filter('tsjippy_media_gallery_download_filename', __NAMESPACE__ . '\downloadFileName', 10, 3);
-function downloadFileName($fileName, $type, $postId) {
+function downloadFileName($fileName, $type, $postId)
+{
     if ($type != 'video') {
         return $fileName;
     }
@@ -45,7 +50,7 @@ function downloadFileName($fileName, $type, $postId) {
         $fileName   = basename($path);
         $vimeoId    = $vimeoApi->getVimeoId($postId);
 
-        $fileName   = str_replace($vimeoId. '_', '', $fileName);
+        $fileName   = str_replace($vimeoId . '_', '', $fileName);
 
         return $fileName;
     }

@@ -1,94 +1,118 @@
-import {VimeoUpload} from './../vimeo_upload.js';
-import { showLoader } from './../../../tsjippy-shared-functionality/includes/js/partials/show_loader.js';
+import { VimeoUpload } from "./../vimeo_upload.js";
+import { showLoader } from "./../../../tsjippy-shared-functionality/includes/js/partials/show_loader.js";
 
-window.wp.Uploader.prototype.init = function() { // plupload 'PostInit'
-	this.uploader.bind('FileFiltered', function(_up, _files) {
-		if(_files.type.split("/")[0] == 'video'){
-			//show vimeo loader
-			try{
-				let loader = showLoader(document.querySelector('.upload-inline-status'), true, 100, '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>');
-			}catch(error){
-				console.error(error);
-			}
-		}
-	})
+window.wp.Uploader.prototype.init = function () {
+  // plupload 'PostInit'
+  this.uploader.bind("FileFiltered", function (_up, _files) {
+    if (_files.type.split("/")[0] == "video") {
+      //show vimeo loader
+      try {
+        let loader = showLoader(
+          document.querySelector(".upload-inline-status"),
+          true,
+          100,
+          '<span class="vimeo" style="font-size:x-large;">Preparing upload to Vimeo</span>',
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
 
-	this.uploader.bind('BeforeUpload', function(up, file) {
-		if(file.type.split("/")[0] == 'video'){
-			wpMediaUpload(file, up);
+  this.uploader.bind("BeforeUpload", function (up, file) {
+    if (file.type.split("/")[0] == "video") {
+      wpMediaUpload(file, up);
 
-			//mark plupload as finished
-	 		file.percent							= 100;
-			file.attachment.attributes.percent		= 100;
-			file.loaded								= file.size;
-			file.attachment.attributes.loaded		= file.size;
-			file.status								= 5;
-			file.attachment.attributes.status		= 5;
-			file.attachment.attributes.uploading	= false;
-			return false;
-		}
-	});
-}
+      //mark plupload as finished
+      file.percent = 100;
+      file.attachment.attributes.percent = 100;
+      file.loaded = file.size;
+      file.attachment.attributes.loaded = file.size;
+      file.status = 5;
+      file.attachment.attributes.status = 5;
+      file.attachment.attributes.uploading = false;
+      return false;
+    }
+  });
+};
 
 // upload video to vimeo
-async function wpMediaUpload (plupload_file, wp_uploader) {
-    var file    = plupload_file.getNative();
-    if (!file) return;
+async function wpMediaUpload(plupload_file, wp_uploader) {
+  var file = plupload_file.getNative();
+  if (!file) return;
 
-    //update upload count
-    document.querySelector('.upload-details .upload-index').textContent    = wp_uploader.total.uploaded+1;
-    
-    document.querySelector('.upload-details .upload-filename').textContent = wp_uploader.files[wp_uploader.total.uploaded].name;
+  //update upload count
+  document.querySelector(".upload-details .upload-index").textContent =
+    wp_uploader.total.uploaded + 1;
 
-	var uploader	= new VimeoUpload(file);
-	var upload		= await uploader.tusUploader();
-	if(!upload){
-		return;
-	}
+  document.querySelector(".upload-details .upload-filename").textContent =
+    wp_uploader.files[wp_uploader.total.uploaded].name;
 
-    upload.options.onProgress   = function(bytesUploaded, bytesTotal) {
-		// Show loader
-		if(document.querySelector('.loader-wrapper .media-progress-bar') == null && document.querySelector('.loader-wrapper') != null){
-			document.querySelector('.loader-wrapper').innerHTML	= `
+  var uploader = new VimeoUpload(file);
+  var upload = await uploader.tusUploader();
+  if (!upload) {
+    return;
+  }
+
+  upload.options.onProgress = function (bytesUploaded, bytesTotal) {
+    // Show loader
+    if (
+      document.querySelector(".loader-wrapper .media-progress-bar") == null &&
+      document.querySelector(".loader-wrapper") != null
+    ) {
+      document.querySelector(".loader-wrapper").innerHTML = `
 			<div class="media-progress-bar" style='display:block;height: 20px;'>
 				<div style="width: 0%;height: 20px;">
 					<span style="width:100%;text-align:center;color:white;display:block;font-size:smaller;">0.00%</span>
 				</div>
 			</div>`;
-		}
-
-        //calculate percentage
-        let percentage = (bytesUploaded / bytesTotal * 100).toFixed(1)
-    
-        //show percentage in progressbar
-        document.querySelectorAll('.loader-wrapper .media-progress-bar > div, .media-progress-bar > div, .selection-view .uploading:first-child .media-progress-bar > div, .media-uploader-status.uploading .media-progress-bar > div').forEach(div=>{
-            div.style.width	= percentage+'%';
-            div.innerHTML	= '<span style="width:100%;text-align:center;color:white;display:block;font-size:smaller;">'+percentage+'%</span>';
-        });
-    };
-
-    upload.options.onSuccess    = async function() {
-        uploader.removeFromStorage();
-        
-        //get wp post details
-        let formData = new FormData();
-        formData.append('post-id', uploader.storedEntry.postId);
-    
-        let request = new XMLHttpRequest();
-        request.open('POST', `${tsjippy.baseUrl}/wp-json${tsjippy.restApiPrefix}/vimeo/add_uploaded_vimeo`, false);
-        request.send(formData);
-    
-        //mark as uploaded
-	    wp_uploader.dispatchEvent('fileUploaded', plupload_file, request);
-	    document.querySelector(`[data-post-id="${uploader.storedEntry.postId}"] .filename > div`).textContent = 'Uploaded to Vimeo';    
-
-		document.querySelectorAll('.loader-wrapper').forEach(el=>el.remove());
     }
 
-    upload.options.onError      = function(error) {
-        console.error(`Failed because: ${error}`);
-        wp_uploader.dispatchEvent('fileUploaded', plupload_file, '');
-    }
+    //calculate percentage
+    let percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(1);
 
-    upload.start();
+    //show percentage in progressbar
+    document
+      .querySelectorAll(
+        ".loader-wrapper .media-progress-bar > div, .media-progress-bar > div, .selection-view .uploading:first-child .media-progress-bar > div, .media-uploader-status.uploading .media-progress-bar > div",
+      )
+      .forEach((div) => {
+        div.style.width = percentage + "%";
+        div.innerHTML =
+          '<span style="width:100%;text-align:center;color:white;display:block;font-size:smaller;">' +
+          percentage +
+          "%</span>";
+      });
+  };
+
+  upload.options.onSuccess = async function () {
+    uploader.removeFromStorage();
+
+    //get wp post details
+    let formData = new FormData();
+    formData.append("post-id", uploader.storedEntry.postId);
+
+    let request = new XMLHttpRequest();
+    request.open(
+      "POST",
+      `${tsjippy.baseUrl}/wp-json${tsjippy.restApiPrefix}/vimeo/add_uploaded_vimeo`,
+      false,
+    );
+    request.send(formData);
+
+    //mark as uploaded
+    wp_uploader.dispatchEvent("fileUploaded", plupload_file, request);
+    document.querySelector(
+      `[data-post-id="${uploader.storedEntry.postId}"] .filename > div`,
+    ).textContent = "Uploaded to Vimeo";
+
+    document.querySelectorAll(".loader-wrapper").forEach((el) => el.remove());
+  };
+
+  upload.options.onError = function (error) {
+    console.error(`Failed because: ${error}`);
+    wp_uploader.dispatchEvent("fileUploaded", plupload_file, "");
+  };
+
+  upload.start();
 }
