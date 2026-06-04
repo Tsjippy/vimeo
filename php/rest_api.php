@@ -4,217 +4,223 @@ use TSJIPPY;
 use WP_Error;
 use WP_User;
 
-add_action( 'rest_api_init', __NAMESPACE__.'\restApiInit');
+add_action('rest_api_init', __NAMESPACE__ . '\restApiInit');
 function restApiInit() {
 
-	// Clean backup dir
-	register_rest_route(
-		RESTAPIPREFIX.'/vimeo',
-		'/cleanup_backup',
-		array(
-			'methods' 				=> 'POST',
-			'callback' 				=> 	__NAMESPACE__.'\cleanupBackupFolder',
-			'permission_callback' 	=> '__return_true'
-		)
-	);
+    // Clean backup dir
+    register_rest_route(
+        RESTAPIPREFIX. '/vimeo',
+        '/cleanup_backup',
+        array(
+            'methods'                 => 'POST',
+            'callback'                 =>     __NAMESPACE__ . '\cleanupBackupFolder',
+            'permission_callback'     => '__return_true'
+       )
+   );
 
-	// Store external url
-	register_rest_route(
-		RESTAPIPREFIX.'/vimeo',
-		'/store_external_url',
-		array(
-			'methods' 				=> 'POST',
-			'callback' 				=> 	__NAMESPACE__.'\storeExternalUrl',
-			'permission_callback' 	=> function(){
-				return current_user_can('read');
-			},
-			'args'					=> array(
-				'external-url'		=> array(
-					'required'	=> true
-                ),
-				'post-id'		=> array(
-					'required'	=> true,
-					'validate_callback' => function($postId){
-						return is_numeric($postId);
-					}
-                )
-			)
-		)
-	);
+    // Store external url
+    register_rest_route(
+        RESTAPIPREFIX. '/vimeo',
+        '/store_external_url',
+        array(
+            'methods'                 => 'POST',
+            'callback'                 =>     __NAMESPACE__ . '\storeExternalUrl',
+            'permission_callback'     => function () {
+                return current_user_can('read');
+            },
+            'args'                    => array(
+                'external-url'        => array(
+                    'required'    => true
+               ),
+                'post-id'        => array(
+                    'required'    => true,
+                    'validate_callback' => function ($postId) {
+                        return is_numeric($postId);
+                    }
+               )
+           )
+       )
+   );
 
-	// prepare video upload
-	register_rest_route(
-		RESTAPIPREFIX.'/vimeo',
-		'/prepare_vimeo_upload',
-		array(
-			'methods' 				=> 'POST',
-			'callback' 				=> 	__NAMESPACE__.'\prepareVimeoUpload',
-			'permission_callback' 	=> '__return_true',		// This is called before the actual upload to vimeo, so we cannot check for permissions here
-			'args'					=> array(
-				'file-name'		=> array(
-					'required'	=> true
-                ),
-                'file-type'		=> array(
-					'required'	=> true
-				)
-			)
-		)
-	);
+    // prepare video upload
+    register_rest_route(
+        RESTAPIPREFIX. '/vimeo',
+        '/prepare_vimeo_upload',
+        array(
+            'methods'                 => 'POST',
+            'callback'                 =>     __NAMESPACE__ . '\prepareVimeoUpload',
+            'permission_callback'     => '__return_true',        // This is called before the actual upload to vimeo, so we cannot check for permissions here
+            'args'                    => array(
+                'file-name'        => array(
+                    'required'    => true
+               ),
+                'file-type'        => array(
+                    'required'    => true
+               )
+           )
+       )
+   );
 
     // Save uploaded video details
     register_rest_route(
-		RESTAPIPREFIX.'/vimeo',
-		'/add_uploaded_vimeo',
-		array(
-			'methods' 				=> 'POST',
-			'callback' 				=> 	__NAMESPACE__.'\addUploadedVimeo',
-			'permission_callback' 	=> '__return_true',		// This is called after the actual upload to vimeo, so we cannot check for permissions here
-			'args'					=> array(
-				'post-id'		=> array(
-					'required'	=> true,
-					'validate_callback' => function($postId){
-						return is_numeric($postId);
-					}
-                )
-			)
-		)
-	);
+        RESTAPIPREFIX. '/vimeo',
+        '/add_uploaded_vimeo',
+        array(
+            'methods'                 => 'POST',
+            'callback'                 =>     __NAMESPACE__ . '\addUploadedVimeo',
+            'permission_callback'     => '__return_true',        // This is called after the actual upload to vimeo, so we cannot check for permissions here
+            'args'                    => array(
+                'post-id'        => array(
+                    'required'    => true,
+                    'validate_callback' => function ($postId) {
+                        return is_numeric($postId);
+                    }
+               )
+           )
+       )
+   );
 
-	// Save uploaded video details
+    // Save uploaded video details
     register_rest_route(
-		RESTAPIPREFIX.'/vimeo',
-		'/download_to_server',
-		array(
-			'methods' 				=> 'POST,GET',
-			'callback' 				=> 	function(){
-				$vimeoApi	= new VimeoApi();
-				$vimeoId	= $_POST['vimeoid'];
+        RESTAPIPREFIX. '/vimeo',
+        '/download_to_server',
+        array(
+            'methods'                 => 'POST,GET',
+            'callback'                 =>     function () {
+                $vimeoApi    = new VimeoApi();
+                $vimeoId    = $_POST['vimeoid'];
 
-				$post	= $vimeoApi->getPost($vimeoId);
-				if(is_wp_error($post)){
-					return $post;
-				}else{
-					$result		= $vimeoApi->downloadFromVimeo($_POST['download-url'], $post->ID);
-					if(is_wp_error($result)){
-						return $result;
-					}
-					return "Video downloaded to server succesfully";
-				}
-			},
-			'permission_callback' 	=> function(){
-				return current_user_can('edit_posts');
-			},
-			'args'					=> array(
-				'vimeoid'		=> array(
-					'required'	=> true,
-					'validate_callback' => function($vimeoId){
-						return is_numeric($vimeoId);
-					}
-                ),
-				'download_url'		=> array(
-					'required'	=> true
-                )
-			)
-		)
-	);
+                $post    = $vimeoApi->getPost($vimeoId);
+                if (is_wp_error($post)) {
+                    return $post;
+                }else{
+                    $result        = $vimeoApi->downloadFromVimeo($_POST['download-url'], $post->ID);
+                    if (is_wp_error($result)) {
+                        return $result;
+                    }
+                    return "Video downloaded to server succesfully";
+                }
+            },
+            'permission_callback'     => function () {
+                return current_user_can('edit_posts');
+            },
+            'args'                    => array(
+                'vimeoid'        => array(
+                    'required'    => true,
+                    'validate_callback' => function ($vimeoId) {
+                        return is_numeric($vimeoId);
+                    }
+               ),
+                'download_url'        => array(
+                    'required'    => true
+               )
+           )
+       )
+   );
 
-	// Save uploaded video details
+    // Save uploaded video details
     register_rest_route(
-		RESTAPIPREFIX.'/vimeo',
-		'/get_download_progress',
-		array(
-			'methods' 				=> 'POST',
-			'callback' 				=> 	__NAMESPACE__.'\getDownloadProgress',
-			'permission_callback' 	=> function(){
-				return current_user_can('edit_posts');
-			},
-			'args'					=> array(
-				'vimeoid'		=> array(
-					'required'	=> true,
-					'validate_callback' => function($vimeoId){
-						return is_numeric($vimeoId);
-					}
-                )
-			)
-		)
-	);
+        RESTAPIPREFIX. '/vimeo',
+        '/get_download_progress',
+        array(
+            'methods'                 => 'POST',
+            'callback'                 =>     __NAMESPACE__ . '\getDownloadProgress',
+            'permission_callback'     => function () {
+                return current_user_can('edit_posts');
+            },
+            'args'                    => array(
+                'vimeoid'        => array(
+                    'required'    => true,
+                    'validate_callback' => function ($vimeoId) {
+                        return is_numeric($vimeoId);
+                    }
+               )
+           )
+       )
+   );
 }
 
 /**
  * create a video on vimeo to upload to
  *
- * @return	array		arra containing the upload link, post id and vimeo id
+ * @return    array        arra containing the upload link, post id and vimeo id
  *
  */
-function prepareVimeoUpload(){
-	global $wpdb;
+function prepareVimeoUpload() {
+    global $wpdb;
 
-	$fileName	= $_POST['file-name'];
-	$mime		= $_POST['file-type'];
+    $fileName    = $_POST['file-name'];
+    $mime        = $_POST['file-type'];
 
-	$url		= '';
-	$postId		= 0;
+    $url        = '';
+    $postId        = 0;
 
-	//check if post already exists
-	$results = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE meta_key = 'vimeo_upload_data'");
-	foreach($results as $result){
-		$data	= unserialize($result->meta_value);
-		if($data['filename'] == $fileName){
-			$url			= $data['url'];
-			$postId			= $result->post_id;
-			$vimeoId      	= $data['vimeo_id'];
-		}
-	}
+    //check if post already exists
+    $results = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT * FROM %i WHERE meta_key = 'vimeo_upload_data'",
+            $wpdb->postmeta
+       )
+   );
+
+    foreach ($results as $result) {
+        $data    = unserialize($result->meta_value);
+        if ($data['filename'] == $fileName) {
+            $url            = $data['url'];
+            $postId            = $result->post_id;
+            $vimeoId          = $data['vimeo_id'];
+        }
+    }
 
     // If there is no file with the same name, create a new video on vimeo
-	if(empty($url)){
-		$vimeoApi	= new VimeoApi();
-		$result		= $vimeoApi->createVimeoVideo($fileName, $mime);
+    if (empty($url)) {
+        $vimeoApi    = new VimeoApi();
+        $result        = $vimeoApi->createVimeoVideo($fileName, $mime);
     // Return a previous created vimeo video link and post id
-	}else{
-		$result = [
-			'upload_link'	=> $url,
-			'post-id'		=> $postId,
-			'vimeo_id'      => $vimeoId
-		];
-	}
+    }else{
+        $result = [
+            'upload_link'    => $url,
+            'post-id'        => $postId,
+            'vimeo_id'      => $vimeoId
+        ];
+    }
 
-	return $result;
+    return $result;
 }
 
 /**
  * After upload to vimeo was succesfull
  *
- * @return	array with succes and the attachment data
+ * @return    array with succes and the attachment data
  */
-function addUploadedVimeo(){
+function addUploadedVimeo() {
 
-	$postId		= $_POST['post-id'];
+    $postId        = $_POST['post-id'];
 
     // Get the attachement data
-	$attachment = wp_prepare_attachment_for_js( $postId );
-	if ( ! $attachment ) {
-		return new WP_Error('attachemnt', 'Something went wrong');
-	}
+    $attachment = wp_prepare_attachment_for_js($postId);
+    if ( ! $attachment) {
+        return new WP_Error('attachemnt', 'Something went wrong');
+    }
 
     // Replace the icon if needed
-	$attachment['icon']	= str_replace('default', 'video', $attachment['icon']);
+    $attachment['icon']    = str_replace('default', 'video', $attachment['icon']);
 
-	update_post_meta($postId, '_wp_attached_file', $attachment['title']);
+    update_post_meta($postId, '_wp_attached_file', $attachment['title']);
 
     // remove upload data
     delete_post_meta($postId, 'vimeo_upload_data');
 
-	// Download a backup or send an e-mail if that is not possible
-	$vimeoApi	= new VimeoApi();
-	$vimeoApi->downloadVideo($postId);
+    // Download a backup or send an e-mail if that is not possible
+    $vimeoApi    = new VimeoApi();
+    $vimeoApi->downloadVideo($postId);
 
     // Media libray expects the below array!
     return [
         'success' => true,
         'data'    => $attachment
     ];
-	return [
+    return [
         'response' => [
             'success' => true,
             'data'    => $attachment
@@ -222,86 +228,86 @@ function addUploadedVimeo(){
     ];
 }
 
-function cleanupBackupFolder(){
+function cleanupBackupFolder() {
 
-	$vimeoApi	= new VimeoApi();
+    $vimeoApi    = new VimeoApi();
 
-	$vimeoVideos	= $vimeoApi->getUploadedVideos();
-	if(!$vimeoVideos){
-		return;
-	}
+    $vimeoVideos    = $vimeoApi->getUploadedVideos();
+    if (!$vimeoVideos) {
+        return;
+    }
 
-	$onlineVideos	= [];
+    $onlineVideos    = [];
 
-	//Build online video's array
-	foreach($vimeoVideos as $vimeoVideo){
-		$vimeoId				= str_replace('/videos/', '', $vimeoVideo['uri']);
-		$onlineVideos[$vimeoId]	= html_entity_decode($vimeoVideo['name']);
-	}
+    //Build online video's array
+    foreach ($vimeoVideos as $vimeoVideo) {
+        $vimeoId                = str_replace('/videos/', '', $vimeoVideo['uri']);
+        $onlineVideos[$vimeoId]    = html_entity_decode($vimeoVideo['name']);
+    }
 
-	// Remove any backup
-	$files      = glob($vimeoApi->backupDir.'*.mp4');
-	$count		= 0;
-	foreach($files as $file){
-		$vimeoId    = explode('_', basename($file))[0];
+    // Remove any backup
+    $files      = glob($vimeoApi->backupDir. '*.mp4');
+    $count        = 0;
+    foreach ($files as $file) {
+        $vimeoId    = explode('_', basename($file))[0];
 
-		if(!in_array($vimeoId, array_keys($onlineVideos))){
-			unlink($file);
-			$count++;
-		}
-	}
+        if (!in_array($vimeoId, array_keys($onlineVideos))) {
+            unlink($file);
+            $count++;
+        }
+    }
 
-	if($count == 0){
-		return 'There was nothing to remove';
-	}
+    if ($count == 0) {
+        return 'There was nothing to remove';
+    }
 
-	return "Succesfully cleaned up the backup folder, removed $count files";
+    return "Succesfully cleaned up the backup folder, removed $count files";
 }
 
-function storeExternalUrl(){
-	$vimeoApi	= new VimeoApi();
+function storeExternalUrl() {
+    $vimeoApi    = new VimeoApi();
 
-	$result		= $vimeoApi->setDownloadUrl($_POST['post-id'], $_POST['external-url']);
+    $result        = $vimeoApi->setDownloadUrl($_POST['post-id'], $_POST['external-url']);
 
-	if($result){
-		return "Succesfully stored the url";
-	}else{
-		return new WP_Error('Vimeo', 'Something went wrong');
-	}
+    if ($result) {
+        return "Succesfully stored the url";
+    }else{
+        return new WP_Error('Vimeo', 'Something went wrong');
+    }
 }
 
-function downloadToServer(){	
-	$vimeoApi	= new VimeoApi();
-	$vimeoId	= $_REQUEST['vimeoid'];
+function downloadToServer() {
+    $vimeoApi    = new VimeoApi();
+    $vimeoId    = $_REQUEST['vimeoid'];
 
-	$post	= $vimeoApi->getPost($vimeoId);
-	if(is_wp_error($post)){
-		return $post;
-	}else{
-		$result		= $vimeoApi->downloadFromVimeo(base64_decode($_REQUEST['download_url']), $post->ID);
-		if(is_wp_error($result)){
-			return $result;
-		}
-	}
+    $post    = $vimeoApi->getPost($vimeoId);
+    if (is_wp_error($post)) {
+        return $post;
+    }else{
+        $result        = $vimeoApi->downloadFromVimeo(base64_decode($_REQUEST['download_url']), $post->ID);
+        if (is_wp_error($result)) {
+            return $result;
+        }
+    }
 
-	return "Download succesfull";
+    return "Download succesfull";
 }
 
 /**
  * Checks and returns the current filesize of a vimeo file backup
  *
- * @return	int|false		The filesize or error 
+ * @return    int|false        The filesize or error
  */
-function getDownloadProgress(){
-	$vimeoApi	= new VimeoApi();
-	$vimeoId	= $_REQUEST['vimeoid'];
-	$post		= $vimeoApi->getPost($vimeoId);
+function getDownloadProgress() {
+    $vimeoApi    = new VimeoApi();
+    $vimeoId    = $_REQUEST['vimeoid'];
+    $post        = $vimeoApi->getPost($vimeoId);
 
-	$path		= $vimeoApi->getVideoPath($post->ID);
+    $path        = $vimeoApi->getVideoPath($post->ID);
 
-	if(!$path){
-		return new WP_Error('Vimeo', "Vimeo post not found!");
-	}else{
-		return filesize($path);
-	}
+    if (!$path) {
+        return new WP_Error('Vimeo', "Vimeo post not found!");
+    }else{
+        return filesize($path);
+    }
 }

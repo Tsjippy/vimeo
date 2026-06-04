@@ -37,9 +37,9 @@ export class VimeoUpload{
 
         //Failed
         if(response){
-            var uploadUrl		= response.upload_link;
-            var postId		    = response['post-id'];
-            var vimeoId		    = response.vimeo_id;
+            var uploadUrl        = response.upload_link;
+            var postId            = response['post-id'];
+            var vimeoId            = response.vimeo_id;
 
             this.storedEntry = {
                 size: this.file.size,
@@ -97,111 +97,111 @@ export class VimeoUpload{
 }
 
 async function uploadVideo(file){
-	var uploader	= new vimeoUploader.VimeoUpload(file);
-	var upload		= await uploader.tusUploader();
-	var s			= '';
+    var uploader    = new vimeoUploader.VimeoUpload(file);
+    var upload        = await uploader.tusUploader();
+    var s            = '';
 
-	// Could not upload
-	if(!upload){
-		//clear file upload
-		fileUploadWrap.querySelector('.file-upload').value = "";
-				
-		//Remove progress barr
-		document.getElementById("progress-wrapper").remove();
+    // Could not upload
+    if(!upload){
+        //clear file upload
+        fileUploadWrap.querySelector('.file-upload').value = "";
+                
+        //Remove progress barr
+        document.getElementById("progress-wrapper").remove();
 
-		// Hide the loader
-		document.querySelector('.loader-wrapper:not(.hidden)').classList.add('hidden');
+        // Hide the loader
+        document.querySelector('.loader-wrapper:not(.hidden)').classList.add('hidden');
 
-		return false;
-	}
+        return false;
+    }
 
-	// Upload started
-	if (totalFiles > 1){
-		s = "s";
-	}else{
-		s = "";
-	}
+    // Upload started
+    if (totalFiles > 1){
+        s = "s";
+    }else{
+        s = "";
+    }
 
-	upload.options.onProgress   = function(bytesUploaded, bytesTotal) {
-		//calculate percentage
-		var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2)
-	
-		//show percentage in progressbar
-		document.getElementById("upload-progress").value			= percentage;
-		document.getElementById("progress-percentage").textContent	= `   ${percentage}%`;
+    upload.options.onProgress   = function(bytesUploaded, bytesTotal) {
+        //calculate percentage
+        var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2)
+    
+        //show percentage in progressbar
+        document.getElementById("upload-progress").value            = percentage;
+        document.getElementById("progress-percentage").textContent    = `   ${percentage}%`;
 
-		if(percentage>98){
-			document.querySelector('.upload-message').textContent = "Processing video"+s;
-			document.getElementById('progress-wrapper').classList.add('hidden');
-		}
-	};
+        if(percentage>98){
+            document.querySelector('.upload-message').textContent = "Processing video"+s;
+            document.getElementById('progress-wrapper').classList.add('hidden');
+        }
+    };
 
-	upload.options.onSuccess    = async function() {
-		let postId	= uploader.storedEntry.postId;
-		// Add post id of the video to the form
-		let formData = new FormData();
+    upload.options.onSuccess    = async function() {
+        let postId    = uploader.storedEntry.postId;
+        // Add post id of the video to the form
+        let formData = new FormData();
         formData.append('post-id', postId);
     
         let request = new XMLHttpRequest();
         request.open('POST', `${tsjippy.baseUrl}/wp-json${tsjippy.restApiPrefix}/vimeo/add_uploaded_vimeo`, false);
         request.send(formData);
 
-		//Remove progress barr
-		document.getElementById("progress-wrapper").remove();
-		
-		let link	= `
-		<div class="vimeo-wrapper">
-			<div class='vimeo-embed-container loading'>
-				<iframe src='https://player.vimeo.com/video/${uploader.storedEntry.vimeoId}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><br>
-			</div>
-		</div>`;
+        //Remove progress barr
+        document.getElementById("progress-wrapper").remove();
+        
+        let link    = `
+        <div class="vimeo-wrapper">
+            <div class='vimeo-embed-container loading'>
+                <iframe src='https://player.vimeo.com/video/${uploader.storedEntry.vimeoId}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><br>
+            </div>
+        </div>`;
 
-		var preview		= addPreview(link, postId);
+        var preview        = addPreview(link, postId);
 
-		// Hide the loader
-		document.querySelector('.loader-wrapper:not(.hidden)').classList.add('hidden');
+        // Hide the loader
+        document.querySelector('.loader-wrapper:not(.hidden)').classList.add('hidden');
 
-		Main.displayMessage(`The file ${file.name} has been uploaded succesfully.`, 'success', 1500);
-		
-		//Hide upload button if only one file allowed
-		if(!fileUploadWrap.querySelector('.file-upload').multiple){
-			fileUploadWrap.querySelector('.upload-div').classList.add('hidden');
-		}
+        Main.displayMessage(`The file ${file.name} has been uploaded succesfully.`, 'success', 1500);
+        
+        //Hide upload button if only one file allowed
+        if(!fileUploadWrap.querySelector('.file-upload').multiple){
+            fileUploadWrap.querySelector('.upload-div').classList.add('hidden');
+        }
 
-		//clear file upload
-		fileUploadWrap.querySelector('.file-upload').value = "";
-		
-		uploader.urlStorage.removeUpload(uploader.storedEntry.urlStorageKey);
+        //clear file upload
+        fileUploadWrap.querySelector('.file-upload').value = "";
+        
+        uploader.urlStorage.removeUpload(uploader.storedEntry.urlStorageKey);
 
-		// check if we are uploading from frontend posting form
-		var postForm = document.getElementById('postform');
-		if(postForm != null){
-			postForm.querySelector('[name="update"]').value		= 1;
-			postForm.querySelector('[name="post-id"]').value	= postId;
-		}
+        // check if we are uploading from frontend posting form
+        var postForm = document.getElementById('postform');
+        if(postForm != null){
+            postForm.querySelector('[name="update"]').value        = 1;
+            postForm.querySelector('[name="post-id"]').value    = postId;
+        }
 
-		// Wait for the video to be processed on Vimeo
-		var result	= '';
-		while(!result.ok){
-			await new Promise(res => setTimeout(res, 10000));
-			result = await fetch(
-				`https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/${uploader.storedEntry.vimeoId}`,
-				{method: 'GET'}
-			);
-		}
-		var response	= await result.json();
+        // Wait for the video to be processed on Vimeo
+        var result    = '';
+        while(!result.ok){
+            await new Promise(res => setTimeout(res, 10000));
+            result = await fetch(
+                `https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/${uploader.storedEntry.vimeoId}`,
+                {method: 'GET'}
+            );
+        }
+        var response    = await result.json();
 
-		preview.querySelector('.vimeo-wrapper').innerHTML = DOMPurify.sanitize(response.html);
-	}
+        preview.querySelector('.vimeo-wrapper').innerHTML = DOMPurify.sanitize(response.html);
+    }
 
-	upload.options.onError      = function(error) {
-		console.error("Failed because: " + error);				
-	}
+    upload.options.onError      = function(error) {
+        console.error("Failed because: " + error);                
+    }
 
-	document.querySelector('.upload-message').textContent = "Uploading video"+s+" to Vimeo";
-	document.getElementById('progress-wrapper').classList.remove('hidden');
+    document.querySelector('.upload-message').textContent = "Uploading video"+s+" to Vimeo";
+    document.getElementById('progress-wrapper').classList.remove('hidden');
 
-	upload.start();
+    upload.start();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

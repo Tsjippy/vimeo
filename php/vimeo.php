@@ -3,166 +3,166 @@ namespace TSJIPPY\VIMEO;
 use TSJIPPY;
 
 // Delete video from vimeo when attachemnt is deleted, if that option is enabled
-if(SETTINGS['remove'] ?? false){
-	add_action( 'delete_attachment', __NAMESPACE__.'\attachmentDeleted', 10, 2);
+if (SETTINGS['remove'] ?? false) {
+    add_action('delete_attachment', __NAMESPACE__ . '\attachmentDeleted', 10, 2);
 }
-function attachmentDeleted($postId, $post ){
+function attachmentDeleted($postId, $post) {
 
-	if(explode('/', $post->post_mime_type)[0] == 'video'){
-		$vimeoApi = new VimeoApi();
-		$vimeoApi->deleteVimeoVideo($postId);
-	}
+    if (explode('/', $post->post_mime_type)[0] == 'video') {
+        $vimeoApi = new VimeoApi();
+        $vimeoApi->deleteVimeoVideo($postId);
+    }
 }
 
-add_action('tsjippy_before_visibility_change', __NAMESPACE__.'\visibility', 10, 2);
-function visibility($attachmentId, $visibility){
+add_action('tsjippy_before_visibility_change', __NAMESPACE__ . '\visibility', 10, 2);
+function visibility($attachmentId, $visibility) {
 
-	if($visibility == 'private'){
-		$vimeoApi	= new VimeoApi();
-		$vimeoApi->hideVimeoVideo($attachmentId);
-	}
+    if ($visibility == 'private') {
+        $vimeoApi    = new VimeoApi();
+        $vimeoApi->hideVimeoVideo($attachmentId);
+    }
 }
 
 //change the url of vimeo videos so it points to vimeo.com
-add_filter( 'wp_get_attachment_url', __NAMESPACE__.'\attachmentUrl', 999, 2 );
-function attachmentUrl( $url, $attId ) {
-	$vimeoId   = get_post_meta($attId, 'vimeo_id', true);
+add_filter('wp_get_attachment_url', __NAMESPACE__ . '\attachmentUrl', 999, 2);
+function attachmentUrl($url, $attId) {
+    $vimeoId   = get_post_meta($attId, 'vimeo_id', true);
 
-    if(is_numeric($vimeoId)){
-		$vimeoApi	= new VimeoApi();
+    if (is_numeric($vimeoId)) {
+        $vimeoApi    = new VimeoApi();
 
-		$video		= $vimeoApi->getVideo($vimeoId);
+        $video        = $vimeoApi->getVideo($vimeoId);
 
-		if(isset($video['player_embed_url'])){
-			$url	= $video['player_embed_url'];
-		}
+        if (isset($video['player_embed_url'])) {
+            $url    = $video['player_embed_url'];
+        }
     }
-	
+
     return $url;
 }
 
 
-if(SETTINGS['upload'] ?? false){
-	//add filter
-	add_action('post-html-upload-ui', __NAMESPACE__.'\uploadUi');
+if (SETTINGS['upload'] ?? false) {
+    //add filter
+    add_action('post-html-upload-ui', __NAMESPACE__ . '\uploadUi');
 
-	//add filter
-	add_action('post-plupload-upload-ui', __NAMESPACE__.'\postPluploadUi');
+    //add filter
+    add_action('post-plupload-upload-ui', __NAMESPACE__ . '\postPluploadUi');
 
-	//do the filter: change upload size message
-	function changeUploadSizeMessage($translation, $text){
-		if($text == "Maximum upload file size: %s."){
-			$translation	= "Maximum upload file size: %s, unlimited upload size for videos.";
-		}
+    //do the filter: change upload size message
+    function changeUploadSizeMessage($translation, $text) {
+        if ($text == "Maximum upload file size: %s. ") {
+            $translation    = "Maximum upload file size: %s, unlimited upload size for videos. ";
+        }
 
-		return $translation;
-	}
+        return $translation;
+    }
 
-	//remove filter
-	add_action('post-upload-ui', __NAMESPACE__.'\postUploadUi');
+    //remove filter
+    add_action('post-upload-ui', __NAMESPACE__ . '\postUploadUi');
 }
 
-function uploadUi(){
-	add_filter('gettext', __NAMESPACE__.'\changeUploadSizeMessage', 10, 2);
+function uploadUi() {
+    add_filter('gettext', __NAMESPACE__ . '\changeUploadSizeMessage', 10, 2);
 }
 
-function postPluploadUi(){
-	add_filter('gettext', __NAMESPACE__.'\changeUploadSizeMessage', 10, 2);
+function postPluploadUi() {
+    add_filter('gettext', __NAMESPACE__ . '\changeUploadSizeMessage', 10, 2);
 }
 
-function postUploadUi(){
-	remove_filter( 'gettext', 'TSJIPPY\VIMEO\change_upload_size_message', 10 );
+function postUploadUi() {
+    remove_filter('gettext', 'TSJIPPY\VIMEO\change_upload_size_message', 10);
 }
 
 // Uploads a video to vimeo, runs after file has been uploaded to the tmp folder but before adding it to the library
-add_filter( 'wp_handle_upload', __NAMESPACE__.'\handleUpload' );
-function handleUpload($file){
+add_filter('wp_handle_upload', __NAMESPACE__ . '\handleUpload');
+function handleUpload($file) {
 
-	if(explode('/', $file['type'])[0] == 'video' && is_numeric($_REQUEST['post'])){
-		$vimeoApi	= new VimeoApi();
-		$postId		= $_REQUEST['post'];
+    if (explode('/', $file['type'])[0] == 'video' && is_numeric($_REQUEST['post'])) {
+        $vimeoApi    = new VimeoApi();
+        $postId        = $_REQUEST['post'];
 
-		try{
-			$post		= get_post($postId);
+        try{
+            $post        = get_post($postId);
 
-			if(!empty($post->post_title)){
-				$name	= $post->post_title;
-			}else{
-				$name	= basename($file['file']);
-			}
+            if (!empty($post->post_title)) {
+                $name    = $post->post_title;
+            }else{
+                $name    = basename($file['file']);
+            }
 
-			if(!empty($post->post_content)){
-				$content	= $post->post_content;
-			}else{
-				$content	= $name;
-			}
+            if (!empty($post->post_content)) {
+                $content    = $post->post_content;
+            }else{
+                $content    = $name;
+            }
 
-			$response 	= $vimeoApi->api->upload($file['file'], [
-				'name'          => $name,
-				'description'   => $content
-			]);
+            $response     = $vimeoApi->api->upload($file['file'], [
+                'name'          => $name,
+                'description'   => $content
+            ]);
 
-			$vimeoId	= str_replace('/videos/', '', $response);
+            $vimeoId    = str_replace('/videos/', '', $response);
 
-			if(!is_numeric($vimeoId)){
-				return $file;
-			}
+            if (!is_numeric($vimeoId)) {
+                return $file;
+            }
 
-			$path       = $vimeoApi->backupDir;
+            $path       = $vimeoApi->backupDir;
 
-			$filename   = $vimeoId."_".get_the_title($postId);
+            $filename   = $vimeoId. "_" .get_the_title($postId);
 
-			$filePath  = str_replace('\\', '/', $path.$filename.'.mp4');
+            $filePath  = str_replace('\\', '/', $path.$filename. ' .mp4');
 
-			move_uploaded_file($file['file'], $filePath);
+            move_uploaded_file($file['file'], $filePath);
 
-			$vimeoApi->saveVideoPath($postId, $filePath);
+            $vimeoApi->saveVideoPath($postId, $filePath);
 
-			update_post_meta($post->ID, 'vimeo_id', $vimeoId);
+            update_post_meta($post->ID, 'vimeo_id', $vimeoId);
 
-		}catch(\Exception $e) {
-			TSJIPPY\printArray('Unable to upload: '.$e->getMessage());
-		}
-	}
+        }catch(\Exception $e) {
+            TSJIPPY\printArray('Unable to upload: ' .$e->getMessage());
+        }
+    }
 
-	return $file;
+    return $file;
 }
 
 //change vimeo thumbnails
-add_filter( 'wp_mime_type_icon', __NAMESPACE__.'\mimeTypeIcon', 10, 9 );
+add_filter('wp_mime_type_icon', __NAMESPACE__ . '\mimeTypeIcon', 10, 9);
 function mimeTypeIcon($icon, $mime, $postId) {
 
-	if(str_contains($icon, 'video.png') && is_numeric(get_post_meta($postId, 'vimeo_id', true))){
-		$startTime = microtime(true);
-		try{
-			$path  = get_post_meta($postId, 'thumbnail', true);
+    if (str_contains($icon, 'video.png') && is_numeric(get_post_meta($postId, 'vimeo_id', true))) {
+        $startTime = microtime(true);
+        try{
+            $path  = get_post_meta($postId, 'thumbnail', true);
 
-			if(!file_exists($path)){
-                $vimeoApi	= new VimeoApi();
-				$path		= $vimeoApi->getThumbnail($postId);
-				if(!$path) {
-					return $icon;
-				}
+            if (!file_exists($path)) {
+                $vimeoApi    = new VimeoApi();
+                $path        = $vimeoApi->getThumbnail($postId);
+                if (!$path) {
+                    return $icon;
+                }
             }
-			
-			$newIcon		= TSJIPPY\pathToUrl($path);
 
-			if(!$newIcon){
-				return $icon;
-			}
+            $newIcon        = TSJIPPY\pathToUrl($path);
 
-			$executionTime = (microtime(true) - $startTime);
-			if($executionTime > 0.01){
-				TSJIPPY\printArray(" Execution time of script = $executionTime sec");
-			}
+            if (!$newIcon) {
+                return $icon;
+            }
 
-			return $newIcon;
-		}catch(\Exception $e){
-			TSJIPPY\printArray($e);
-		}
-	}
-	
-	return $icon;
+            $executionTime = (microtime(true) - $startTime);
+            if ($executionTime > 0.01) {
+                TSJIPPY\printArray(" Execution time of script = $executionTime sec");
+            }
+
+            return $newIcon;
+        }catch(\Exception $e) {
+            TSJIPPY\printArray($e);
+        }
+    }
+
+    return $icon;
 }
 
 

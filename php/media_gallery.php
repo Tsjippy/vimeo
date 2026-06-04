@@ -2,9 +2,9 @@
 namespace TSJIPPY\VIMEO;
 use TSJIPPY;
 
-add_filter('tsjippy_media_gallery_item_html', __NAMESPACE__.'\mediaItem', 10, 3);
-function mediaItem($mediaHtml, $type, $postId){
-    if($type != 'video'){
+add_filter('tsjippy_media_gallery_item_html', __NAMESPACE__ . '\mediaItem', 10, 3);
+function mediaItem($mediaHtml, $type, $postId) {
+    if ($type != 'video') {
         return $mediaHtml;
     }
 
@@ -13,39 +13,39 @@ function mediaItem($mediaHtml, $type, $postId){
     $vimeoId    = $vimeoApi->getVimeoId($postId);
 
     // Vimeo video
-    if(is_numeric($vimeoId)){
+    if (is_numeric($vimeoId)) {
         return showVimeoVideo($vimeoId);
     }
 
     return $mediaHtml;
 }
 
-add_filter('tsjippy_media_gallery_download_url', __NAMESPACE__.'\downloadUrl', 10, 2);
-function downloadUrl($url, $postId){
+add_filter('tsjippy_media_gallery_download_url', __NAMESPACE__ . '\downloadUrl', 10, 2);
+function downloadUrl($url, $postId) {
     $vimeoApi   = new VimeoApi();
     $path       = $vimeoApi->getVideoPath($postId);
 
-    if(file_exists($path)){
+    if (file_exists($path)) {
         return TSJIPPY\pathToUrl($path);
     }
 
     return $url;
 }
 
-add_filter('tsjippy_media_gallery_download_filename', __NAMESPACE__.'\downloadFileName', 10, 3);
-function downloadFileName($fileName, $type, $postId){
-    if($type != 'video'){
+add_filter('tsjippy_media_gallery_download_filename', __NAMESPACE__ . '\downloadFileName', 10, 3);
+function downloadFileName($fileName, $type, $postId) {
+    if ($type != 'video') {
         return $fileName;
     }
 
     $vimeoApi   = new VimeoApi();
     $path       = $vimeoApi->getVideoPath($postId);
 
-    if(file_exists($path)){
+    if (file_exists($path)) {
         $fileName   = basename($path);
         $vimeoId    = $vimeoApi->getVimeoId($postId);
 
-        $fileName   = str_replace($vimeoId.'_', '', $fileName);
+        $fileName   = str_replace($vimeoId. '_', '', $fileName);
 
         return $fileName;
     }
