@@ -258,7 +258,7 @@ function cleanupBackupFolder()
         $vimeoId    = explode('_', basename($file))[0];
 
         if (!in_array($vimeoId, array_keys($onlineVideos))) {
-            unlink($file);
+            wp_delete_file($file);
             $count++;
         }
     }

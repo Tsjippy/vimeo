@@ -323,7 +323,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
 
                 //delete thumbnail
                 $path   = get_post_meta($postId, 'thumbnail', true);
-                unlink($path);
+                wp_delete_file($path);
             }
         }
 
@@ -754,7 +754,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
 
                 return $filePath;
             } catch (\GuzzleHttp\Exception\ClientException $e) {
-                unlink($filePath);
+                wp_delete_file($filePath);
 
                 if ($e->getResponse()->getReasonPhrase() == 'Gone') {
                     return new WP_Error('vimeo', "The link has expired, please get a new one");
