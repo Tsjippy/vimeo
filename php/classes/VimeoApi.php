@@ -215,7 +215,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
             }
 
             $oembedEndpoint = 'http://vimeo.com/api/oembed';
-            $url            = $oembedEndpoint . ' .json?url=' . rawurlencode("http://vimeo.com/$vimeoId") . '&width=640';
+            $url            = $oembedEndpoint . '.json?url=' . rawurlencode("http://vimeo.com/$vimeoId") . '&width=640';
 
             $curl           = curl_init($url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -589,7 +589,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 if ($data['active'] && is_array($data['sizes'])) {
                     $last   = array_key_last($data['sizes']);
                     foreach ($data['sizes'] as $index => $image) {
-                        $iconUrl   = explode('?', $image['link'])[0] . ' .webp';
+                        $iconUrl   = explode('?', $image['link'])[0] . '.webp';
 
                         if ($index == $last) {
                             // do not add dimensions to the biggest image
