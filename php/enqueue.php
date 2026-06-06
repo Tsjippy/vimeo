@@ -15,7 +15,7 @@ function loadAssets()
         array(
             'baseUrl'         => get_home_url(),
             'restNonce'        => wp_create_nonce('wp_rest'),
-            'restApiPrefix'    => '/' . RESTAPIPREFIX
+            'restApiPrefix'    => '/' . TSJIPPY\RESTAPIPREFIXPIPREFIX
         )
     );
 }

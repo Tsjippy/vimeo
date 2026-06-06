@@ -12,7 +12,7 @@ function restApiInit()
 
     // Clean backup dir
     register_rest_route(
-        RESTAPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
         '/cleanup_backup',
         array(
             'methods'                 => 'POST',
@@ -23,7 +23,7 @@ function restApiInit()
 
     // Store external url
     register_rest_route(
-        RESTAPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
         '/store_external_url',
         array(
             'methods'                 => 'POST',
@@ -47,7 +47,7 @@ function restApiInit()
 
     // prepare video upload
     register_rest_route(
-        RESTAPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
         '/prepare_vimeo_upload',
         array(
             'methods'                 => 'POST',
@@ -66,7 +66,7 @@ function restApiInit()
 
     // Save uploaded video details
     register_rest_route(
-        RESTAPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
         '/add_uploaded_vimeo',
         array(
             'methods'                 => 'POST',
@@ -85,7 +85,7 @@ function restApiInit()
 
     // Save uploaded video details
     register_rest_route(
-        RESTAPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
         '/download_to_server',
         array(
             'methods'                 => 'POST,GET',
@@ -123,7 +123,7 @@ function restApiInit()
 
     // Save uploaded video details
     register_rest_route(
-        RESTAPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
         '/get_download_progress',
         array(
             'methods'                 => 'POST',
