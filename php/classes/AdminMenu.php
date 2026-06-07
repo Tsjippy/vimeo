@@ -68,7 +68,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
                     </div>
                 <?php
                 } else {
-                    $accessToken = $vimeoApi->storeAccessToken($clientId, $clientSecret, $_GET['code'], admin_url("admin.php?page=" . $_GET["page"]));
+                    $accessToken = $vimeoApi->storeAccessToken($clientId, $clientSecret, TSJIPPY\sanitize($_GET['code']), admin_url("admin.php?page=" . TSJIPPY\sanitize($_GET["page"])));
                 ?>
                     <div id='set-vimeo-token'>
                         <h2>Succesfully connect to vimeo</h2>
@@ -89,7 +89,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
                         We are almost done.<br>
                         Go back to the vimeo page and click on "OAuth Redirect Authentication"<br>
                         Click on the "Add URL +" button.<br>
-                        Insert his url: <code><?php echo esc_url(admin_url("admin.php?page=" . $_GET["page"])); ?></code><br>
+                        Insert his url: <code><?php echo esc_url(admin_url("admin.php?page=" . TSJIPPY\sanitize($_GET["page"]))); ?></code><br>
                         <br>
                         Once you have added the url you can click this <a href='<?php echo esc_url($link); ?>'>link</a> to authorize the app.<br>
                         <br>

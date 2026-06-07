@@ -18,15 +18,15 @@ function afterPostSave($post)
 
         $data            = [];
 
-        $newTitle       = sanitize_text_field(wp_unslash($_POST['post-title']));
+        $newTitle       = TSJIPPY\sanitize($_POST['post-title']);
 
         // Only update when needed
         if (!empty($newTitle) && $newTitle != $post->post_title) {
             $data['name']    = $newTitle;
         }
 
-        if (!empty($_POST['post-content']) && $_POST['post-content'] != $post->post_content) {
-            $data['description']    = $_POST['post-content'];
+        if (($_POST['post-content'] ?? '') != $post->post_content) {
+            $data['description']    = TSJIPPY\sanitize($_POST['post-content'], 'textarea_field');
         }
 
         if (!empty($data)) {

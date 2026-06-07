@@ -12,7 +12,7 @@ function restApiInit()
 
     // Clean backup dir
     register_rest_route(
-        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIX . '/vimeo',
         '/cleanup_backup',
         array(
             'methods'                 => 'POST',
@@ -23,7 +23,7 @@ function restApiInit()
 
     // Store external url
     register_rest_route(
-        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIX . '/vimeo',
         '/store_external_url',
         array(
             'methods'                 => 'POST',
@@ -47,7 +47,7 @@ function restApiInit()
 
     // prepare video upload
     register_rest_route(
-        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIX . '/vimeo',
         '/prepare_vimeo_upload',
         array(
             'methods'                 => 'POST',
@@ -66,7 +66,7 @@ function restApiInit()
 
     // Save uploaded video details
     register_rest_route(
-        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIX . '/vimeo',
         '/add_uploaded_vimeo',
         array(
             'methods'                 => 'POST',
@@ -85,19 +85,19 @@ function restApiInit()
 
     // Save uploaded video details
     register_rest_route(
-        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIX . '/vimeo',
         '/download_to_server',
         array(
             'methods'                 => 'POST,GET',
             'callback'                 =>     function () {
                 $vimeoApi    = new VimeoApi();
-                $vimeoId    = $_POST['vimeoid'];
+                $vimeoId    = (int) $_POST['vimeoid'];
 
                 $post    = $vimeoApi->getPost($vimeoId);
                 if (is_wp_error($post)) {
                     return $post;
                 } else {
-                    $result        = $vimeoApi->downloadFromVimeo($_POST['download-url'], $post->ID);
+                    $result        = $vimeoApi->downloadFromVimeo(TSJIPPY\sanitize($_POST['download-url'], 'url'), $post->ID);
                     if (is_wp_error($result)) {
                         return $result;
                     }
@@ -123,7 +123,7 @@ function restApiInit()
 
     // Save uploaded video details
     register_rest_route(
-        TSJIPPY\RESTAPIPREFIXPIPREFIX . '/vimeo',
+        TSJIPPY\RESTAPIPREFIX . '/vimeo',
         '/get_download_progress',
         array(
             'methods'                 => 'POST',
@@ -153,8 +153,8 @@ function prepareVimeoUpload()
 {
     global $wpdb;
 
-    $fileName    = $_POST['file-name'];
-    $mime        = $_POST['file-type'];
+    $fileName    = TSJIPPY\sanitize($_POST['file-name']);
+    $mime        = TSJIPPY\sanitize($_POST['file-type']);
 
     $url        = '';
     $postId        = 0;
@@ -200,7 +200,7 @@ function prepareVimeoUpload()
 function addUploadedVimeo()
 {
 
-    $postId        = $_POST['post-id'];
+    $postId        = (int) $_POST['post-id'];
 
     // Get the attachement data
     $attachment = wp_prepare_attachment_for_js($postId);
@@ -274,7 +274,7 @@ function storeExternalUrl()
 {
     $vimeoApi    = new VimeoApi();
 
-    $result        = $vimeoApi->setDownloadUrl($_POST['post-id'], $_POST['external-url']);
+    $result        = $vimeoApi->setDownloadUrl((int) $_POST['post-id'], TSJIPPY\sanitize($_POST['external-url']));
 
     if ($result) {
         return "Succesfully stored the url";

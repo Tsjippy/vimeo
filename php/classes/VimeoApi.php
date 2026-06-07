@@ -87,7 +87,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
         public function getAuthorizeUrl($clientId, $clientSecret, $url = null)
         {
             if ($url == null) {
-                $redirectUri   =  admin_url("admin.php?page=" . $_GET["page"]);
+                $redirectUri   =  admin_url("admin.php?page=" . TSJIPPY\sanitize($_GET["page"]));
             }
 
             $scopes = array(
@@ -346,7 +346,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
             //remove extension
             $title            = pathinfo($path, PATHINFO_FILENAME);
             $uploadLink     = '';
-            $size            = $_POST['file-size'];
+            $size            = (int) $_POST['file-size'];
             if (!is_numeric($size)) {
                 return new WP_Error('vimeo', 'No filesize given');
             }
