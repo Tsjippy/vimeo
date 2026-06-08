@@ -1,5 +1,5 @@
 import * as tus from "tus-js-client";
-import { fetchRestApi } from "./../../tsjippy-shared-functionality/includes/js/partials/form_submit_functions.js";
+import { fetchRestApi } from "./../../tsjippy-shared-functionality/js/partials/form_submit_functions.js";
 
 console.log("vimeo upload loaded");
 

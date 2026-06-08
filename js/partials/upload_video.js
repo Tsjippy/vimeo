@@ -1,5 +1,5 @@
 import { VimeoUpload } from "./../vimeo_upload.js";
-import { showLoader } from "./../../../tsjippy-shared-functionality/includes/js/partials/show_loader.js";
+import { showLoader } from "./../../../tsjippy-shared-functionality/js/partials/show_loader.js";
 
 window.wp.Uploader.prototype.init = function () {
   // plupload 'PostInit'

@@ -1,4 +1,4 @@
-import { showLoader } from "./../../tsjippy-shared-functionality/includes/js/partials/show_loader.js";
+import { showLoader } from "./../../tsjippy-shared-functionality/js/partials/show_loader.js";
 
 console.log("Vimeo admin js loaded");
 
