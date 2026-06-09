@@ -214,7 +214,7 @@ function addUploadedVimeo()
     update_post_meta($postId, '_wp_attached_file', $attachment['title']);
 
     // remove upload data
-    delete_post_meta($postId, 'vimeo_upload_data');
+    delete_post_meta($postId, 'tsjippy_vimeo_upload_data');
 
     // Download a backup or send an e-mail if that is not possible
     $vimeoApi    = new VimeoApi();

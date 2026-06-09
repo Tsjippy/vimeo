@@ -6,7 +6,7 @@ use TSJIPPY;
 use Vimeo\Vimeo;
 
 //shortcode to display vimeo video's
-add_shortcode("vimeo_video", function ($atts) {
+add_shortcode("tsjippy_vimeo_video", function ($atts) {
     return showVimeoVideo($atts['id']);
 });
 
@@ -35,7 +35,7 @@ function showVimeoVideo($vimeoId)
 add_filter('wp_video_shortcode', __NAMESPACE__ . '\videoShortcode', 10, 4);
 function videoShortcode($output, $atts, $video, $postId)
 {
-    $vimeoId    = get_post_meta($postId, 'vimeo_id', true);
+    $vimeoId    = get_post_meta($postId, 'tsjippy_vimeo_id', true);
 
     if (!is_numeric($vimeoId)) {
         return $output;

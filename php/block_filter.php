@@ -12,7 +12,7 @@ function vimeoBlock($blockContent, $block)
     // Video block with a vimeo url
     if ($block['blockName'] == 'core/video') {
         // Find vimeo id
-        $vimeoId    = get_post_meta($post->ID, 'vimeo_id', true);
+        $vimeoId    = get_post_meta($post->ID, 'tsjippy_vimeo_id', true);
 
         if (is_numeric($vimeoId)) {
             return showVimeoVideo($vimeoId);

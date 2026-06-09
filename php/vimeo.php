@@ -31,7 +31,7 @@ function visibility($attachmentId, $visibility)
 add_filter('wp_get_attachment_url', __NAMESPACE__ . '\attachmentUrl', 999, 2);
 function attachmentUrl($url, $attId)
 {
-    $vimeoId   = get_post_meta($attId, 'vimeo_id', true);
+    $vimeoId   = get_post_meta($attId, 'tsjippy_vimeo_id', true);
 
     if (is_numeric($vimeoId)) {
         $vimeoApi    = new VimeoApi();
@@ -128,7 +128,7 @@ function handleUpload($file)
 
             $vimeoApi->saveVideoPath($postId, $filePath);
 
-            update_post_meta($post->ID, 'vimeo_id', $vimeoId);
+            update_post_meta($post->ID, 'tsjippy_vimeo_id', $vimeoId);
         } catch (\Exception $e) {
             TSJIPPY\printArray('Unable to upload: ' . $e->getMessage());
         }
@@ -142,10 +142,10 @@ add_filter('wp_mime_type_icon', __NAMESPACE__ . '\mimeTypeIcon', 10, 9);
 function mimeTypeIcon($icon, $mime, $postId)
 {
 
-    if (str_contains($icon, 'video.png') && is_numeric(get_post_meta($postId, 'vimeo_id', true))) {
+    if (str_contains($icon, 'video.png') && is_numeric(get_post_meta($postId, 'tsjippy_vimeo_id', true))) {
         $startTime = microtime(true);
         try {
-            $path  = get_post_meta($postId, 'thumbnail', true);
+            $path  = get_post_meta($postId, 'tsjippy_thumbnail', true);
 
             if (!file_exists($path)) {
                 $vimeoApi    = new VimeoApi();

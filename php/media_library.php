@@ -51,11 +51,11 @@ function attachmentFieldsToEdit($formFields, $post)
 
     $startTime = microtime(true);
 
-    $vimeoId = get_post_meta($post->ID, 'vimeo_id', true);
+    $vimeoId = get_post_meta($post->ID, 'tsjippy_vimeo_id', true);
 
     if (is_numeric($vimeoId)) {
         //check if backup already exists
-        $path   = get_post_meta($post->ID, 'video_path', true);
+        $path   = get_post_meta($post->ID, 'tsjippy_video_path', true);
 
         if (!file_exists($path)) {
             $formFields['vimeo_url'] = array(

@@ -87,7 +87,7 @@ function vimeoSync()
 
         //Build the local videos array
         foreach ($posts as $post) {
-            $vimeoId    = get_post_meta($post->ID, 'vimeo_id', true);
+            $vimeoId    = get_post_meta($post->ID, 'tsjippy_vimeo_id', true);
             if (is_numeric($vimeoId)) {
                 $localVideos[$vimeoId]    = $post->ID;
             }
@@ -101,7 +101,7 @@ function vimeoSync()
 
         //remove any local video which does not exist on vimeo
         foreach (array_diff_key($localVideos, $onlineVideos) as $vimeoId => $postId) {
-            $vimeoId        = get_post_meta($postId, 'vimeo_id', true);
+            $vimeoId        = get_post_meta($postId, 'tsjippy_vimeo_id', true);
             TSJIPPY\printArray("Deleting video with vimeo id $vimeoId");
             wp_delete_post($postId);
         }

@@ -28,8 +28,8 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
             };
 
             if (!empty(SETTINGS['client-id']) && !empty(SETTINGS['client-secret']) && !empty(SETTINGS['access-token'])) {
-                $this->clientId            = SETTINGS['client-id'];
-                $this->clientSecret        = SETTINGS['client-secret'];
+                $this->clientId         = SETTINGS['client-id'];
+                $this->clientSecret     = SETTINGS['client-secret'];
                 $this->accessToken      = SETTINGS['access-token'];
                 $this->filesDir         = WP_CONTENT_DIR . '/vimeo_files';
                 $this->picturesDir      = $this->filesDir . "/thumbnails/";
@@ -48,7 +48,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
          **/
         public function isConnected()
         {
-            $this->status = get_transient('vimeo_connected');
+            $this->status = get_transient('tsjippy_vimeo_connected');
             if ($this->status === false || $this->status == 'offline' || empty($this->status)) {
                 try {
                     if ($this->api == null) {
@@ -69,7 +69,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                     TSJIPPY\printArray($error);
                 }
 
-                set_transient('vimeo_connected', $this->status, 120);
+                set_transient('tsjippy_vimeo_connected', $this->status, 120);
             }
             return $this->status;
         }
@@ -139,7 +139,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
          **/
         public function getVimeoId($postId)
         {
-            $vimeoId        = get_post_meta($postId, 'vimeo_id', true);
+            $vimeoId        = get_post_meta($postId, 'tsjippy_vimeo_id', true);
             if (is_numeric($vimeoId)) {
                 return $vimeoId;
             } else {
@@ -322,7 +322,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 TSJIPPY\printArray("Succesfully deleted video with id $vimeoId from Vimeo");
 
                 //delete thumbnail
-                $path   = get_post_meta($postId, 'thumbnail', true);
+                $path   = get_post_meta($postId, 'tsjippy_thumbnail', true);
                 wp_delete_file($path);
             }
         }
@@ -420,7 +420,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
             $attachmentId = wp_insert_post($args);
 
             //add to wp library
-            update_post_meta($attachmentId, 'vimeo_id', $vimeoId);
+            update_post_meta($attachmentId, 'tsjippy_vimeo_id', $vimeoId);
             update_post_meta($attachmentId, '_wp_attached_file', $title);
 
             return $attachmentId;
@@ -457,7 +457,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 TSJIPPY\printArray('Unable to upload: ' . $e->getMessage());
             }
 
-            update_post_meta($postId, 'vimeo_id', str_replace('/videos/', '', $response['body']['uri']));
+            update_post_meta($postId, 'tsjippy_vimeo_id', str_replace('/videos/', '', $response['body']['uri']));
 
             return $response;
         }
@@ -476,7 +476,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 return false;
             }
 
-            return update_post_meta($postId, 'video_path', $filePath);
+            return update_post_meta($postId, 'tsjippy_video_path', $filePath);
         }
 
         /**
@@ -493,7 +493,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 return false;
             }
 
-            $filePath   = get_post_meta($postId, 'video_path', true);
+            $filePath   = get_post_meta($postId, 'tsjippy_video_path', true);
 
             if (empty($filePath)) {
                 return false;
@@ -574,7 +574,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
          **/
         public function getThumbnail($postId)
         {
-            $thumbnail  = get_post_meta($postId, 'thumbnail', true);
+            $thumbnail  = get_post_meta($postId, 'tsjippy_thumbnail', true);
 
             if (file_exists($thumbnail)) {
                 return $thumbnail;
@@ -602,7 +602,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                         }
 
                         if ($index === 0) {
-                            update_post_meta($postId, 'thumbnail', $result);
+                            update_post_meta($postId, 'tsjippy_thumbnail', $result);
                             $thumbnail  = $result;
                         }
                     }
@@ -630,7 +630,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 return true;
             }
 
-            return update_post_meta($postId, 'download_url', $url);
+            return update_post_meta($postId, 'tsjippy_download_url', $url);
         }
 
         /**
@@ -642,7 +642,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
          */
         public function getDownloadUrl($postId)
         {
-            $url    = get_post_meta($postId, 'download_url', true);
+            $url    = get_post_meta($postId, 'tsjippy_download_url', true);
             if (empty($url)) {
                 return false;
             }
