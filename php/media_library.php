@@ -73,7 +73,7 @@ function attachmentFieldsToEdit($formFields, $post)
 
         $formFields['visibility'] = array(
             'value' => 'upload',
-            'label' => __('Upload this video to vimeo', 'tsjippy'),
+            'label' => __('Upload this video to vimeo', '%TEXTDOMAIN%'),
             'input' => 'html',
             'html'  =>  $html
         );
