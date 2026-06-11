@@ -692,7 +692,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
          **/
         public function downloadFromVimeo($url, $postId, $width = '', $height = '')
         {
-            $extension  = pathinfo(parse_url($url)['path'], PATHINFO_EXTENSION);
+            $extension  = pathinfo(wp_parse_url($url)['path'], PATHINFO_EXTENSION);
             if ($extension == 'webp') {
                 $path       = $this->picturesDir;
                 $filename   = $this->getVimeoId($postId);
