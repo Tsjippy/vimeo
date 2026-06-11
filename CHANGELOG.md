@@ -2,6 +2,17 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Updated
+
+## [10.1.6] - 2026-06-11
+
+
+### Added
 - placeholder for textdomain
 
 ### Changed
@@ -9,8 +20,6 @@
 
 ### Fixed
 - prefix meta_query
-
-### Updated
 
 ## [10.1.5] - 2026-06-09
 
