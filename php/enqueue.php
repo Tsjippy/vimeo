@@ -11,11 +11,11 @@ function loadAssets()
     wp_register_script('tsjippy_vimeo_admin_script', TSJIPPY\pathToUrl(PLUGINPATH . 'js/admin.min.js'), ['tsjippy_formsubmit_script', 'tsjippy_script'], PLUGINVERSION);
     wp_localize_script(
         'tsjippy_vimeo_admin_script',
-        'sim',
+        'tsjippy',
         array(
             'baseUrl'         => get_home_url(),
-            'restNonce'        => wp_create_nonce('wp_rest'),
-            'restApiPrefix'    => '/' . TSJIPPY\RESTAPIPREFIX
+            'restNonce'       => wp_create_nonce('wp_rest'),
+            'restApiPrefix'   => '/' . TSJIPPY\RESTAPIPREFIX
         )
     );
 }
