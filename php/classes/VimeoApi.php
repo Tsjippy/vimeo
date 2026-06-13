@@ -161,7 +161,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
             $posts = get_posts(array(
                 'numberposts'   => -1,
                 'post_type'     => 'attachment',
-                'meta_key'      => 'vimeo_id',
+                'meta_key'      => 'tsjippy_vimeo_id',
                 'meta_value'    => $vimeoId
             ));
 
