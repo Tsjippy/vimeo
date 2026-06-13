@@ -5,6 +5,7 @@
 
 ### Changed
 - replaced parse_url with wp_parse_url
+- prefix meta key in get_users
 
 ### Fixed
 - shared code loader
