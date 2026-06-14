@@ -723,7 +723,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 }
             }
 
-            $filePath  = str_replace('\\', '/', $path . $filename . ' . ' . $extension);
+            $filePath  = wp_normalize_path($path . $filename . ' . ' . $extension);
 
             // save filepath in meta
             if ($extension == 'mp4') {

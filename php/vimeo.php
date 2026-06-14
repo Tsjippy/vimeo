@@ -122,7 +122,7 @@ function handleUpload($file)
 
             $filename   = $vimeoId . "_" . get_the_title($postId);
 
-            $filePath  = str_replace('\\', '/', $path . $filename . '.mp4');
+            $filePath  = wp_normalize_path($path . $filename . '.mp4');
 
             move_uploaded_file($file['file'], $filePath);
 
