@@ -4,7 +4,7 @@ namespace TSJIPPY\VIMEO;
 
 use TSJIPPY;
 
-add_filter('tsjippy_media_gallery_item_html', __NAMESPACE__ . '\mediaItem', 10, 3);
+add_filter('tsjippy-media-gallery-item-html', __NAMESPACE__ . '\mediaItem', 10, 3);
 function mediaItem($mediaHtml, $type, $postId)
 {
     if ($type != 'video') {
@@ -23,7 +23,7 @@ function mediaItem($mediaHtml, $type, $postId)
     return $mediaHtml;
 }
 
-add_filter('tsjippy_media_gallery_download_url', __NAMESPACE__ . '\downloadUrl', 10, 2);
+add_filter('tsjippy-media-gallery-download-url', __NAMESPACE__ . '\downloadUrl', 10, 2);
 function downloadUrl($url, $postId)
 {
     $vimeoApi   = new VimeoApi();
@@ -36,7 +36,7 @@ function downloadUrl($url, $postId)
     return $url;
 }
 
-add_filter('tsjippy_media_gallery_download_filename', __NAMESPACE__ . '\downloadFileName', 10, 3);
+add_filter('tsjippy-media-gallery-download-filename', __NAMESPACE__ . '\downloadFileName', 10, 3);
 function downloadFileName($fileName, $type, $postId)
 {
     if ($type != 'video') {

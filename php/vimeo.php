@@ -17,7 +17,7 @@ function attachmentDeleted($postId, $post)
     }
 }
 
-add_action('tsjippy_before_visibility_change', __NAMESPACE__ . '\visibility', 10, 2);
+add_action('tsjippy-before-visibility-change', __NAMESPACE__ . '\visibility', 10, 2);
 function visibility($attachmentId, $visibility)
 {
 

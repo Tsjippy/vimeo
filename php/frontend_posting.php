@@ -5,7 +5,7 @@ namespace TSJIPPY\VIMEO;
 use TSJIPPY;
 
 // Update vimeo when attachment has changed
-add_action('tsjippy_after_post_save', __NAMESPACE__ . '\afterPostSave');
+add_action('tsjippy-after-post-save', __NAMESPACE__ . '\afterPostSave');
 function afterPostSave($post)
 {
     if ($post->post_type == 'attachment' && is_numeric($post->ID)) {
@@ -35,7 +35,7 @@ function afterPostSave($post)
     }
 }
 
-add_filter('tsjippy_attachment_preview', __NAMESPACE__ . '\attachmentPreview', 10, 2);
+add_filter('tsjippy-attachment-preview', __NAMESPACE__ . '\attachmentPreview', 10, 2);
 function attachmentPreview($image, $postId)
 {
 

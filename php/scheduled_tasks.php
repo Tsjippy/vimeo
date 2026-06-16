@@ -8,15 +8,15 @@ add_action('init', __NAMESPACE__ . '\initTasks');
 function initTasks()
 {
     //add action for use in scheduled task
-    add_action('sync_vimeo_action', __NAMESPACE__ . '\vimeoSync');
-    add_action('createVimeoThumbnails', __NAMESPACE__ . '\createVimeoThumbnails');
+    add_action('tsjippy-sync-vimeo', __NAMESPACE__ . '\vimeoSync');
+    add_action('tsjippy-create-vimeo-thumbnails', __NAMESPACE__ . '\createVimeoThumbnails');
 }
 
 function scheduleTasks()
 {
-    TSJIPPY\scheduleTask('createVimeoThumbnails', 'daily');
+    TSJIPPY\scheduleTask('tsjippy-create-vimeo-thumbnails', 'daily');
     if (SETTINGS['sync'] ?? false) {
-        TSJIPPY\scheduleTask('sync_vimeo_action', 'daily');
+        TSJIPPY\scheduleTask('tsjippy-sync-vimeo', 'daily');
     }
 }
 
