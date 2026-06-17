@@ -38,9 +38,3 @@ define(__NAMESPACE__ . '\PLUGINPATH', __DIR__ . '/');
 define(__NAMESPACE__ . '\PLUGINVERSION', get_plugin_data(__FILE__, false, false)['Version']);
 define(__NAMESPACE__ . '\PLUGINSLUG', str_replace('tsjippy-', '', basename(__FILE__, '.php')));
 define(__NAMESPACE__ . '\SETTINGS', get_option('tsjippy_' . PLUGINSLUG . '_settings', []));
-
-// Remove scheduled tasks upon plugin deactivation
-register_deactivation_hook(__FILE__, function () {
-    wp_clear_scheduled_hook('createVimeoThumbnails');
-    wp_clear_scheduled_hook('sync_vimeo_action');
-});

@@ -17,10 +17,9 @@ function attachmentDeleted($postId, $post)
     }
 }
 
-add_action('tsjippy-before-visibility-change', __NAMESPACE__ . '\visibility', 10, 2);
+add_action('tsjippy-content-filter-before-visibility-change', __NAMESPACE__ . '\visibility', 10, 2);
 function visibility($attachmentId, $visibility)
 {
-
     if ($visibility == 'private') {
         $vimeoApi    = new VimeoApi();
         $vimeoApi->hideVimeoVideo($attachmentId);

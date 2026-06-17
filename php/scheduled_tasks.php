@@ -4,19 +4,12 @@ namespace TSJIPPY\VIMEO;
 
 use TSJIPPY;
 
-add_action('init', __NAMESPACE__ . '\initTasks');
-function initTasks()
-{
-    //add action for use in scheduled task
-    add_action('tsjippy-sync-vimeo', __NAMESPACE__ . '\vimeoSync');
-    add_action('tsjippy-create-vimeo-thumbnails', __NAMESPACE__ . '\createVimeoThumbnails');
-}
-
+add_action('init', __NAMESPACE__ . '\scheduleTasks');
 function scheduleTasks()
 {
-    TSJIPPY\scheduleTask('tsjippy-create-vimeo-thumbnails', 'daily');
+    TSJIPPY\scheduleTask('tsjippy-create-vimeo-thumbnails', 'daily', __NAMESPACE__, 'createVimeoThumbnails');
     if (SETTINGS['sync'] ?? false) {
-        TSJIPPY\scheduleTask('tsjippy-sync-vimeo', 'daily');
+        TSJIPPY\scheduleTask('tsjippy-sync-vimeo', 'daily', __NAMESPACE__, 'vimeoSync');
     }
 }
 
@@ -113,7 +106,7 @@ function vimeoSync()
 
         // Backup any video who is not yet backed up
         $files      = glob($vimeoApi->backupDir . '*.mp4');
-        $files      = apply_filters('tsjippy-local-vimeo-files', $files);
+        $files      = apply_filters('tsjippy-vimeo-local-files', $files);
         foreach (array_keys($onlineVideos) as $vimeoId) {
             // If the video does not exist locally
             if (empty(preg_grep("~$vimeoId~", $files))) {
