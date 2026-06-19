@@ -25,9 +25,9 @@ function editAttachment($attachmentId)
     }
 
     // Update vimeo meta data
-    $title            = $_REQUEST['changes']['title'];
-    $description    = $_REQUEST['changes']['description'];
-    $data            = [];
+    $title       = TSJIPPY\sanitize($_REQUEST['changes']['title'] ?? '');
+    $description = TSJIPPY\sanitize($_REQUEST['changes']['description'] ?? '');
+    $data        = [];
     if (!empty($title)) {
         $data['name']    = $title;
     }

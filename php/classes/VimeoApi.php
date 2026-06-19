@@ -529,7 +529,9 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
                 if ($filePath) {
                     //Rename backup file
                     $newFilePath    = dirname($filePath) . "/{$vimeoId}_{$data['name']}.mp4";
-                    rename($filePath, $newFilePath);
+
+                    $wpFileSystem   = TSJIPPY\loadWpFileSystem();
+                    $wpFileSystem->move($filePath, $newFilePath);
 
                     // Save new filepath in post meta
                     $this->saveVideoPath($postId, $newFilePath);

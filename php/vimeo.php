@@ -88,8 +88,8 @@ function handleUpload($file)
 {
 
     if (explode('/', $file['type'])[0] == 'video' && is_numeric($_REQUEST['post'])) {
-        $vimeoApi    = new VimeoApi();
-        $postId        = $_REQUEST['post'];
+        $vimeoApi = new VimeoApi();
+        $postId   = TSJIPPY\sanitize($_REQUEST['post']);
 
         try {
             $post        = get_post($postId);

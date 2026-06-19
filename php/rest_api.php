@@ -285,10 +285,10 @@ function storeExternalUrl()
 
 function downloadToServer()
 {
-    $vimeoApi    = new VimeoApi();
-    $vimeoId    = $_REQUEST['vimeoid'];
+    $vimeoApi = new VimeoApi();
+    $vimeoId  = (int) $_REQUEST['vimeoid'];
 
-    $post    = $vimeoApi->getPost($vimeoId);
+    $post     = $vimeoApi->getPost($vimeoId);
     if (is_wp_error($post)) {
         return $post;
     } else {
@@ -308,11 +308,11 @@ function downloadToServer()
  */
 function getDownloadProgress()
 {
-    $vimeoApi    = new VimeoApi();
-    $vimeoId    = $_REQUEST['vimeoid'];
-    $post        = $vimeoApi->getPost($vimeoId);
+    $vimeoApi = new VimeoApi();
+    $vimeoId  = (int) $_REQUEST['vimeoid'];
+    $post     = $vimeoApi->getPost($vimeoId);
 
-    $path        = $vimeoApi->getVideoPath($post->ID);
+    $path    = $vimeoApi->getVideoPath($post->ID);
 
     if (!$path) {
         return new WP_Error('Vimeo', "Vimeo post not found!");
