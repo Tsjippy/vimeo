@@ -170,9 +170,9 @@ function prepareVimeoUpload()
     foreach ($results as $result) {
         $data    = unserialize($result->meta_value);
         if ($data['filename'] == $fileName) {
-            $url            = $data['url'];
-            $postId            = $result->post_id;
-            $vimeoId          = $data['vimeo_id'];
+            $url     = $data['url'];
+            $postId  = $result->post_id;
+            $vimeoId = $data['vimeo_id'];
         }
     }
 
