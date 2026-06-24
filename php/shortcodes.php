@@ -20,14 +20,14 @@ function showVimeoVideo($vimeoId)
     $html        = $vimeoApi->getEmbedHtml($vimeoId);
 
     ob_start();
-?>
+    ?>
     <div class="vimeo-wrapper">
         <div class="loader-image-trigger" data-size="100" data-text="Loading video... "></div>
         <div class='vimeo-embed-container'>
             <?php echo $html; ?>
         </div>
     </div>
-<?php
+    <?php
 
     return ob_get_clean();
 }
