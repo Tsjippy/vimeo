@@ -5,8 +5,15 @@ namespace TSJIPPY\VIMEO;
 use TSJIPPY;
 
 // Update vimeo when attachment has changed
-add_action('tsjippy-frontend-content-after-post-save', __NAMESPACE__ . '\afterPostSave');
-function afterPostSave($post)
+/**
+ * Allow comments
+ * 
+ * @param   \WP_Post    $post       The new or updated post
+ * @param   object      $object     FrontEndContent Instance
+ * @param   array       $request    The sanitized request data
+ */
+add_action('tsjippy-frontend-content-after-post-save', __NAMESPACE__ . '\afterPostSave', 10, 3);
+function afterPostSave($post, $object, $request)
 {
     if ($post->post_type == 'attachment' && is_numeric($post->ID)) {
 
@@ -18,15 +25,15 @@ function afterPostSave($post)
 
         $data            = [];
 
-        $newTitle       = TSJIPPY\sanitize($_POST['post-title']);
+        $newTitle       = $request['post-title'];
 
         // Only update when needed
         if (!empty($newTitle) && $newTitle != $post->post_title) {
             $data['name']    = $newTitle;
         }
 
-        if (($_POST['post-content'] ?? '') != $post->post_content) {
-            $data['description']    = TSJIPPY\sanitize($_POST['post-content'], 'textarea_field');
+        if (($request['post-content'] ?? '') != $post->post_content) {
+            $data['description']    = $request['post-content'];
         }
 
         if (!empty($data)) {
