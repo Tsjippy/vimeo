@@ -376,7 +376,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
             add_post_meta($attachmentId, '_wp_attached_file', 'Uploading to vimeo');
 
             //store upload link in case of failed upload and we want to resume
-            add_post_meta($attachmentId, 'vimeo_upload_data', [
+            add_post_meta($attachmentId, "tsjippy_vimeo_upload_data", [
                 'url'       => $uploadLink,
                 'filename'  => $path,
                 'vimeo_id'  => $vimeoId
