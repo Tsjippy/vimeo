@@ -33,7 +33,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
         $accessToken    = $this->settings['access-token'] ?? '';
 
         if (empty($clientId) || empty($clientSecret)) {
-?>
+        ?>
             <div id='set-vimeo-id'>
                 <h2>Connect to vimeo</h2>
                 <p>
@@ -99,7 +99,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
                         Save your changed.<br>
                     </p>
                 </div>
-        <?php
+            <?php
             }
         } else {
             $vimeoApi        = new VimeoApi();
@@ -120,40 +120,30 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
             </label>
             <br>
 
-            <label <?php if (empty($clientSecret)) {
-                        echo 'style="display:none;"';
-                    } ?>>
+            <label <?php if (empty($clientSecret)) echo 'style="display:none;"'; ?>>
                 Access Token<br>
                 <input type="text" name="access-token" value="<?php echo esc_attr($accessToken); ?>">
             </label>
 
         </div>
 
-        <div class="settings-section" <?php if (empty($accessToken)) {
-                                            echo 'style="display:none;"';
-                                        } ?>>
+        <div class="settings-section" <?php if (empty($accessToken)) echo 'style="display:none;"'; ?>>
             <h2>Vimeo Settings</h2>
 
             <label>
-                <input type="checkbox" name="upload" <?php if ($this->settings['upload']) {
-                                                            echo 'checked';
-                                                        } ?>>
+                <input type="checkbox" name="upload" <?php if ($this->settings['upload']) echo 'checked'; ?>>
                 Automatically upload all video's to Vimeo
             </label>
             <br>
 
             <label>
-                <input type="checkbox" name="remove" <?php if ($this->settings['remove']) {
-                                                            echo 'checked';
-                                                        } ?>>
+                <input type="checkbox" name="remove" <?php if ($this->settings['remove']) echo 'checked'; ?>>
                 Automatically remove video from Vimeo when deleted in library
             </label>
             <br>
 
             <label>
-                <input type="checkbox" name="sync" <?php if ($this->settings['sync']) {
-                                                        echo 'checked';
-                                                    } ?>>
+                <input type="checkbox" name="sync" <?php if ($this->settings['sync']) echo 'checked'; ?>>
                 Automatically sync local video's with video's on Vimeo
             </label>
         </div>
@@ -217,7 +207,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
             <button class='button' id='cleanup-archive' style='margin-top: 15px;'>
                 Clean up the video archive folder
             </button>
-<?php
+        <?php
         }
 
         addRawHtml(ob_get_clean(), $parent);
