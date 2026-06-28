@@ -248,7 +248,7 @@ function cleanupBackupFolder()
     //Build online video's array
     foreach ($vimeoVideos as $vimeoVideo) {
         $vimeoId                = str_replace('/videos/', '', $vimeoVideo['uri']);
-        $onlineVideos[$vimeoId]    = html_entity_decode($vimeoVideo['name']);
+        $onlineVideos[$vimeoId] = html_entity_decode($vimeoVideo['name']);
     }
 
     // Remove any backup
@@ -257,7 +257,7 @@ function cleanupBackupFolder()
     foreach ($files as $file) {
         $vimeoId    = explode('_', basename($file))[0];
 
-        if (!in_array($vimeoId, array_keys($onlineVideos))) {
+        if (!isset($onlineVideos[$vimeoId])) {
             wp_delete_file($file);
             $count++;
         }
