@@ -23,7 +23,7 @@ if (!class_exists(__NAMESPACE__ . '\VimeoApi')) {
         public function __construct()
         {
             if (! class_exists('\Vimeo\Vimeo')) {
-                TSJIPPY\printArray(__('Vimeo not loaded', 'sim'));
+                TSJIPPY\printArray(__('Vimeo not loaded', 'tsjippy'));
                 return false;
             };
 

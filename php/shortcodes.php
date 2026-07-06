@@ -12,7 +12,6 @@ add_shortcode("tsjippy_vimeo_video", function ($atts) {
 
 function showVimeoVideo($vimeoId)
 {
-
     // Load css
     wp_enqueue_style('vimeo_style');
 
