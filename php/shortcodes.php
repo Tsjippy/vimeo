@@ -6,9 +6,9 @@ use TSJIPPY;
 use Vimeo\Vimeo;
 
 //shortcode to display vimeo video's
-add_shortcode("tsjippy_vimeo_video", function ($atts) {
+/* add_shortcode("tsjippy_vimeo_video", function ($atts) {
     return showVimeoVideo($atts['id']);
-});
+}); */
 
 function showVimeoVideo($vimeoId)
 {
