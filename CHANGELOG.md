@@ -2,14 +2,19 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- vimeo block
-- block icon
 
 ### Changed
 
 ### Fixed
 
 ### Updated
+
+## [10.3.7] - 2026-07-10
+
+
+### Added
+- vimeo block
+- block icon
 
 ## [10.3.6] - 2026-07-06
 
