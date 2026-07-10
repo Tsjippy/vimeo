@@ -3,6 +3,7 @@
 
 ### Added
 - vimeo block
+- block icon
 
 ### Changed
 
