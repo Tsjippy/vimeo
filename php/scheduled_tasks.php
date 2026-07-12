@@ -5,6 +5,9 @@ namespace TSJIPPY\VIMEO;
 use TSJIPPY;
 
 add_action('init', __NAMESPACE__ . '\scheduleTasks');
+/**
+ * Schedule all tasks for this plugin
+ */
 function scheduleTasks()
 {
     TSJIPPY\scheduleTask('tsjippy-create-vimeo-thumbnails', 'daily', __NAMESPACE__, 'createVimeoThumbnails');
