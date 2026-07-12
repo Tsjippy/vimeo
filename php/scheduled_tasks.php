@@ -16,7 +16,9 @@ function scheduleTasks()
     }
 }
 
-//create local thumbnails
+/**
+ * create local thumbnails
+ */
 function createVimeoThumbnails()
 {
 
@@ -43,7 +45,9 @@ function createVimeoThumbnails()
     }
 }
 
-//sync local db with vimeo.com
+/**
+ * sync local db with vimeo.com
+ */
 function vimeoSync()
 {
 
