@@ -10,10 +10,10 @@ function blockInit()
     register_block_type(
         'tsjippy-vimeo/show-video',
         array(
-            'title'           => __( 'Vimeo Video', 'tsjippy' ),
+            'title'           => __( 'Vimeo Video', '%TEXTDOMAIN%' ),
             'attributes'      => array(
                 'id'   => array(
-                    'label'   => __("Vimeo id", "tsjippy"),
+                    'label'   => __("Vimeo id", "%TEXTDOMAIN%"),
                     'type'    => 'integer',
                     'default' => 0,
                 ),
