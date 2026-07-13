@@ -24,6 +24,13 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
         parent::__construct($settings, $name);
     }
 
+    /**
+     * Add the settings page to the admin menu
+     *
+     * @param \DOMElement $parent The parent menu slug
+     * 
+     * @return bool True if the settings page was added, false otherwise
+     */
     public function settings($parent)
     {
         ob_start();
