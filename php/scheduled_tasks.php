@@ -10,9 +10,9 @@ add_action('init', __NAMESPACE__ . '\scheduleTasks');
  */
 function scheduleTasks()
 {
-    TSJIPPY\scheduleTask('tsjippy-create-vimeo-thumbnails', 'daily', __NAMESPACE__, 'createVimeoThumbnails');
+    TSJIPPY\scheduleTask('tsjippy-vimeo-create-thumbnails', 'daily', __NAMESPACE__, 'createVimeoThumbnails');
     if (SETTINGS['sync'] ?? false) {
-        TSJIPPY\scheduleTask('tsjippy-sync-vimeo', 'daily', __NAMESPACE__, 'vimeoSync');
+        TSJIPPY\scheduleTask('tsjippy-vimeo-sync', 'daily', __NAMESPACE__, 'vimeoSync');
     }
 }
 
