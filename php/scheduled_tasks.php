@@ -26,7 +26,8 @@ function createVimeoThumbnails()
         'numberposts'     => -1,
         'meta_query'      => array(
             array(
-                'key'     => 'tsjippy_vimeo_id'
+                'key'     => 'tsjippy_vimeo_id',
+                'compare' => 'EXISTS'
             ),
             array(
                 'key'     => 'thumbnail',
@@ -73,9 +74,10 @@ function vimeoSync()
         $args = array(
             'post_type'      => 'attachment',
             'numberposts'    => -1,
-            'meta_query'    => array(
+            'meta_query'     => array(
                 array(
-                    'key'   => 'tsjippy_vimeo_id'
+                    'key'     => 'tsjippy_vimeo_id',
+                    'compare' => 'EXISTS'
                 )
             )
         );
