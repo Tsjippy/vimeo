@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- prefix scheduled task
 
 ### Fixed
 
 ### Updated
+
+## [10.4.6] - 2026-07-14
+
+
+### Changed
+- prefix scheduled task
 
 ## [10.4.4] - 2026-07-13
 
