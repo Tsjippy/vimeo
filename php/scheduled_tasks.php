@@ -21,7 +21,6 @@ function scheduleTasks()
  */
 function createVimeoThumbnails()
 {
-
     $args = array(
         'post_type'       => 'attachment',
         'numberposts'     => -1,
