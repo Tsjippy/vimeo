@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- implemented onBlockEditPage
 
 ### Fixed
 
