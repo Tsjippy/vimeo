@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- implemented onBlockEditPage
 
 ### Fixed
 
 ### Updated
+
+## [10.5.3] - 2026-08-31
+
+
+### Changed
+- implemented onBlockEditPage
 
 ## [10.5.2] - 2026-08-23
 
