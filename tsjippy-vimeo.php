@@ -13,10 +13,9 @@ use TSJIPPY;
  * AuthorURI:            harmseninnigeria.nl
  * Requires at least:    6.3
  * Requires PHP:         8.3
- * Tested up to:         7.1
- * Plugin URI:            https://github.com/Tsjippy/vimeo
+ * Plugin URI:           https://github.com/Tsjippy/vimeo
  * Tested:               7.1
- * TextDomain:            tsjippy
+ * TextDomain:           tsjippy
  * Requires Plugins:    
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
