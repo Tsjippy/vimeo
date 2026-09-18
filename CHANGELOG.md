@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- js to module
 
 ### Fixed
 
