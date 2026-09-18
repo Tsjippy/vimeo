@@ -196,7 +196,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu
      */
     public function functions($parent)
     {
-        wp_enqueue_script('tsjippy_vimeo_admin_script');
+        wp_enqueue_script_module('@tsjippy/vimeo_admin_script');
         wp_enqueue_style('vimeo_style');
 
         ob_start();

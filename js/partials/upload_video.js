@@ -1,6 +1,12 @@
 import { VimeoUpload } from "./../vimeo_upload.js";
 import { showLoader } from "./../../../tsjippy-shared-functionality/js/partials/show_loader.js";
 
+const data   = JSON.parse(
+  document.getElementById(
+      'wp-script-module-data-@tsjippy/vimeo_admin_script'
+  ).textContent
+);
+
 window.wp.Uploader.prototype.init = function () {
   // plupload 'PostInit'
   this.uploader.bind("FileFiltered", function (_up, _files) {
@@ -95,7 +101,7 @@ async function wpMediaUpload(plupload_file, wp_uploader) {
     let request = new XMLHttpRequest();
     request.open(
       "POST",
-      `${tsjippy.baseUrl}/wp-json${tsjippy.restApiPrefix}/vimeo/add_uploaded_vimeo`,
+      `${data.baseUrl}/wp-json${data.restApiPrefix}/vimeo/add_uploaded_vimeo`,
       false,
     );
     request.send(formData);

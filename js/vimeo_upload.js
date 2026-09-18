@@ -1,7 +1,13 @@
 import * as tus from "tus-js-client";
-import { fetchRestApi } from "./../../tsjippy-shared-functionality/js/partials/form_submit_functions.js";
+import { fetchRestApi } from "./../../tsjippy-forms/js/form_submit_functions.js";
 
 console.log("vimeo upload loaded");
+
+const data   = JSON.parse(
+  document.getElementById(
+      'wp-script-module-data-@tsjippy/vimeo_admin_script'
+  ).textContent
+);
 
 export class VimeoUpload {
   constructor(file) {
@@ -13,7 +19,7 @@ export class VimeoUpload {
 
   async findInStorage() {
     this.fingerprint = await this.getFingerprint(this.file, {
-      endpoint: tsjippy.baseUrl,
+      endpoint: data.baseUrl,
     });
     let storedEntries = await this.urlStorage.findUploadsByFingerprint(
       this.fingerprint,
@@ -156,7 +162,7 @@ async function uploadVideo(file) {
     let request = new XMLHttpRequest();
     request.open(
       "POST",
-      `${tsjippy.baseUrl}/wp-json${tsjippy.restApiPrefix}/vimeo/add_uploaded_vimeo`,
+      `${data.baseUrl}/wp-json${data.restApiPrefix}/vimeo/add_uploaded_vimeo`,
       false,
     );
     request.send(formData);

@@ -1,5 +1,10 @@
 import { showLoader } from "./../../tsjippy-shared-functionality/js/partials/show_loader.js";
 
+import{
+  fetchRestApi
+} from "../../tsjippy-forms/js/form_submit_functions.js";
+
+
 console.log("Vimeo admin js loaded");
 
 async function fileSize(url) {
@@ -20,7 +25,7 @@ async function updateProgress() {
 
   let formData = new FormData();
   formData.append("vimeoid", vidmeoId);
-  let curSize = await FormSubmit.fetchRestApi(
+  let curSize = await fetchRestApi(
     "vimeo/get_download_progress",
     formData,
   );
@@ -94,7 +99,7 @@ async function downloadVimeoVideo(ev) {
   formData.append("download-url", vimeoUrl);
 
   // when download is done
-  FormSubmit.fetchRestApi("vimeo/download_to_server", formData).then(
+  fetchRestApi("vimeo/download_to_server", formData).then(
     (response) => {
       clearTimeout(timerId);
 
@@ -164,7 +169,7 @@ async function storeVimeoUrlLocation(ev) {
   formData.append("external-url", vimeoUrl);
 
   // when download is done
-  FormSubmit.fetchRestApi("vimeo/store_external_url", formData).then(
+  fetchRestApi("vimeo/store_external_url", formData).then(
     (response) => {
       Main.displayMessage(response, "info", 1500);
 
@@ -182,7 +187,7 @@ async function storeVimeoUrlLocation(ev) {
 async function cleanUpBackup(ev) {
   showLoader(ev.target);
 
-  let response = await FormSubmit.fetchRestApi("vimeo/cleanup_backup");
+  let response = await fetchRestApi("vimeo/cleanup_backup");
 
   //hide loader
   document
