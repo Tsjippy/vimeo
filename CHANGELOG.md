@@ -5,6 +5,7 @@
 
 ### Changed
 - js to module
+- js update
 
 ### Fixed
 
