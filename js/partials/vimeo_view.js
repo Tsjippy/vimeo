@@ -1,3 +1,7 @@
+import { 
+  showLoader 
+} from "../../../tsjippy-shared-functionality/js/partials/show_loader.js";
+
 /* 
 		Show vimeo in wp library
 */
@@ -36,7 +40,7 @@ export function loadVimeoVideo(el) {
   } else if (vimeoLink.includes("vimeo.com/")) {
     let element = document.querySelector(".wp-media-wrapper.wp-video");
 
-    let loaderHtml = Main.showLoader("", true, 100, "Loading video...", true);
+    let loaderHtml = showLoader("", true, 100, "Loading video...", true);
 
     element.innerHTML = `
 		<div class="vimeo-wrapper">

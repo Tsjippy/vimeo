@@ -1,5 +1,11 @@
 import * as tus from "tus-js-client";
-import { fetchRestApi } from "./../../tsjippy-forms/js/form_submit_functions.js";
+import { 
+  fetchRestApi 
+} from "./../../tsjippy-forms/js/form_submit_functions.js";
+
+import { 
+  displayMessage 
+} from "../../tsjippy-shared-functionality/js/partials/display_message.js";
 
 console.log("vimeo upload loaded");
 
@@ -184,7 +190,7 @@ async function uploadVideo(file) {
       .querySelector(".loader-wrapper:not(.hidden)")
       .classList.add("hidden");
 
-    Main.displayMessage(
+    displayMessage(
       `The file ${file.name} has been uploaded succesfully.`,
       "success",
       1500,

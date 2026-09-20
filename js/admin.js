@@ -4,6 +4,9 @@ import{
   fetchRestApi
 } from "../../tsjippy-forms/js/form_submit_functions.js";
 
+import { 
+  displayMessage 
+} from "../../tsjippy-shared-functionality/js/partials/display_message.js";
 
 console.log("Vimeo admin js loaded");
 
@@ -45,7 +48,7 @@ async function updateProgress() {
     timerId = setTimeout(updateProgress, 5000);
   } else {
     clearTimeout(timerId);
-    Main.displayMessage("Download finished ", "info", 1500);
+    displayMessage("Download finished ", "info", 1500);
 
     //hide loader
     document
@@ -78,7 +81,7 @@ async function downloadVimeoVideo(ev) {
     .querySelector('[name="download-url"]').value;
 
   if (vimeoUrl == "") {
-    Main.displayMessage("Please give an url to download from", "error");
+    displayMessage("Please give an url to download from", "error");
     return;
   }
 
@@ -103,7 +106,7 @@ async function downloadVimeoVideo(ev) {
     (response) => {
       clearTimeout(timerId);
 
-      Main.displayMessage(response, "info");
+      displayMessage(response, "info");
 
       //hide loader and progressbar
       document
@@ -129,7 +132,7 @@ async function downloadVimeoVideo(ev) {
   document.getElementById("information").innerHTML =
     `<div style="margin-top: -28px;text-align:center; color: white;font-weight:bold;text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;">0% downloaded</div>`;
 
-  Main.displayMessage(
+  displayMessage(
     "Download started, " + parseInt(downloadSize).formatBytes() + " to go",
     "info",
     1500,
@@ -148,7 +151,7 @@ async function storeVimeoUrlLocation(ev) {
     .querySelector('[name="external-url"]').value;
 
   if (vimeoUrl == "") {
-    Main.displayMessage("Please provide an external url", "error");
+    displayMessage("Please provide an external url", "error");
     return;
   }
 
@@ -171,7 +174,7 @@ async function storeVimeoUrlLocation(ev) {
   // when download is done
   fetchRestApi("vimeo/store_external_url", formData).then(
     (response) => {
-      Main.displayMessage(response, "info", 1500);
+      displayMessage(response, "info", 1500);
 
       //hide loader and progressbar
       document
@@ -195,7 +198,7 @@ async function cleanUpBackup(ev) {
     .forEach((el) => el.classList.add("hidden"));
 
   if (response) {
-    Main.displayMessage(response);
+    displayMessage(response);
   }
 }
 
