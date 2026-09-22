@@ -1,5 +1,5 @@
-import { VimeoUpload } from "./../vimeo_upload.js";
-import { showLoader } from "./../../../tsjippy-shared-functionality/js/partials/show_loader.js";
+import { VimeoUpload } from "@tsjippy/vimeo_upload";
+import { showLoader } from "@tsjippy/show_loader";
 
 const data   = JSON.parse(
   document.getElementById(

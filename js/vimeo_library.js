@@ -1,7 +1,7 @@
 // check all media events with wp.media.frame.on('all', function(e) { console.log(e); });
 
-import "./partials/vimeo_view.js";
-import "./partials/upload_video.js";
-import "./partials/max_file_size.js";
+import "@tsjippy/vimeo_view";
+import "@tsjippy/upload_video";
+import "@tsjippy/max_file_size";
 
 console.log("vimeo loaded");

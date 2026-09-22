@@ -1,11 +1,11 @@
 import * as tus from "tus-js-client";
 import { 
   fetchRestApi 
-} from "./../../tsjippy-forms/js/form_submit_functions.js";
+} from "@tsjippy/form_submit_functions";
 
 import { 
   displayMessage 
-} from "../../tsjippy-shared-functionality/js/partials/display_message.js";
+} from "@tsjippy/display_message";
 
 console.log("vimeo upload loaded");
 

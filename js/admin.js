@@ -1,12 +1,12 @@
-import { showLoader } from "./../../tsjippy-shared-functionality/js/partials/show_loader.js";
+import { showLoader } from "@tsjippy/show_loader";
 
 import{
   fetchRestApi
-} from "../../tsjippy-forms/js/form_submit_functions.js";
+} from "@tsjippy/form_submit_functions";
 
 import { 
   displayMessage 
-} from "../../tsjippy-shared-functionality/js/partials/display_message.js";
+} from "@tsjippy/display_message";
 
 console.log("Vimeo admin js loaded");
 

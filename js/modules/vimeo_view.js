@@ -1,6 +1,6 @@
 import { 
   showLoader 
-} from "../../../tsjippy-shared-functionality/js/partials/show_loader.js";
+} from "@tsjippy/show_loader";
 
 /* 
 		Show vimeo in wp library
