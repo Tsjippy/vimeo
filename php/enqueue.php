@@ -4,16 +4,11 @@ namespace TSJIPPY\VIMEO;
 
 use TSJIPPY;
 
-// admin js
-add_action('admin_enqueue_scripts', __NAMESPACE__ . '\loadAssets');
-function loadAssets()
-{
-    
-}
-
-
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\enqueueVimeoScripts');
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\enqueueVimeoScripts');
+/**
+ * Registeres the CSS and JS
+ */
 function enqueueVimeoScripts()
 {
     /** 
@@ -57,15 +52,8 @@ function enqueueVimeoScripts()
     ] :
     [];
 
+    $deps[] = "@tsjippy/nonce_script";
     wp_register_script_module('@tsjippy/vimeo_admin_script', TSJIPPY\pathToUrl(PLUGINPATH . 'js/admin' . TSJIPPY\JSEXTENSION), $deps, PLUGINVERSION);
-
-    add_filter( 'script_module_data_@tsjippy/vimeo_admin_script', function($data){
-        $data['baseUrl']       = get_home_url();
-        $data['restApiPrefix'] = '/' . TSJIPPY\RESTAPIPREFIX;
-        $data['restNonce']     = wp_create_nonce('wp_rest');
-
-        return $data; 
-    } );
 
     // Vimeo Library
     $deps   = SCRIPT_DEBUG ? [  
@@ -89,6 +77,8 @@ function enqueueVimeoScripts()
         "@tsjippy/display_message"
     ] :
     [];
+
+    $deps[] = "@tsjippy/nonce_script";
     wp_register_script_module('@tsjippy/vimeo_uploader_script', TSJIPPY\pathToUrl(PLUGINPATH . 'js/vimeo_upload' . TSJIPPY\JSEXTENSION), $deps, PLUGINVERSION);
 }
 
@@ -98,6 +88,9 @@ if (SETTINGS['upload'] ?? false) {
     add_action('wp_enqueue_media', __NAMESPACE__ . '\loadMediaAssets');
 }
 
+/**
+ * Registeres the CSS and JS
+ */
 function loadMediaAssets()
 {
     wp_enqueue_script_module('@tsjippy/vimeo_library_script');
