@@ -20,7 +20,7 @@ function enqueueVimeoScripts()
      * Libraries
      */
     wp_register_script_module('@tsjippy/vimeo_player', 'https://player.vimeo.com/api/player.js', [], false);
-    wp_register_script_module('@tsjippy/vimeo_tus', TSJIPPY\pathToUrl(PLUGINPATH . 'js/node_modules/tus-js-client.js/dist/tus.js'), [], false);
+    wp_register_script_module('@tsjippy/vimeo_tus', TSJIPPY\pathToUrl(PLUGINPATH . 'js/modules/tus.js'), [], false);
 
     /**
      * Modules
@@ -74,7 +74,8 @@ function enqueueVimeoScripts()
     $deps   = SCRIPT_DEBUG ? [  
         '@tsjippy/form_submit_functions', 
         '@tsjippy/vimeo_tus', 
-        "@tsjippy/display_message"
+        "@tsjippy/display_message",
+        '@tsjippy/fileupload_script'
     ] :
     [];
 

@@ -1,4 +1,4 @@
-import * as tus from "tus-js-client";
+import "@tsjippy/vimeo_tus";
 import { 
   fetchRestApi 
 } from "@tsjippy/form_submit_functions";
@@ -7,11 +7,13 @@ import {
   displayMessage 
 } from "@tsjippy/display_message";
 
+import "@tsjippy/fileupload_script";
+
 console.log("vimeo upload loaded");
 
 const data   = JSON.parse(
   document.getElementById(
-      'wp-script-module-data-@tsjippy/vimeo_admin_script'
+      'wp-script-module-data-@tsjippy/nonce_script'
   ).textContent
 );
 
@@ -238,11 +240,11 @@ async function uploadVideo(file) {
   upload.start();
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+/* document.addEventListener("DOMContentLoaded", async () => {
   FileUpload.fileTypeFilter["video"] = async function () {
     createProgressBar(target);
 
     //update post id on a postform
     await uploadVideo(file);
   };
-});
+}); */
