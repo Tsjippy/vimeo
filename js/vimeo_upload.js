@@ -7,7 +7,9 @@ import {
   displayMessage 
 } from "@tsjippy/display_message";
 
-import "@tsjippy/fileupload_script";
+import {
+  fileTypeFilter
+} from "@tsjippy/fileupload_script";
 
 console.log("vimeo upload loaded");
 
@@ -240,11 +242,11 @@ async function uploadVideo(file) {
   upload.start();
 }
 
-/* document.addEventListener("DOMContentLoaded", async () => {
-  FileUpload.fileTypeFilter["video"] = async function () {
+document.addEventListener("DOMContentLoaded", async () => {
+  fileTypeFilter["video"] = async function () {
     createProgressBar(target);
 
     //update post id on a postform
     await uploadVideo(file);
   };
-}); */
+});
