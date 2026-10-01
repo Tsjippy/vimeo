@@ -7,6 +7,7 @@
 
 ### Fixed
 - load tus
+- changefileTypeFilter
 
 ### Updated
 
