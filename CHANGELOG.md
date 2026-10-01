@@ -6,10 +6,15 @@
 ### Changed
 
 ### Fixed
-- load tus
-- changefileTypeFilter
 
 ### Updated
+
+## [10.7.4] - 2026-10-01
+
+
+### Fixed
+- load tus
+- changefileTypeFilter
 
 ## [10.7.3] - 2026-09-27
 
